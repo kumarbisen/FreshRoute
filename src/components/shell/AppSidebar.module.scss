@@ -1,0 +1,389 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+
+  @include breakpoint-up(1024px) {
+    display: none;
+  }
+}
+
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $color-dark-900;
+  border-right: 1px solid $color-dark-750;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform $transition-base;
+
+  @include breakpoint-down(1024px) {
+    transform: translateX(-100%);
+
+    &.mobileOpen {
+      transform: translateX(0);
+    }
+  }
+}
+
+.brandRow {
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid $color-dark-750;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.logoBadge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, $color-lime-300, $color-produce-emerald);
+  color: $color-dark-950;
+  font-family: $font-mono;
+  font-weight: 800;
+  font-size: $text-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-glow-lime;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: $font-sans;
+  font-size: $text-base;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.brandSubtitle {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.closeMobileBtn {
+  color: $color-slate-400;
+  padding: $space-1;
+  border-radius: $radius-sm;
+
+  &:hover {
+    color: #ffffff;
+    background-color: $color-dark-800;
+  }
+
+  @include breakpoint-up(1024px) {
+    display: none;
+  }
+}
+
+.workspaceWrapper {
+  padding: $space-3 $space-4;
+  position: relative;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.workspaceTrigger {
+  width: 100%;
+  padding: $space-2 $space-3;
+  background-color: $color-dark-850;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  text-align: left;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $color-dark-800;
+    border-color: $color-dark-600;
+  }
+}
+
+.workspaceIcon {
+  color: $color-lime-300;
+  display: flex;
+  align-items: center;
+}
+
+.workspaceDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.workspaceName {
+  font-size: $text-xs;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workspaceMeta {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+}
+
+.chevron {
+  color: $color-slate-400;
+  transition: transform $transition-fast;
+
+  &.chevronRotated {
+    transform: rotate(180deg);
+  }
+}
+
+.workspaceDropdown {
+  position: absolute;
+  top: 100%;
+  left: $space-4;
+  right: $space-4;
+  background-color: $color-dark-800;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  padding: $space-2;
+  z-index: 105;
+  margin-top: $space-1;
+}
+
+.dropdownHeader {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+  padding: $space-1 $space-2;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: $space-2;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: $text-xs;
+  color: $color-slate-200;
+  text-align: left;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $color-dark-750;
+    color: #ffffff;
+  }
+
+  &.activeItem {
+    background-color: $color-lime-dim;
+    color: $color-lime-300;
+    font-weight: 600;
+  }
+}
+
+.dropdownItemName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdownItemCode {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+}
+
+.navContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-4 $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.sectionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.sectionTitle {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-slate-500;
+  letter-spacing: 0.08em;
+  padding: $space-1 $space-3;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  color: $color-slate-300;
+  font-size: $text-sm;
+  font-weight: 500;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $color-dark-800;
+    color: #ffffff;
+  }
+
+  &.activeLink {
+    background-color: $color-dark-750;
+    color: $color-lime-300;
+    font-weight: 600;
+
+    .linkIcon {
+      color: $color-lime-300;
+    }
+  }
+
+  &.highlightLink:not(.activeLink) {
+    color: $color-lime-300;
+
+    .linkIcon {
+      color: $color-lime-300;
+    }
+  }
+}
+
+.linkIcon {
+  color: $color-slate-400;
+  display: flex;
+  align-items: center;
+  transition: color $transition-fast;
+}
+
+.linkLabel {
+  flex: 1;
+}
+
+.navBadge {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  padding: 1px $space-2;
+  border-radius: $radius-full;
+  background-color: $color-dark-750;
+  color: $color-slate-400;
+}
+
+.footerTelemetry {
+  padding: $space-4;
+  border-top: 1px solid $color-dark-750;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.telemetryCard {
+  background-color: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-md;
+  padding: $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.telemetryHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.shieldIcon {
+  color: $color-produce-emerald;
+}
+
+.telemetryTitle {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.telemetryStats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+}
+
+.statLabel {
+  color: $color-slate-400;
+}
+
+.statValSuccess {
+  font-family: $font-mono;
+  color: $color-produce-emerald;
+  font-weight: 600;
+}
+
+.statVal {
+  font-family: $font-mono;
+  color: $color-slate-300;
+}
+
+.marketingLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: $text-xs;
+  color: $color-slate-400;
+  padding: $space-2;
+  border-radius: $radius-sm;
+
+  &:hover {
+    color: $color-lime-300;
+    background-color: $color-dark-800;
+  }
+}

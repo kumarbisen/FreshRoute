@@ -1,0 +1,151 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.footer {
+  background-color: $color-dark-950;
+  border-top: 1px solid $color-dark-750;
+  padding: $space-16 0 $space-8;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $space-6;
+
+  @include breakpoint-up(1024px) {
+    padding: 0 $space-8;
+  }
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-10;
+  margin-bottom: $space-16;
+
+  @include breakpoint-up(768px) {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.logoBadge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, $color-lime-300, $color-produce-emerald);
+  color: $color-dark-950;
+  font-family: $font-mono;
+  font-weight: 800;
+  font-size: $text-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandTitle {
+  font-size: $text-lg;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.brandDesc {
+  font-size: $text-xs;
+  color: $color-slate-400;
+  line-height: 1.6;
+  max-width: 360px;
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  color: $color-slate-400;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background-color: $color-produce-emerald;
+  box-shadow: 0 0 6px $color-produce-emerald;
+}
+
+.linksCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.colTitle {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-slate-300;
+  letter-spacing: 0.08em;
+}
+
+.linksList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.link {
+  font-size: $text-xs;
+  color: $color-slate-400;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-lime-300;
+  }
+}
+
+.specItem {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+}
+
+.bottomBar {
+  padding-top: $space-8;
+  border-top: 1px solid $color-dark-750;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  align-items: center;
+  justify-content: space-between;
+
+  @include breakpoint-up(768px) {
+    flex-direction: row;
+  }
+}
+
+.copyright {
+  font-size: $text-xs;
+  color: $color-slate-500;
+}
+
+.bottomMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-500;
+}

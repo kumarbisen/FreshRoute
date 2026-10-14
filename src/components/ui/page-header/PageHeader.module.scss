@@ -1,0 +1,58 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-bottom: $space-6;
+}
+
+.breadcrumbsWrapper {
+  margin-bottom: $space-1;
+}
+
+.contentRow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  @include breakpoint-up(768px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.headingWithBadge {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: $text-2xl;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: $text-sm;
+  color: $color-slate-400;
+  max-width: 650px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-shrink: 0;
+}

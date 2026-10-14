@@ -6,6 +6,9 @@ export default defineConfig({
     environment: "node",
     globals: true,
     include: ["tests/**/*.test.ts"],
+    hookTimeout: 30000,
+    testTimeout: 30000,
+    fileParallelism: false, // Run test files sequentially for clean database isolation
   },
   resolve: {
     alias: {

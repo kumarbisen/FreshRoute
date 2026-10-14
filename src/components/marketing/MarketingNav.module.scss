@@ -1,0 +1,195 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  background-color: rgba($color-dark-950, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $space-3 $space-6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include breakpoint-up(1024px) {
+    padding: $space-4 $space-8;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.logoBadge {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, $color-lime-300, $color-produce-emerald);
+  color: $color-dark-950;
+  font-family: $font-mono;
+  font-weight: 800;
+  font-size: $text-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-glow-lime;
+}
+
+.pulseDot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: $radius-full;
+  background-color: $color-lime-300;
+  box-shadow: 0 0 8px $color-lime-300;
+  animation: pulse 1.5s infinite;
+}
+
+.brandTitleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: $font-sans;
+  font-size: $text-lg;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.brandTag {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  color: $color-slate-400;
+  letter-spacing: 0.08em;
+}
+
+.desktopMenu {
+  display: none;
+  align-items: center;
+  gap: $space-8;
+
+  @include breakpoint-up(880px) {
+    display: flex;
+  }
+}
+
+.navLink {
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $color-slate-300;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-lime-300;
+  }
+}
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+}
+
+.networkStatus {
+  display: none;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-produce-emerald;
+  background-color: $color-produce-emerald-dim;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+
+  @include breakpoint-up(640px) {
+    display: flex;
+  }
+}
+
+.statusPulse {
+  animation: pulse 2s infinite;
+}
+
+.mobileToggle {
+  color: $color-slate-300;
+  padding: $space-2;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: #ffffff;
+    background-color: $color-dark-800;
+  }
+
+  @include breakpoint-up(880px) {
+    display: none;
+  }
+}
+
+.mobileDrawer {
+  background-color: $color-dark-900;
+  border-bottom: 1px solid $color-dark-750;
+  padding: $space-5 $space-6;
+
+  @include breakpoint-up(880px) {
+    display: none;
+  }
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.mobileLink {
+  font-size: $text-base;
+  font-weight: 600;
+  color: $color-slate-200;
+  padding: $space-2 0;
+  border-bottom: 1px solid $color-dark-800;
+
+  &:hover {
+    color: $color-lime-300;
+  }
+}
+
+.mobileActions {
+  padding-top: $space-3;
+}
+
+.mobileCta {
+  width: 100%;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}

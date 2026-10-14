@@ -1,0 +1,332 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.kpiRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include breakpoint-up(640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.kpiCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-1;
+}
+
+.kpiTitle {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-slate-400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpiIcon {
+  color: $color-slate-400;
+}
+
+.kpiWarningIcon {
+  color: $color-urgency-amber;
+}
+
+.kpiLimeIcon {
+  color: $color-lime-300;
+}
+
+.kpiNumber {
+  font-family: $font-mono;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.kpiNumberWarning {
+  font-family: $font-mono;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: $color-urgency-amber;
+  letter-spacing: -0.02em;
+}
+
+.kpiNumberLime {
+  font-family: $font-mono;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: $color-lime-300;
+  letter-spacing: -0.02em;
+}
+
+.alertBanner {
+  background-color: $color-dark-850;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  border-left: 4px solid $color-salvage-purple;
+  border-radius: $radius-lg;
+  padding: $space-4 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  @include breakpoint-up(768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.alertContent {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+}
+
+.alertIconCircle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: $radius-full;
+  background-color: $color-salvage-purple-dim;
+  color: $color-salvage-purple;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.alertTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.alertTitle {
+  font-size: $text-sm;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.alertDescription {
+  font-size: $text-xs;
+  color: $color-slate-300;
+  line-height: 1.5;
+
+  b {
+    color: #ffffff;
+  }
+}
+
+.tableCardHeader {
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid $color-dark-750;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  @include breakpoint-up(768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.tableTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+}
+
+.filterPill {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  padding: $space-1 $space-3;
+  border-radius: $radius-sm;
+  background-color: $color-dark-800;
+  border: 1px solid $color-dark-700;
+  color: $color-slate-300;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: #ffffff;
+    border-color: $color-dark-600;
+  }
+
+  &.activeFilterPill {
+    background-color: $color-lime-dim;
+    border-color: $color-lime-300;
+    color: $color-lime-300;
+    font-weight: 700;
+  }
+}
+
+.batchMono {
+  font-family: $font-mono;
+  font-weight: 700;
+  font-size: $text-xs;
+  color: #ffffff;
+}
+
+.produceCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.produceName {
+  font-weight: 600;
+  color: $color-slate-100;
+}
+
+.categoryTag {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  color: $color-slate-400;
+}
+
+.quantityVal {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: #ffffff;
+}
+
+.tempCard {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: $color-cold-sky;
+}
+
+.destinationName {
+  font-size: $text-xs;
+  color: $color-slate-200;
+  font-weight: 500;
+}
+
+.routeCode {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: $color-slate-400;
+}
+
+.reasonBadgeCell {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.discountTag {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: $color-salvage-purple;
+  background-color: $color-salvage-purple-dim;
+  padding: 1px $space-1;
+  border-radius: $radius-sm;
+}
+
+// Dialog Form Styles
+.dialogForm {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin: $space-4 0;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.formLabel {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-slate-300;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.formReadonly {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-sm;
+  padding: $space-2 $space-3;
+  color: $color-lime-300;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.checkbox {
+  accent-color: $color-lime-300;
+  width: 1rem;
+  height: 1rem;
+}
+
+.checkboxLabel {
+  font-size: $text-xs;
+  color: $color-slate-300;
+  cursor: pointer;
+}
+
+.dialogInfoCallout {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  font-size: $text-xs;
+  color: $color-slate-300;
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-md;
+  padding: $space-3;
+  line-height: 1.4;
+}
+
+.calloutIcon {
+  color: $color-produce-emerald;
+  flex-shrink: 0;
+  margin-top: 1px;
+}

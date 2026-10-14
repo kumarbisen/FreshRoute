@@ -1,0 +1,182 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.heroSection {
+  position: relative;
+  background-color: $color-dark-950;
+  padding: $space-16 0 $space-20;
+  overflow: hidden;
+  border-bottom: 1px solid $color-dark-750;
+
+  @include breakpoint-up(1024px) {
+    padding: $space-24 0 $space-24;
+  }
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.heroContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $space-6;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint-up(1024px) {
+    padding: 0 $space-8;
+  }
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-8;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.coordinateBadge {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  padding: $space-1 $space-3;
+  border-radius: $radius-sm;
+}
+
+.coordDot {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background-color: $color-lime-300;
+  box-shadow: 0 0 6px $color-lime-300;
+}
+
+.coordText {
+  letter-spacing: 0.06em;
+}
+
+.headlineBlock {
+  max-width: 1100px;
+  margin-bottom: $space-10;
+}
+
+.mainTitle {
+  font-family: $font-sans;
+  font-size: 2.75rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin-bottom: $space-6;
+  text-transform: uppercase;
+
+  @include breakpoint-up(768px) {
+    font-size: 4.25rem;
+  }
+
+  @include breakpoint-up(1280px) {
+    font-size: 5.5rem;
+  }
+}
+
+.accentText {
+  color: $color-lime-300;
+  text-shadow: 0 0 40px rgba($color-lime-300, 0.25);
+  display: inline-block;
+}
+
+.subTitle {
+  font-size: $text-base;
+  line-height: 1.7;
+  color: $color-slate-300;
+  max-width: 780px;
+
+  @include breakpoint-up(768px) {
+    font-size: $text-lg;
+  }
+}
+
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-bottom: $space-16;
+
+  @include breakpoint-up(640px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.metricStrip {
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-xl;
+  padding: $space-6 $space-8;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-6;
+
+  @include breakpoint-up(640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(1024px) {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    gap: $space-8;
+  }
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.metricValue {
+  font-family: $font-mono;
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: $color-lime-300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.metricLabel {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricHighlight {
+  font-size: $text-sm;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.metricSub {
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+}
+
+.metricDivider {
+  display: none;
+}

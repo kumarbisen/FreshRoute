@@ -27,14 +27,19 @@ FreshRoute is engineered under strict decoupling invariants to ensure testabilit
 ```
 
 ### Boundary Invariants:
-1. **Isolated Pure Domain Optimization Module (`src/domain/solver`)**:
+1. **Presentation Layer Architecture**:
+   - **Server Components by Default**: Next.js 15 App Router pages and layouts render server-side by default with zero unnecessary client JS bundle.
+   - **Client Boundaries**: Explicit `'use client'` leaves for interactive widgets (`NetworkFlowVisualizer`, `BaselineComparisonVisualizer`, `OperationsOverview`, `Dialog` Radix modal, and `AppHeader` ticking clock).
+   - **Design Token System (`src/styles/_tokens.scss`)**: Comprehensive SCSS token scale for deep charcoal backgrounds, acid-lime (`#d4f933`) and produce emerald accents, technical monospace typography, spacing, border radii, and accessible focus rings.
+   - **Reduced Motion Support**: Global `@media (prefers-reduced-motion: reduce)` resets across animations and transitions.
+   - **Accessible UI Component Library (`src/components/ui/`)**: Reusable atomic primitives (`Button`, `Card`, `Badge`, `Dialog`, `Table`, `EmptyState`, `Skeleton`, `Breadcrumbs`, `PageHeader`) built on Radix UI and SCSS Modules.
+2. **Isolated Pure Domain Optimization Module (`src/domain/solver`)**:
    - The distribution solver, shelf-life decay models, dynamic markdown calculators, and baseline comparators are written in pure TypeScript.
    - **Zero external framework dependencies**: No imports from `react`, `next`, `@prisma/client`, or `@clerk/nextjs`.
    - All inputs and outputs are pure, immutable, and strictly validated data structures.
    - Operates synchronously or via deterministic promises for ease of unit testing and parallel worker execution.
-2. **Server Components by Default**:
-   - Every route in the App Router renders as a Server Component.
-   - Client components are strictly reserved for interactive leaves: form inputs with React Hook Form, Radix interactive dialogs/menus, and Recharts interactive tooltips.
+3. **Application Shell Architecture (`src/components/shell/`)**:
+   - Unified `AppShellLayout` wrapping desktop/mobile sidebar with facility workspace switcher, top sticky header with live dispatch clock and solver telemetry, and responsive content canvas.
 3. **Zod Runtime Validation**:
    - All external data boundaries (HTTP payloads, query parameters, environment configurations, and solver parameter JSON) pass through Zod schemas.
 4. **Decimal-Safe Financial Arithmetic**:

@@ -1,0 +1,131 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-weight: 600;
+  border-radius: $radius-sm;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.mono {
+  font-family: $font-mono;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+// Sizes
+.sm {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.6875rem; // 11px
+}
+
+.md {
+  padding: 0.3rem 0.6rem;
+  font-size: $text-xs; // 12px
+}
+
+// Variants
+.fresh {
+  background-color: $color-produce-emerald-dim;
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+
+  .pulseDot {
+    background-color: #34d399;
+  }
+}
+
+.warning {
+  background-color: $color-urgency-amber-dim;
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+
+  .pulseDot {
+    background-color: #fbbf24;
+  }
+}
+
+.critical {
+  background-color: $color-urgency-rose-dim;
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+
+  .pulseDot {
+    background-color: #fb7185;
+  }
+}
+
+.cold {
+  background-color: $color-cold-dim;
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+
+  .pulseDot {
+    background-color: #38bdf8;
+  }
+}
+
+.salvage {
+  background-color: $color-salvage-purple-dim;
+  color: #d8b4fe;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+
+  .pulseDot {
+    background-color: #d8b4fe;
+  }
+}
+
+.lime {
+  background-color: $color-lime-dim;
+  color: $color-lime-300;
+  border: 1px solid rgba($color-lime-300, 0.3);
+
+  .pulseDot {
+    background-color: $color-lime-300;
+  }
+}
+
+.neutral {
+  background-color: $color-dark-800;
+  color: $color-slate-300;
+  border: 1px solid $color-dark-750;
+
+  .pulseDot {
+    background-color: $color-slate-400;
+  }
+}
+
+.pulseDot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: $radius-full;
+  display: inline-block;
+  box-shadow: 0 0 6px currentColor;
+  animation: pulseAnimation 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+@keyframes pulseAnimation {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}

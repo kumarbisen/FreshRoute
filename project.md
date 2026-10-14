@@ -55,10 +55,14 @@ Wholesale distributors handle highly perishable commodities (berries, leafy gree
 ---
 
 ## 6. High-Level System Scope & Phased Milestones
-1. **Phase 0: Architecture & Foundation (Current)**: Architecture design, baseline documentation, project scaffolding, tech stack integration, and domain contract definitions.
-2. **Phase 1: Pure Domain Optimizer & Baseline Engine**: Mathematical allocation solver, FEFO algorithm, shelf-life decay model, dynamic markdown calculator, and documented baseline comparator.
-3. **Phase 2: Database Schema & Seed Engine**: Prisma models, migrations, PostgreSQL persistence, and realistic synthetic demo datasets.
+1. **Phase 0: Architecture & Foundation (Completed)**: Architecture design, baseline documentation, project scaffolding, tech stack integration, and domain contract definitions.
+2. **Phase 01: Visual Foundation, Marketing Website & Application Shell (Completed)**:
+   - **Art Direction**: Bold editorial identity inspired by dope.security; high-contrast deep charcoal (`#07090b` / `#0b0f12`), vibrant acid-lime (`#d4f933`) and fresh produce green (`#10b981`), technical coordinate chips, physical produce metaphors (crates, countdown clocks, reefer temperature zones, and destination acceptance SLAs).
+   - **Responsive Marketing Website**: Hero ("Every batch has a clock. Make every dispatch count."), interactive Network Flow topology simulator, Problem & Solution storytelling (The 22% Spoilage Tax vs. Algorithmic Dispatch), 4 Feature Deep Dives, interactive Documented Baseline Performance Benchmark, 4-step How It Works pipeline, Closing CTA, and Footer.
+   - **Reusable UI Primitives**: Accessible `Button`, `Card`, `Badge`, `Dialog` (Radix UI), `Table`, `EmptyState`, `Skeleton`, `Breadcrumbs`, and `PageHeader`.
+   - **Application Shell**: Responsive collapsible `AppSidebar` with workspace/DC facility switcher, `AppHeader` with live ticking dispatch clock and network telemetry, and consistent layout across `/app` (Operations Cockpit) and scaffolded views (`/app/inventory`, `/app/destinations`, `/app/transport`, `/app/planning`, `/app/discounts`, `/app/analytics`, `/app/scenarios`, `/app/settings`).
+3. **Phase 2: Database Schema & Seed Engine (Next)**: Prisma models, migrations, PostgreSQL persistence, and realistic synthetic demo datasets.
 4. **Phase 3: Planning Run API & Snapshot Engine**: Reproducible planning run orchestration, input snapshot hashing, run execution, and transactional persistence.
-5. **Phase 4: Operational UI & Dispatch Consoles**: Server-component driven dashboards, interactive dispatch console, batch inventory browser, and order allocation views with SCSS modules and Radix UI.
+5. **Phase 4: Pure Domain Distribution Solver & Baseline Comparator Engine**: Mathematical allocation solver, FEFO algorithm, shelf-life decay model, dynamic markdown calculator, and documented baseline comparator.
 6. **Phase 5: Comparative Analytics & Recharts Dashboards**: Visualizing FreshRoute vs. Baseline metrics, revenue deltas, waste curves, and exportable run summaries.
 7. **Phase 6: Hardening, Security, E2E Verification & Release**: Strict linting, type-checking, test suites, Clerk auth boundaries, and production build readiness.

@@ -36,19 +36,25 @@ The distribution optimization solver (`src/domain/solver/`) must be 100% pure Ty
 - Never hardcode calculated dashboard metrics, allocation outputs, or fake successful API responses.
 - All numbers displayed on the UI must derive from authentic domain solver runs or database records.
 
-### Rule 7: Synthetic Seed Data Policy
-- Demo seed datasets are permitted for initial testing and visualization, but must be explicitly tagged with `isDemo: true` and labeled prominently in the UI as **"Demo Data"**.
+### Rule 7: Synthetic Seed & Demo Data Policy
+- Demo seed datasets and illustrative figures are permitted for initial testing and visualization, but must be explicitly tagged and labeled prominently as **"Illustrative Demo Data"**.
+- Never invent real customer logos, testimonials, measured savings, or fake production metrics.
 
 ### Rule 8: Strict Secret Management
 - Secrets (`DATABASE_URL`, `CLERK_SECRET_KEY`, `WEBHOOK_SECRET`) must reside exclusively in environment variables and never be committed to git.
 - Never prefix server-only environment variables with `NEXT_PUBLIC_`.
 
-### Rule 9: Deterministic Reproducibility
+### Rule 9: Visual Metaphors & Art Direction
+- Build a distinctive visual identity around physical produce distribution: crates, reefer temperature zones, time windows, and lot countdown clocks.
+- Avoid generic AI gradients, excessive glassmorphism, or stock-dashboard aesthetics.
+- Maintain bold editorial storytelling for the marketing surface, but preserve restrained, high-density, legible operational ergonomics for the internal operations dashboard (`/app`).
+
+### Rule 10: Deterministic Reproducibility
 - Every planning run must persist an exact JSON snapshot of all inputs (batches, orders, routes, parameters).
 - The snapshot must be hashed using SHA-256 and stored alongside the algorithm version.
 - Re-running a historical snapshot with the same algorithm version must produce an identical allocation plan.
 
-### Rule 10: Absolute Constraint Integrity
+### Rule 11: Absolute Constraint Integrity
 Every generated allocation must strictly satisfy:
 1. Batch inventory availability (no overselling).
 2. Customer order demand cap.
@@ -57,10 +63,10 @@ Every generated allocation must strictly satisfy:
 5. Arrival timestamp + customer minimum shelf-life $\le$ batch expiration timestamp.
 6. Reefer temperature zone compatibility.
 
-### Rule 11: Structured Reason Codes & Explainability
+### Rule 12: Structured Reason Codes & Explainability
 - Every batch allocation, discount recommendation, or rejected assignment must include a machine-readable `AllocationReasonCode` and a clear human-readable narrative explanation.
 
-### Rule 12: Zero Premature Abstraction
+### Rule 13: Zero Premature Abstraction
 - Avoid unnecessary external dependencies, redundant wrapper layers, and microservice decompositions. Keep the codebase cohesive, modular, and maintainable.
 
 ---

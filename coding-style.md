@@ -90,49 +90,28 @@ export function calculateAllocationFinancials(input: FinancialCalculationInput) 
 
 ---
 
-## 5. SCSS Modules Guidelines
-FreshRoute uses SCSS Modules for style encapsulation with zero runtime overhead.
+## 5. SCSS Modules & Design Token Architecture
+FreshRoute uses SCSS Modules for style encapsulation with zero runtime overhead and strict token adherence.
 
-### File Organization
-- Every component has a co-located stylesheet: `ComponentName.module.scss`.
-- Global styles and CSS variables reside in `src/styles/`:
-  - `_variables.scss`: Color tokens, typography scales, spacing units.
-  - `_mixins.scss`: Flexbox/grid shortcuts, responsive breakpoints, elevation shadows.
-  - `globals.scss`: Root resets and CSS variable declarations.
+### Token Architecture (`src/styles/_tokens.scss`)
+- Use tokens for colors, spacing, borders, radii, typography, and motion:
+  - Deep charcoal ground (`$color-dark-950: #07090b`, `$color-dark-900: #0b0f12`, `$color-dark-850: #10151a`)
+  - Acid-lime accent (`$color-lime-300: #d4f933`, `$color-lime-dim: rgba(212, 249, 51, 0.12)`)
+  - Fresh produce emerald (`$color-produce-emerald: #10b981`)
+  - Cold-chain ocean blue (`$color-cold-sky: #0ea5e9`)
+  - At-risk urgency amber (`$color-urgency-amber: #f59e0b`)
+  - Critical expiry rose (`$color-urgency-rose: #f43f5e`)
+  - Dynamic markdown salvage purple (`$color-salvage-purple: #c084fc`)
 
-### Class Naming & Structure
-- Use camelCase for class names inside `.module.scss` for direct TypeScript dot notation:
-  ```scss
-  // BatchCard.module.scss
-  .cardContainer {
-    display: flex;
-    padding: var(--spacing-md);
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
+### Technical Metadata Typography
+- Technical coordinates, lot codes, reason codes, and telemetry tags must use `$font-mono` (`JetBrains Mono`, `SF Mono`, `monospace`) with uppercase transformation and letter-spacing (`0.05em`).
 
-    &.urgent {
-      border: 1px solid var(--color-warning);
-    }
-  }
+### Accessibility & Reduced Motion
+- All interactive controls must include visible focus rings (`@include focus-ring`).
+- Global `@media (prefers-reduced-motion: reduce)` resets duration and transitions to 0.01ms.
 
-  .title {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-  }
-  ```
-- Import with typed styles:
-  ```typescript
-  import styles from "./BatchCard.module.scss";
-  import clsx from "clsx";
-
-  export function BatchCard({ isUrgent, title }: Props) {
-    return (
-      <div className={clsx(styles.cardContainer, isUrgent && styles.urgent)}>
-        <h3 className={styles.title}>{title}</h3>
-      </div>
-    );
-  }
-  ```
+### Radix UI Primitives Wrapper Pattern
+- Always wrap unstyled Radix UI primitives (`Dialog`, `DropdownMenu`, `Select`, `Tabs`, `Slot`) in thin component wrappers that encapsulate SCSS Module class names, accessibility attributes, and keyboard navigation.
 
 ---
 

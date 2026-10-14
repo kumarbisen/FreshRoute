@@ -1,0 +1,247 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.section {
+  background-color: $color-dark-950;
+  padding: $space-20 0;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $space-6;
+
+  @include breakpoint-up(1024px) {
+    padding: 0 $space-8;
+  }
+}
+
+.headerBlock {
+  max-width: 850px;
+  margin-bottom: $space-16;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-3;
+}
+
+.eyebrowText {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 700;
+  color: $color-urgency-amber;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: $space-4;
+
+  @include breakpoint-up(768px) {
+    font-size: 2.75rem;
+  }
+}
+
+.subtitle {
+  font-size: $text-base;
+  color: $color-slate-300;
+  line-height: 1.6;
+}
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @include breakpoint-up(1024px) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-10;
+  }
+}
+
+.painColumn {
+  background-color: rgba($color-dark-900, 0.6);
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-xl;
+  padding: $space-6 $space-8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.solutionColumn {
+  background-color: $color-dark-850;
+  border: 1px solid rgba($color-lime-300, 0.3);
+  border-radius: $radius-xl;
+  padding: $space-6 $space-8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  position: relative;
+  box-shadow: $shadow-glow-lime;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $color-produce-emerald, $color-lime-300);
+  }
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.columnHeaderSolution {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: $space-4;
+  border-bottom: 1px solid $color-dark-700;
+}
+
+.headerTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.painIcon {
+  color: $color-urgency-rose;
+}
+
+.solutionIcon {
+  color: $color-lime-300;
+}
+
+.columnTitle {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+}
+
+.columnTag {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-500;
+}
+
+.cardsStack {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.storyCard {
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.storyCardSolution {
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: rgba($color-lime-300, 0.5);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.crossIcon {
+  color: $color-urgency-rose;
+  flex-shrink: 0;
+}
+
+.checkIcon {
+  color: $color-produce-emerald;
+  flex-shrink: 0;
+}
+
+.cardHeading {
+  font-size: $text-base;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.cardHeadingSolution {
+  font-size: $text-base;
+  font-weight: 700;
+  color: $color-lime-300;
+}
+
+.cardBody {
+  font-size: $text-sm;
+  color: $color-slate-400;
+  line-height: 1.6;
+}
+
+.cardBodySolution {
+  font-size: $text-sm;
+  color: $color-slate-200;
+  line-height: 1.6;
+}
+
+.statCallout {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-urgency-rose;
+  background-color: $color-urgency-rose-dim;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+}
+
+.statCalloutSolution {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-produce-emerald;
+  background-color: $color-produce-emerald-dim;
+  padding: $space-2 $space-3;
+  border-radius: $radius-sm;
+}
+
+.trendDown {
+  color: $color-urgency-rose;
+}
+
+.trendUp {
+  color: $color-produce-emerald;
+}

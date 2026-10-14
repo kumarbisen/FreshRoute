@@ -1,0 +1,114 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include breakpoint-up(640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.statLabel {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-slate-400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: $space-1;
+}
+
+.statValue {
+  font-family: $font-mono;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.cardHeaderTop {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  margin-bottom: $space-3;
+}
+
+.iconCircle {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: $radius-lg;
+  background-color: $color-dark-800;
+  border: 1px solid $color-dark-700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardIcon {
+  color: $color-lime-300;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phaseTag {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: $color-lime-300;
+  letter-spacing: 0.08em;
+}
+
+.deliverablesBlock {
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.deliverablesTitle {
+  font-size: $text-sm;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.deliverablesList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.deliverableItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  font-size: $text-xs;
+  color: $color-slate-300;
+  line-height: 1.5;
+}
+
+.bullet {
+  color: $color-produce-emerald;
+  font-weight: 700;
+  flex-shrink: 0;
+}

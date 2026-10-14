@@ -1,0 +1,130 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.section {
+  background-color: $color-dark-950;
+  padding: $space-20 0;
+  position: relative;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $space-6;
+
+  @include breakpoint-up(1024px) {
+    padding: 0 $space-8;
+  }
+}
+
+.ctaBox {
+  background-color: $color-dark-850;
+  border: 1px solid rgba($color-lime-300, 0.3);
+  border-radius: $radius-2xl;
+  padding: $space-12 $space-6;
+  position: relative;
+  overflow: hidden;
+  box-shadow: $shadow-glow-lime;
+
+  @include breakpoint-up(768px) {
+    padding: $space-16 $space-12;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $color-lime-300, transparent);
+  }
+}
+
+.glowBg {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba($color-lime-300, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-6;
+}
+
+.tagText {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 700;
+  color: $color-slate-400;
+  letter-spacing: 0.06em;
+}
+
+.heading {
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin-bottom: $space-4;
+
+  @include breakpoint-up(768px) {
+    font-size: 3.25rem;
+  }
+}
+
+.subtext {
+  font-size: $text-base;
+  color: $color-slate-300;
+  line-height: 1.6;
+  margin-bottom: $space-8;
+  max-width: 680px;
+}
+
+.actionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-bottom: $space-10;
+
+  @include breakpoint-up(640px) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.bottomMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: $space-6;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: $color-slate-400;
+  border-top: 1px solid $color-dark-750;
+  padding-top: $space-6;
+  width: 100%;
+}
+
+.metaItem {
+  color: $color-slate-300;
+}

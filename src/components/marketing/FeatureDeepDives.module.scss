@@ -1,0 +1,185 @@
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as *;
+
+.section {
+  background-color: $color-dark-900;
+  padding: $space-20 0;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $space-6;
+
+  @include breakpoint-up(1024px) {
+    padding: 0 $space-8;
+  }
+}
+
+.headerBlock {
+  max-width: 850px;
+  margin-bottom: $space-16;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-3;
+}
+
+.eyebrowText {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 700;
+  color: $color-lime-300;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: $space-4;
+
+  @include breakpoint-up(768px) {
+    font-size: 2.75rem;
+  }
+}
+
+.subtitle {
+  font-size: $text-base;
+  color: $color-slate-300;
+  line-height: 1.6;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @include breakpoint-up(1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.featureCard {
+  background-color: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-xl;
+  padding: $space-6 $space-8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $space-6;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-dark-600;
+    box-shadow: $shadow-md;
+  }
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.featureTag {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: $color-lime-300;
+  letter-spacing: 0.06em;
+}
+
+.featureTitle {
+  font-size: $text-xl;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.featureDescription {
+  font-size: $text-sm;
+  color: $color-slate-300;
+  line-height: 1.6;
+}
+
+.highlightsList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.highlightItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  font-size: $text-xs;
+  color: $color-slate-200;
+}
+
+.checkIconWrapper {
+  width: 18px;
+  height: 18px;
+  border-radius: $radius-full;
+  background-color: $color-produce-emerald-dim;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.checkIcon {
+  color: $color-produce-emerald;
+}
+
+.codeContainer {
+  background-color: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.codeHeader {
+  padding: $space-2 $space-3;
+  background-color: $color-dark-800;
+  border-bottom: 1px solid $color-dark-750;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.codeDots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background-color: $color-dark-600;
+}
+
+.codeLang {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  color: $color-slate-400;
+}
+
+.codeBlock {
+  padding: $space-3 $space-4;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  color: #a5f3fc;
+  line-height: 1.5;
+  overflow-x: auto;
+}

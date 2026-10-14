@@ -1,5 +1,6 @@
-// FreshRoute SCSS Mixins
+@use "./tokens" as *;
 
+// Flexbox & Layout Helpers
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -12,27 +13,86 @@
   justify-content: space-between;
 }
 
-@mixin responsive-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
 
-  &:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-border-hover);
+// Technical Mono Tag / Metadata Chip
+@mixin technical-badge {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+// Accessible Focus Ring
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $color-lime-300;
+    outline-offset: 2px;
   }
 }
 
-// Media query breakpoints
+// Reduced Motion Support
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+// Breakpoint Queries
 $bp-sm: 640px;
 $bp-md: 768px;
 $bp-lg: 1024px;
 $bp-xl: 1280px;
+$bp-2xl: 1536px;
 
 @mixin breakpoint-up($bp) {
   @media (min-width: $bp) {
     @content;
+  }
+}
+
+@mixin breakpoint-down($bp) {
+  @media (max-width: ($bp - 1px)) {
+    @content;
+  }
+}
+
+// Dark Card Elevation
+@mixin dark-card {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $color-dark-600;
+  }
+}
+
+// Highlight Glow Card
+@mixin glow-card {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-xl;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba($color-lime-300, 0.4), transparent);
   }
 }

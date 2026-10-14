@@ -1,0 +1,53 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $space-12 $space-6;
+  text-align: center;
+  background-color: $color-dark-850;
+  border: 1px dashed $color-dark-700;
+  border-radius: $radius-xl;
+}
+
+.iconWrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: $radius-full;
+  background-color: $color-dark-800;
+  border: 1px solid $color-dark-750;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-lime-300;
+  margin-bottom: $space-4;
+
+  svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+.title {
+  font-size: $text-base;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: $space-2;
+}
+
+.description {
+  font-size: $text-sm;
+  color: $color-slate-400;
+  max-width: 420px;
+  line-height: 1.5;
+  margin-bottom: $space-6;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}

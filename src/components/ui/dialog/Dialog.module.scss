@@ -1,0 +1,98 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(7, 9, 11, 0.75);
+  backdrop-filter: blur(4px);
+  animation: fadeIn $transition-fast;
+}
+
+.content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 51;
+  width: 90vw;
+  max-width: 540px;
+  max-height: 85vh;
+  transform: translate(-50%, -50%);
+  background-color: $color-dark-850;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  padding: $space-6;
+  overflow-y: auto;
+  animation: slideUp $transition-fast;
+  @include focus-ring;
+}
+
+.closeButton {
+  position: absolute;
+  top: $space-4;
+  right: $space-4;
+  border-radius: $radius-sm;
+  color: $color-slate-400;
+  padding: $space-1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    color: #ffffff;
+    background-color: $color-dark-750;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-bottom: $space-5;
+}
+
+.title {
+  font-size: $text-lg;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  font-size: $text-sm;
+  color: $color-slate-400;
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-3;
+  margin-top: $space-6;
+  padding-top: $space-4;
+  border-top: 1px solid $color-dark-750;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

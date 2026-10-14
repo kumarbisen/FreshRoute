@@ -1,0 +1,84 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.card {
+  background-color: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  position: relative;
+  overflow: hidden;
+}
+
+.default {
+  &:hover {
+    border-color: $color-dark-600;
+  }
+}
+
+.glow {
+  border-color: $color-dark-700;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $color-lime-300, transparent);
+    opacity: 0.8;
+  }
+
+  &:hover {
+    box-shadow: $shadow-glow-lime;
+    border-color: rgba($color-lime-300, 0.4);
+  }
+}
+
+.elevated {
+  background-color: $color-dark-800;
+  border-color: $color-dark-700;
+  box-shadow: $shadow-md;
+}
+
+.accent {
+  border-left: 3px solid $color-lime-300;
+}
+
+.cardHeader {
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid $color-dark-750;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.cardTitle {
+  font-family: $font-sans;
+  font-size: $text-base;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.cardDescription {
+  font-size: $text-xs;
+  color: $color-slate-400;
+  line-height: 1.4;
+}
+
+.cardContent {
+  padding: $space-6;
+}
+
+.cardFooter {
+  padding: $space-4 $space-6;
+  border-top: 1px solid $color-dark-750;
+  background-color: rgba($color-dark-900, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $space-3;
+}

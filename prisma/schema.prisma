@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum QualityGrade {
+  GRADE_A // Premium export quality
+  GRADE_B // Standard retail quality
+  GRADE_C // Discount grocery / commercial processing
+}
+
+enum OrderStatus {
+  PENDING
+  ALLOCATED
+  PARTIALLY_ALLOCATED
+  DISPATCHED
+  CANCELLED
+}
+
+enum PlanningRunStatus {
+  DRAFT
+  OPTIMIZED
+  COMMITTED
+  ARCHIVED
+}
+
+enum AllocationReasonCode {
+  FEFO_URGENCY_PRIORITY
+  SHELF_LIFE_SLA_SATISFIED
+  DYNAMIC_MARKDOWN_SALVAGE
+  COLD_CHAIN_COMPLIANT
+  TRANSPORT_CAPACITY_OPTIMIZED
+  SECONDARY_BUYER_MATCH
+  DISPATCH_WINDOW_ALIGNED
+  REJECTED_INSUFFICIENT_SHELF_LIFE
+  REJECTED_TEMPERATURE_INCOMPATIBLE
+  REJECTED_VEHICLE_OVERFLOW
+  REJECTED_MARGIN_FLOOR_VIOLATION
+}
+
+model Facility {
+  id               String           @id @default(cuid())
+  code             String           @unique
+  name             String
+  city             String
+  state            String
+  coldStorageType  String           @default("DUAL_ZONE_REFRIGERATED")
+  batches          InventoryBatch[]
+  routes           TransportRoute[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Product {
+  id                    String           @id @default(cuid())
+  code                  String           @unique
+  name                  String
+  category              String           // e.g. "BERRIES", "LEAFY_GREENS", "AVOCADOS"
+  standardShelfLifeDays Int
+  minTempCelsius        Decimal          @db.Decimal(4, 1)
+  maxTempCelsius        Decimal          @db.Decimal(4, 1)
+  decayRateExponent     Decimal          @default("1.5") @db.Decimal(4, 2)
+  defaultPricePerKg     Decimal          @db.Decimal(10, 2)
+  defaultCostPerKg      Decimal          @db.Decimal(10, 2)
+  batches               InventoryBatch[]
+  orders                DemandOrder[]
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+}
+
+model InventoryBatch {
+  id                 String        @id @default(cuid())
+  batchCode          String        @unique
+  facilityId         String
+  facility           Facility      @relation(fields: [facilityId], references: [id])
+  productId          String
+  product            Product       @relation(fields: [productId], references: [id])
+  harvestDate        DateTime
+  receivedDate       DateTime
+  expiryDate         DateTime
+  initialQtyKg       Decimal       @db.Decimal(12, 2)
+  availableQtyKg     Decimal       @db.Decimal(12, 2)
+  qualityGrade       QualityGrade  @default(GRADE_A)
+  storageTempCelsius Decimal       @db.Decimal(4, 1)
+  unitCostPerKg      Decimal       @db.Decimal(10, 2)
+  basePricePerKg     Decimal       @db.Decimal(10, 2)
+  isDemo             Boolean       @default(false)
+  allocations        Allocation[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([facilityId])
+  @@index([productId])
+  @@index([expiryDate])
+}
+
+model Customer {
+  id                    String        @id @default(cuid())
+  code                  String        @unique
+  name                  String
+  tier                  String        // "PREMIUM_GROCER", "REGIONAL_SUPERMARKET", "DISCOUNT_CHAIN", "FOOD_SERVICE"
+  minShelfLifeDays      Int           // Minimum remaining shelf-life required at delivery
+  city                  String
+  state                 String
+  acceptsDiscounts      Boolean       @default(false)
+  maxDiscountThreshold  Decimal       @default("0.0") @db.Decimal(5, 2)
+  isDemo                Boolean       @default(false)
+  orders                DemandOrder[]
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+}
+
+model DemandOrder {
+  id                   String        @id @default(cuid())
+  orderNumber          String        @unique
+  customerId           String
+  customer             Customer      @relation(fields: [customerId], references: [id])
+  productId            String
+  product              Product       @relation(fields: [productId], references: [id])
+  requestedQtyKg       Decimal       @db.Decimal(12, 2)
+  contractedPricePerKg Decimal       @db.Decimal(10, 2)
+  deliveryWindowStart  DateTime
+  deliveryWindowEnd    DateTime
+  status               OrderStatus   @default(PENDING)
+  isDemo               Boolean       @default(false)
+  allocations          Allocation[]
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@index([customerId])
+  @@index([productId])
+}
+
+model TransportRoute {
+  id                 String        @id @default(cuid())
+  routeCode          String        @unique
+  originFacilityId   String
+  originFacility     Facility      @relation(fields: [originFacilityId], references: [id])
+  destinationRegion  String
+  maxWeightKg        Decimal       @db.Decimal(12, 2)
+  maxVolumeM3        Decimal       @db.Decimal(10, 2)
+  tempZoneMinCelsius Decimal       @db.Decimal(4, 1)
+  tempZoneMaxCelsius Decimal       @db.Decimal(4, 1)
+  transitHours       Decimal       @db.Decimal(6, 2)
+  costPerKg          Decimal       @db.Decimal(10, 2)
+  departureTime      DateTime
+  arrivalTime        DateTime
+  isDemo             Boolean       @default(false)
+  allocations        Allocation[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([originFacilityId])
+}
+
+model PlanningRun {
+  id                   String             @id @default(cuid())
+  runNumber            String             @unique
+  status               PlanningRunStatus  @default(DRAFT)
+  algorithmVersion     String
+  snapshotHash         String
+  totalAllocatedKg     Decimal            @db.Decimal(12, 2)
+  totalRevenueUsd      Decimal            @db.Decimal(14, 2)
+  totalCostUsd         Decimal            @db.Decimal(14, 2)
+  netMarginUsd         Decimal            @db.Decimal(14, 2)
+  spoilagePreventedKg  Decimal            @db.Decimal(12, 2)
+  spoilagePreventedUsd Decimal            @db.Decimal(14, 2)
+  baselineProfitUsd    Decimal            @db.Decimal(14, 2)
+  proposedProfitUsd    Decimal            @db.Decimal(14, 2)
+  profitUpliftUsd      Decimal            @db.Decimal(14, 2)
+  isDemo               Boolean            @default(false)
+  snapshot             PlanningSnapshot?
+  allocations          Allocation[]
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@index([status])
+  @@index([snapshotHash])
+}
+
+model PlanningSnapshot {
+  id            String      @id @default(cuid())
+  planningRunId String      @unique
+  planningRun   PlanningRun @relation(fields: [planningRunId], references: [id], onDelete: Cascade)
+  snapshotJson  String      @db.Text
+  hashSha256    String
+  createdAt     DateTime    @default(now())
+}
+
+model Allocation {
+  id                   String               @id @default(cuid())
+  planningRunId        String
+  planningRun          PlanningRun          @relation(fields: [planningRunId], references: [id], onDelete: Cascade)
+  batchId              String
+  batch                InventoryBatch       @relation(fields: [batchId], references: [id])
+  demandOrderId        String
+  demandOrder          DemandOrder          @relation(fields: [demandOrderId], references: [id])
+  routeId              String
+  route                TransportRoute       @relation(fields: [routeId], references: [id])
+  allocatedQtyKg       Decimal              @db.Decimal(12, 2)
+  discountPercent      Decimal              @default("0.0") @db.Decimal(5, 2)
+  effectivePricePerKg  Decimal              @db.Decimal(10, 2)
+  grossRevenueUsd      Decimal              @db.Decimal(14, 2)
+  totalCostUsd         Decimal              @db.Decimal(14, 2)
+  netMarginUsd         Decimal              @db.Decimal(14, 2)
+  arrivalShelfLifeDays Decimal              @db.Decimal(6, 2)
+  reasonCode           AllocationReasonCode
+  reasonExplanation    String
+  createdAt            DateTime             @default(now())
+
+  @@index([planningRunId])
+  @@index([batchId])
+  @@index([demandOrderId])
+  @@index([routeId])
+}

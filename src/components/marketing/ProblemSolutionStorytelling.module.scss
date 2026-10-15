@@ -2,9 +2,9 @@
 @use "../../styles/mixins" as *;
 
 .section {
-  background-color: $color-dark-950;
+  background-color: #faf9f6;
   padding: $space-20 0;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid $color-border-subtle;
 }
 
 .container {
@@ -33,14 +33,14 @@
   font-family: $font-mono;
   font-size: $text-xs;
   font-weight: 700;
-  color: $color-urgency-amber;
+  color: #d97706;
   letter-spacing: 0.08em;
 }
 
 .title {
   font-size: $text-3xl;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.03em;
   line-height: 1.15;
   margin-bottom: $space-4;
@@ -52,7 +52,7 @@
 
 .subtitle {
   font-size: $text-base;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.6;
 }
 
@@ -68,9 +68,10 @@
 }
 
 .painColumn {
-  background-color: rgba($color-dark-900, 0.6);
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-xl;
+  background-color: #ffffff;
+  border: 1px solid #fed7aa;
+  border-radius: $radius-2xl;
+  box-shadow: $shadow-sm;
   padding: $space-6 $space-8;
   display: flex;
   flex-direction: column;
@@ -78,15 +79,15 @@
 }
 
 .solutionColumn {
-  background-color: $color-dark-850;
-  border: 1px solid rgba($color-lime-300, 0.3);
-  border-radius: $radius-xl;
+  background-color: #ffffff;
+  border: 1px solid #bbf7d0;
+  border-radius: $radius-2xl;
+  box-shadow: $shadow-sm;
   padding: $space-6 $space-8;
   display: flex;
   flex-direction: column;
   gap: $space-6;
   position: relative;
-  box-shadow: $shadow-glow-lime;
 
   &::before {
     content: "";
@@ -95,7 +96,8 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, $color-produce-emerald, $color-lime-300);
+    background: linear-gradient(90deg, #059669, #10b981);
+    border-radius: 3px 3px 0 0;
   }
 }
 
@@ -104,7 +106,7 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: $space-4;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid #ffedd5;
 }
 
 .columnHeaderSolution {
@@ -112,7 +114,7 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: $space-4;
-  border-bottom: 1px solid $color-dark-700;
+  border-bottom: 1px solid #dcfce7;
 }
 
 .headerTitleGroup {
@@ -122,11 +124,11 @@
 }
 
 .painIcon {
-  color: $color-urgency-rose;
+  color: #e11d48;
 }
 
 .solutionIcon {
-  color: $color-lime-300;
+  color: #059669;
 }
 
 .columnTitle {
@@ -134,13 +136,13 @@
   font-size: $text-sm;
   font-weight: 800;
   letter-spacing: 0.06em;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .columnTag {
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-slate-500;
+  color: $color-slate-400;
 }
 
 .cardsStack {
@@ -150,9 +152,9 @@
 }
 
 .storyCard {
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-lg;
+  background-color: #fff7ed;
+  border: 1px solid #ffedd5;
+  border-radius: $radius-xl;
   padding: $space-5;
   display: flex;
   flex-direction: column;
@@ -160,17 +162,18 @@
 }
 
 .storyCardSolution {
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-lg;
+  background-color: #f0fdf4;
+  border: 1px solid #dcfce7;
+  border-radius: $radius-xl;
   padding: $space-5;
   display: flex;
   flex-direction: column;
   gap: $space-3;
-  transition: border-color $transition-fast;
+  transition: all $transition-fast;
 
   &:hover {
-    border-color: rgba($color-lime-300, 0.5);
+    border-color: #86efac;
+    box-shadow: $shadow-sm;
   }
 }
 
@@ -181,36 +184,36 @@
 }
 
 .crossIcon {
-  color: $color-urgency-rose;
+  color: #e11d48;
   flex-shrink: 0;
 }
 
 .checkIcon {
-  color: $color-produce-emerald;
+  color: #059669;
   flex-shrink: 0;
 }
 
 .cardHeading {
   font-size: $text-base;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .cardHeadingSolution {
   font-size: $text-base;
   font-weight: 700;
-  color: $color-lime-300;
+  color: #065f46;
 }
 
 .cardBody {
   font-size: $text-sm;
-  color: $color-slate-400;
+  color: $color-text-secondary;
   line-height: 1.6;
 }
 
 .cardBodySolution {
   font-size: $text-sm;
-  color: $color-slate-200;
+  color: #1e3a2f;
   line-height: 1.6;
 }
 
@@ -220,10 +223,12 @@
   gap: $space-2;
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-urgency-rose;
-  background-color: $color-urgency-rose-dim;
+  color: #be123c;
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
   padding: $space-2 $space-3;
-  border-radius: $radius-sm;
+  border-radius: $radius-full;
+  width: fit-content;
 }
 
 .statCalloutSolution {
@@ -232,16 +237,18 @@
   gap: $space-2;
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-produce-emerald;
-  background-color: $color-produce-emerald-dim;
+  color: #047857;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
   padding: $space-2 $space-3;
-  border-radius: $radius-sm;
+  border-radius: $radius-full;
+  width: fit-content;
 }
 
 .trendDown {
-  color: $color-urgency-rose;
+  color: #e11d48;
 }
 
 .trendUp {
-  color: $color-produce-emerald;
+  color: #059669;
 }

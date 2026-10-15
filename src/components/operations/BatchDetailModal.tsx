@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X, Clock, History, AlertTriangle, ShieldCheck, Box, Tag, Thermometer, DollarSign, Calendar, Layers } from "lucide-react";
+import { X, Clock, History, AlertTriangle, ShieldCheck, Box, Tag, Thermometer, IndianRupee, Calendar, Layers } from "lucide-react";
 import { Button, Badge } from "@/components/ui";
 import styles from "./Operations.module.scss";
 
@@ -130,7 +130,7 @@ export function BatchDetailModal({ batchId, isOpen, onClose }: BatchDetailModalP
                 <div className={styles.detailCard}>
                   <span className={styles.detailLabel}>Unit Cost / Price</span>
                   <span className={styles.detailValue}>
-                    ${batch.unitCost.toFixed(2)} / ${batch.basePrice.toFixed(2)}
+                    ₹{batch.unitCost.toFixed(2)} / ₹{batch.basePrice.toFixed(2)}
                   </span>
                 </div>
                 <div className={styles.detailCard}>
@@ -223,7 +223,7 @@ export function BatchDetailModal({ batchId, isOpen, onClose }: BatchDetailModalP
                             </td>
                             <td>{al.destinationName}</td>
                             <td style={{ fontWeight: 700 }}>{Number(al.allocatedQuantity).toLocaleString()} kg</td>
-                            <td>${Number(al.effectivePricePerUnit).toFixed(2)} / kg</td>
+                            <td>₹{Number(al.effectivePricePerUnit).toFixed(2)} / kg</td>
                             <td>
                               <Badge variant="neutral">{al.reasonCode}</Badge>
                             </td>

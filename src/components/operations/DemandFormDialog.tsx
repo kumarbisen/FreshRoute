@@ -215,7 +215,7 @@ export function DemandFormDialog({
               </div>
 
               <div className={styles.fieldGroup}>
-                <label className={styles.fieldLabel}>Contracted Selling Price ($/kg)</label>
+                <label className={styles.fieldLabel}>Contracted Selling Price (₹/kg)</label>
                 <input
                   type="number"
                   step="0.01"

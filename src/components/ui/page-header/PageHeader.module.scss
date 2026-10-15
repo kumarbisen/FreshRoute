@@ -40,13 +40,13 @@
 .title {
   font-size: $text-2xl;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.02em;
 }
 
 .subtitle {
   font-size: $text-sm;
-  color: $color-slate-400;
+  color: $color-text-secondary;
   max-width: 650px;
 }
 

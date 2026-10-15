@@ -9,7 +9,7 @@ import {
   RefreshCw,
   Edit,
   Clock,
-  DollarSign,
+  IndianRupee,
   Gauge,
   MapPin,
   ChevronLeft,
@@ -86,7 +86,7 @@ export default function TransportPage() {
             <span>Transport Logistics & Fleet Route Scheduling</span>
           </div>
           <div className={styles.pageSubtitle}>
-            Two-Part Logistics Economics (Fixed Dispatch + Variable $/kg) // Reefer Payload Capacity & Constraints
+            Two-Part Logistics Economics (Fixed Dispatch + Variable ₹/kg) // Reefer Payload Capacity & Constraints
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export default function TransportPage() {
         <div className={styles.statCard}>
           <span className={styles.statLabel}>Economic Cost Model</span>
           <div className={styles.statValue} style={{ fontSize: "1.25rem", color: "var(--accent-lime, #d4f933)" }}>
-            Fixed + $/kg
+            Fixed + ₹/kg
           </div>
           <span className={styles.statSub}>Two-part logistics tariff formulation</span>
         </div>
@@ -265,16 +265,16 @@ export default function TransportPage() {
                       </span>
                     </td>
                     <td>
-                      <span className={styles.priceCell}>${rt.fixedTripCostUsd.toFixed(2)}</span>
+                      <span className={styles.priceCell}>₹{rt.fixedTripCostUsd.toFixed(2)}</span>
                       <span className={styles.subText}>flat truck roll</span>
                     </td>
                     <td>
-                      <span className={styles.priceCell}>${rt.variableCostPerKgUsd.toFixed(3)}</span>
+                      <span className={styles.priceCell}>₹{rt.variableCostPerKgUsd.toFixed(3)}</span>
                       <span className={styles.subText}>per kg</span>
                     </td>
                     <td>
                       <span style={{ fontWeight: 700, color: "var(--produce-emerald)" }}>
-                        ${rt.sampleCostFor1000KgUsd.toFixed(2)}
+                        ₹{rt.sampleCostFor1000KgUsd.toFixed(2)}
                       </span>
                       <span className={styles.subText}>for 1,000 kg load</span>
                     </td>

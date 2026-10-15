@@ -4,7 +4,8 @@
 .shellContainer {
   display: flex;
   min-height: 100vh;
-  background-color: $color-dark-950;
+  background-color: #f8f9fa;
+  position: relative;
 }
 
 .mainWrapper {
@@ -15,7 +16,7 @@
   transition: padding-left $transition-base;
 
   @include breakpoint-up(1024px) {
-    padding-left: 280px; // Width of sidebar
+    padding-left: 290px; // Floating capsule dock width (260px) + spacing (30px)
   }
 }
 

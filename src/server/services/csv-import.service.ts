@@ -47,7 +47,7 @@ export function getCsvSampleTemplate(templateType: CsvTemplateType): {
     case "inventory":
       return {
         filename: "freshroute_inventory_template.csv",
-        content: `batchCode,commodityCode,warehouseCode,initialQuantityKg,qualityGrade,unitCostUsd,basePriceUsd,harvestDate,expiryDate,storageTempCelsius
+        content: `batchCode,commodityCode,warehouseCode,initialQuantityKg,qualityGrade,unitCostInr,basePriceInr,harvestDate,expiryDate,storageTempCelsius
 BATCH-STR-EXP-101,STR-01,DC-SALINAS,3500.00,GRADE_A,3.10,5.20,2026-10-10,2026-10-22,1.5
 BATCH-SPN-EXP-102,SPN-01,DC-SALINAS,2400.00,GRADE_A,2.15,3.90,2026-10-11,2026-10-24,2.0
 BATCH-AVO-EXP-103,AVO-01,DC-FRESNO,4800.00,GRADE_A,3.75,6.10,2026-10-08,2026-11-01,5.5
@@ -66,17 +66,28 @@ DEST-MOD-03,Modesto Discount Hub,DISCOUNT_CHAIN,800 S 9th St,Modesto,CA,95351,37
     case "transport":
       return {
         filename: "freshroute_transport_routes_template.csv",
-        content: `routeCode,originWarehouseCode,destinationRegion,carrierName,vehicleType,maxWeightCapacityKg,fixedTripCostUsd,variableCostPerKgUsd,transitDurationHours,handlingDurationHours,departureTime,estimatedArrivalTime
+        content: `routeCode,originWarehouseCode,destinationRegion,carrierName,vehicleType,maxWeightCapacityKg,fixedTripCostInr,variableCostPerKgInr,transitDurationHours,handlingDurationHours,departureTime,estimatedArrivalTime
 RT-SAL-SAC-04,DC-SALINAS,Sacramento Valley,Valley Reefer Express,REEFER_53FT_MULTI_ZONE,14000.00,420.00,0.095,3.25,0.50,2026-10-16T04:00:00Z,2026-10-16T07:45:00Z
 RT-FRE-SAC-05,DC-FRESNO,Sacramento Valley,NorCal Intermodal Reefer,REEFER_HEAVY_TRUCK,18000.00,480.00,0.105,3.75,0.75,2026-10-16T05:00:00Z,2026-10-16T09:30:00Z`,
       };
   }
 }
 
+export const MAX_CSV_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+export const MAX_CSV_ROWS = 5000;
+
 /**
  * Basic CSV parser supporting quotes, trimmed headers, and row splitting
  */
 export function parseRawCsvText(csvText: string): { headers: string[]; rows: Record<string, string>[] } {
+  if (!csvText || typeof csvText !== "string") {
+    throw new Error("CSV payload is empty or invalid");
+  }
+
+  if (csvText.length > MAX_CSV_FILE_SIZE_BYTES) {
+    throw new Error(`CSV payload exceeds maximum file size limit of ${MAX_CSV_FILE_SIZE_BYTES / (1024 * 1024)}MB`);
+  }
+
   const lines = csvText
     .split(/\r?\n/)
     .map((l) => l.trim())
@@ -84,6 +95,10 @@ export function parseRawCsvText(csvText: string): { headers: string[]; rows: Rec
 
   if (lines.length < 2) {
     throw new Error("CSV file must contain a header line and at least one data row");
+  }
+
+  if (lines.length - 1 > MAX_CSV_ROWS) {
+    throw new Error(`CSV file exceeds maximum limit of ${MAX_CSV_ROWS.toLocaleString()} rows per import batch`);
   }
 
   // Parse header

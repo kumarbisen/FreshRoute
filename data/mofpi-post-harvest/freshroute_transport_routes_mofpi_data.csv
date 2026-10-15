@@ -1,0 +1,7 @@
+routeCode,originWarehouseCode,destinationRegion,carrierName,vehicleType,maxWeightCapacityKg,fixedTripCostUsd,variableCostPerKgUsd,transitDurationHours,handlingDurationHours,departureTime,estimatedArrivalTime
+RT-SHI-DEL-01,DC-AZ01-SHI,Delhi National Capital Region,ColdEx Reefer Logistics,REEFER_HEAVY_TRUCK,15000.00,350.00,0.045,7.50,0.75,2026-10-16T04:00:00Z,2026-10-16T12:15:00Z
+RT-VAR-DEL-02,DC-AZ04-VAR,Delhi National Capital Region,Snowman Multimodal Reefer,REEFER_53FT_MULTI_ZONE,18000.00,520.00,0.055,12.00,1.00,2026-10-16T03:00:00Z,2026-10-16T16:00:00Z
+RT-NAS-MUM-03,DC-AZ09-NAS,Mumbai Metropolitan Region,TCI Fresh Reefer Express,REEFER_HEAVY_TRUCK,16000.00,280.00,0.035,4.50,0.50,2026-10-16T05:00:00Z,2026-10-16T10:00:00Z
+RT-BLR-CITY-04,DC-AZ10-BLR,Bengaluru Urban Corridor,Mahindra Reefer Fleet,REEFER_MEDIUM_TRUCK,8000.00,160.00,0.025,2.50,0.50,2026-10-16T04:30:00Z,2026-10-16T07:30:00Z
+RT-VIZ-KOL-05,DC-AZ11-VIZ,Greater Kolkata Metropolitan,Blue Dart Chilled Cargo,REEFER_53FT_MULTI_ZONE,14000.00,680.00,0.075,14.50,1.00,2026-10-16T02:00:00Z,2026-10-16T17:30:00Z
+RT-AHM-DEL-06,DC-AZ13-AHM,Delhi National Capital Region,Amul Cold Line Express,REEFER_53FT_MULTI_ZONE,22000.00,620.00,0.060,15.00,1.00,2026-10-16T01:00:00Z,2026-10-16T17:00:00Z

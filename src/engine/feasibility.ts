@@ -291,7 +291,7 @@ export function evaluateCandidateFeasibility(
       recommendedDiscountPercent: recommendedDiscount,
       effectivePricePerKgUsd: Number(effectivePrice.toFixed(4)),
       reasonCode: AllocationReasonCode.REJECTED_NEGATIVE_MARGIN,
-      reasonExplanation: `Net margin of $${unitMarginVal.toFixed(2)}/kg is worse than spoilage disposal penalty (-$${disposalPenalty.toFixed(2)}/kg). Economically infeasible.`,
+      reasonExplanation: `Net margin of ₹${unitMarginVal.toFixed(2)}/kg is worse than spoilage disposal penalty (-₹${disposalPenalty.toFixed(2)}/kg). Economically infeasible.`,
       departureTime,
       arrivalTime,
       handlingCompletedTime,
@@ -311,7 +311,7 @@ export function evaluateCandidateFeasibility(
     : AllocationReasonCode.SHELF_LIFE_SLA_SATISFIED;
 
   const reasonExplanation = isSalvageDiscount
-    ? `Salvage discount of ${recommendedDiscount}% applied to recover at-risk produce (${handlingRslDays.toFixed(2)}d RSL vs ${destination.minShelfLifeDays}d SLA). Yields net contribution of $${unitMarginVal.toFixed(2)}/kg.`
+    ? `Salvage discount of ${recommendedDiscount}% applied to recover at-risk produce (${handlingRslDays.toFixed(2)}d RSL vs ${destination.minShelfLifeDays}d SLA). Yields net contribution of ₹${unitMarginVal.toFixed(2)}/kg.`
     : `Feasible dispatch satisfying cold-chain, delivery window, and gate SLA with ${handlingRslDays.toFixed(2)} days RSL at handling completion.`;
 
   return {

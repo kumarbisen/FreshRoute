@@ -8,21 +8,22 @@
   justify-content: center;
   padding: $space-12 $space-6;
   text-align: center;
-  background-color: $color-dark-850;
-  border: 1px dashed $color-dark-700;
-  border-radius: $radius-xl;
+  background-color: #ffffff;
+  border: 1px dashed $color-border-medium;
+  border-radius: $radius-2xl;
+  box-shadow: $shadow-sm;
 }
 
 .iconWrapper {
   width: 3.5rem;
   height: 3.5rem;
   border-radius: $radius-full;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-750;
+  background-color: #f8fafc;
+  border: 1px solid $color-border-subtle;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color-lime-300;
+  color: $color-primary-charcoal;
   margin-bottom: $space-4;
 
   svg {
@@ -34,13 +35,13 @@
 .title {
   font-size: $text-base;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
   margin-bottom: $space-2;
 }
 
 .description {
   font-size: $text-sm;
-  color: $color-slate-400;
+  color: $color-text-secondary;
   max-width: 420px;
   line-height: 1.5;
   margin-bottom: $space-6;

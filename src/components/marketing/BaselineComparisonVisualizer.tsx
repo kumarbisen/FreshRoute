@@ -5,7 +5,7 @@ import {
   TrendingUp,
   TrendingDown,
   Scale,
-  DollarSign,
+  IndianRupee,
   AlertTriangle,
   CheckCircle,
   Clock,
@@ -80,15 +80,15 @@ export function BaselineComparisonVisualizer() {
           <div className={clsx(styles.kpiCard, activeMode === "freshroute" && styles.highlightCard)}>
             <div className={styles.kpiTop}>
               <span className={styles.kpiLabel}>Net Distributor Profit</span>
-              <DollarSign size={16} className={styles.kpiIcon} />
+              <IndianRupee size={16} className={styles.kpiIcon} />
             </div>
             <div className={styles.kpiValue}>
-              {activeMode === "freshroute" ? "$166,950" : "$142,300"}
+              {activeMode === "freshroute" ? "₹166,950" : "₹142,300"}
             </div>
             <div className={styles.kpiDelta}>
               {activeMode === "freshroute" ? (
                 <span className={styles.deltaSuccess}>
-                  <TrendingUp size={14} /> +$24,650 (+17.3% profit uplift)
+                  <TrendingUp size={14} /> +₹24,650 (+17.3% profit uplift)
                 </span>
               ) : (
                 <span className={styles.deltaMuted}>Baseline reference benchmark</span>
@@ -131,7 +131,7 @@ export function BaselineComparisonVisualizer() {
                   <TrendingDown size={14} /> -92.8% rejection chargebacks
                 </span>
               ) : (
-                <span className={styles.deltaDanger}>$11,200 in return freight & fines</span>
+                <span className={styles.deltaDanger}>₹11,200 in return freight & fines</span>
               )}
             </div>
           </div>
@@ -143,7 +143,7 @@ export function BaselineComparisonVisualizer() {
               <TrendingUp size={16} className={styles.kpiIcon} />
             </div>
             <div className={styles.kpiValue}>
-              {activeMode === "freshroute" ? "$18,450" : "$0"}
+              {activeMode === "freshroute" ? "₹18,450" : "₹0"}
             </div>
             <div className={styles.kpiDelta}>
               {activeMode === "freshroute" ? (
@@ -172,7 +172,7 @@ export function BaselineComparisonVisualizer() {
                 <b>FreshRoute Solution:</b> Under the proposed FEFO plan, 350 kg of Sweet Strawberries (Lot
                 #B-BERRY-802) had 2.6 days remaining shelf-life, which breached Metro Fresh’s 5.0-day minimum SLA.
                 Instead of dispatching to Metro Fresh (which would trigger an immediate dock rejection), the solver
-                diverted the lot to Valley Pre-Cut at a 15% dynamic discount, generating $1,338.75 in salvage
+                diverted the lot to Valley Pre-Cut at a 15% dynamic discount, generating ₹1,338.75 in salvage
                 revenue. Simultaneously, Route R-04’s reefer capacity was optimized to 94.2% payload by packaging
                 compliant Spinach and Avocados, capturing maximum retail contract margin.
               </p>
@@ -181,8 +181,8 @@ export function BaselineComparisonVisualizer() {
                 <b>Traditional FIFO Failure:</b> Under legacy FIFO ordering, Lot #B-BERRY-802 was dispatched to
                 Metro Fresh solely because it arrived in the warehouse before newer lots. Upon arrival at Metro
                 Fresh’s distribution center 4 hours later, the remaining shelf life was 2.4 days—violating the
-                strict 5-day acceptance contract. The entire 350 kg load was rejected on the dock, incurring $450 in
-                return freight and $1,050 in total spoilage disposal write-offs.
+                strict 5-day acceptance contract. The entire 350 kg load was rejected on the dock, incurring ₹450 in
+                return freight and ₹1,050 in total spoilage disposal write-offs.
               </p>
             )}
           </div>

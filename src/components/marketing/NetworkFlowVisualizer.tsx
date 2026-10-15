@@ -55,8 +55,8 @@ const BATCHES_DATA: BatchItem[] = [
     discountApplied: 15,
     reasonCode: "DYNAMIC_MARKDOWN_SALVAGE",
     narrative:
-      "Batch shelf-life of 2.6 days failed Premium Supermarket 5-day SLA constraint. Diverted to secondary discount partner at 15% markdown ($3.83/kg), recovering $1,338.75 in revenue versus $1,050.00 disposal loss under baseline FIFO.",
-    salvagedValue: "$1,338.75",
+      "Batch shelf-life of 2.6 days failed Premium Supermarket 5-day SLA constraint. Diverted to secondary discount partner at 15% markdown (₹3.83/kg), recovering ₹1,338.75 in revenue versus ₹1,050.00 disposal loss under baseline FIFO.",
+    salvagedValue: "₹1,338.75",
   },
   {
     id: "batch-2",
@@ -74,8 +74,8 @@ const BATCHES_DATA: BatchItem[] = [
     discountApplied: 0,
     reasonCode: "FEFO_URGENCY_PRIORITY",
     narrative:
-      "Earliest-expiring compliant batch matching Metro Fresh SLA (min 5.0 days). Delivered at full list price ($5.20/kg), capturing maximum retail contract margin without risk of dock rejection.",
-    salvagedValue: "$2,600.00",
+      "Earliest-expiring compliant batch matching Metro Fresh SLA (min 5.0 days). Delivered at full list price (₹5.20/kg), capturing maximum retail contract margin without risk of dock rejection.",
+    salvagedValue: "₹2,600.00",
   },
   {
     id: "batch-3",
@@ -93,8 +93,8 @@ const BATCHES_DATA: BatchItem[] = [
     discountApplied: 0,
     reasonCode: "TRANSPORT_CAPACITY_OPTIMIZED",
     narrative:
-      "Longer shelf life permitted hold for Route R-02 to pack vehicle payload to 94.2% utilization, lowering transport unit freight cost to $0.28/kg.",
-    salvagedValue: "$3,315.00",
+      "Longer shelf life permitted hold for Route R-02 to pack vehicle payload to 94.2% utilization, lowering transport unit freight cost to ₹0.28/kg.",
+    salvagedValue: "₹3,315.00",
   },
 ];
 

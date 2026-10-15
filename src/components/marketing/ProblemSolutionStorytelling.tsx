@@ -65,7 +65,7 @@ export function ProblemSolutionStorytelling() {
                 </p>
                 <div className={styles.statCallout}>
                   <TrendingDown size={14} className={styles.trendDown} />
-                  <span>Result: $12k+ average monthly retail dock chargebacks</span>
+                  <span>Result: ₹12k+ average monthly retail dock chargebacks</span>
                 </div>
               </div>
 
@@ -81,7 +81,7 @@ export function ProblemSolutionStorytelling() {
                 </p>
                 <div className={styles.statCallout}>
                   <TrendingDown size={14} className={styles.trendDown} />
-                  <span>Result: $0 recovered value on near-expiry surplus</span>
+                  <span>Result: ₹0 recovered value on near-expiry surplus</span>
                 </div>
               </div>
             </div>

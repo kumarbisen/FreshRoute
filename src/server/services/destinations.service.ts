@@ -648,7 +648,13 @@ export async function updateDemand(
     ]
   );
 
-  const res = await db.query<any>(`SELECT "orderNumber" FROM "DestinationDemand" WHERE id = $1;`, [demandId]);
+  const res = await db.query<any>(
+    `SELECT "orderNumber" FROM "DestinationDemand" WHERE id = $1 AND "organizationId" = $2;`,
+    [demandId, organizationId]
+  );
+  if (res.rows.length === 0) {
+    throw new Error(`Demand order not found: ${demandId}`);
+  }
   const orderNum = res.rows[0]?.orderNumber;
   const list = await listDemands(organizationId, { search: orderNum });
   return list.demands[0];

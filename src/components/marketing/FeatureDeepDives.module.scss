@@ -2,9 +2,9 @@
 @use "../../styles/mixins" as *;
 
 .section {
-  background-color: $color-dark-900;
+  background-color: #ffffff;
   padding: $space-20 0;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid $color-border-subtle;
 }
 
 .container {
@@ -33,14 +33,14 @@
   font-family: $font-mono;
   font-size: $text-xs;
   font-weight: 700;
-  color: $color-lime-300;
+  color: #059669;
   letter-spacing: 0.08em;
 }
 
 .title {
   font-size: $text-3xl;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.03em;
   line-height: 1.15;
   margin-bottom: $space-4;
@@ -52,7 +52,7 @@
 
 .subtitle {
   font-size: $text-base;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.6;
 }
 
@@ -67,19 +67,21 @@
 }
 
 .featureCard {
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-xl;
+  background-color: #f8fafc;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-2xl;
   padding: $space-6 $space-8;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: $space-6;
-  transition: border-color $transition-fast, box-shadow $transition-fast;
+  box-shadow: $shadow-sm;
+  transition: all $transition-fast;
 
   &:hover {
-    border-color: $color-dark-600;
+    border-color: $color-border-hover;
     box-shadow: $shadow-md;
+    background-color: #ffffff;
   }
 }
 
@@ -93,20 +95,20 @@
   font-family: $font-mono;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: $color-lime-300;
+  color: #059669;
   letter-spacing: 0.06em;
 }
 
 .featureTitle {
   font-size: $text-xl;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.02em;
 }
 
 .featureDescription {
   font-size: $text-sm;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.6;
 }
 
@@ -121,15 +123,15 @@
   align-items: flex-start;
   gap: $space-3;
   font-size: $text-xs;
-  color: $color-slate-200;
+  color: $color-text-body;
 }
 
 .checkIconWrapper {
   width: 18px;
   height: 18px;
   border-radius: $radius-full;
-  background-color: $color-produce-emerald-dim;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,20 +140,20 @@
 }
 
 .checkIcon {
-  color: $color-produce-emerald;
+  color: #059669;
 }
 
 .codeContainer {
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-md;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: $radius-lg;
   overflow: hidden;
 }
 
 .codeHeader {
   padding: $space-2 $space-3;
-  background-color: $color-dark-800;
-  border-bottom: 1px solid $color-dark-750;
+  background-color: #1e293b;
+  border-bottom: 1px solid #334155;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -166,13 +168,13 @@
   width: 6px;
   height: 6px;
   border-radius: $radius-full;
-  background-color: $color-dark-600;
+  background-color: #475569;
 }
 
 .codeLang {
   font-family: $font-mono;
   font-size: 0.625rem;
-  color: $color-slate-400;
+  color: #94a3b8;
 }
 
 .codeBlock {

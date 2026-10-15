@@ -1,50 +1,70 @@
 // ============================================================================
 // FreshRoute Design System: Core Design Tokens
-// Art Direction: High-contrast Dark Slate / Deep Charcoal with Acid-Lime & Fresh Green
-// Inspired by bold editorial typography, technical data density, and physical logistics
+// Art Direction: Minimal Porcelain & Slate Charcoal with Fresh Produce Accents
+// Inspired by Behance SaaS Dashboard & RaceZero Editorial Aesthetics
 // ============================================================================
 
-// Base Color Palettes
-$color-dark-950: #07090b; // Deepest ground
-$color-dark-900: #0b0f12; // Primary dark background
-$color-dark-850: #10151a; // Surface cards
-$color-dark-800: #151d24; // Elevated surface / dropdowns
-$color-dark-750: #1c2630; // Card borders & dividers
-$color-dark-700: #263442; // Subtle borders
-$color-dark-600: #3a4b5d; // Muted borders / inactive elements
+// Base Color Palettes (Porcelain / White / Charcoal)
+$color-canvas-bg: #f8f9fa;       // Soft warm porcelain ground
+$color-canvas-subtle: #f4f5f7;   // Secondary light background
+$color-card-bg: #ffffff;         // Crisp white card surface
+$color-elevated-bg: #ffffff;     // Elevated cards & dropdowns
+$color-dock-bg: #16181d;         // Floating dark charcoal capsule dock
 
-// Acid-Lime & Produce Green Accents
-$color-lime-300: #d4f933; // Vibrant electric lime
-$color-lime-400: #c1eb1a; // Primary interactive accent
-$color-lime-500: #a7d10e; // Hover accent
-$color-lime-900: #223004; // Low-contrast lime container
-$color-lime-dim: rgba(212, 249, 51, 0.12);
+// Hairline Borders & Dividers
+$color-border-subtle: #eaecf0;   // 1px clean card hairline
+$color-border-medium: #e2e8f0;   // Medium divider
+$color-border-hover: #cbd5e1;    // Interactive hover border
 
-$color-produce-emerald: #10b981; // Fresh safe stock
-$color-produce-emerald-dim: rgba(16, 185, 129, 0.12);
+// Backwards-compatible aliases for existing SCSS imports:
+$color-dark-950: $color-canvas-bg;
+$color-dark-900: $color-canvas-subtle;
+$color-dark-850: $color-card-bg;
+$color-dark-800: #f8f9fa;
+$color-dark-750: $color-border-subtle;
+$color-dark-700: $color-border-medium;
+$color-dark-600: $color-border-hover;
+
+// High-Contrast Primary & Produce Accents
+$color-primary-charcoal: #0f172a; // Deep obsidian charcoal for main buttons/text
+$color-produce-emerald: #059669;  // Fresh safe stock & positive deltas
+$color-produce-emerald-dim: rgba(5, 150, 105, 0.08);
+
+$color-lime-300: #10b981;        // Fresh vibrant green
+$color-lime-400: #059669;
+$color-lime-500: #047857;
+$color-lime-900: #064e3b;
+$color-lime-dim: rgba(16, 185, 129, 0.1);
 
 // Cold-chain Ocean Blue
-$color-cold-cyan: #06b6d4;
-$color-cold-sky: #0ea5e9;
-$color-cold-dim: rgba(14, 165, 233, 0.12);
+$color-cold-cyan: #0891b2;
+$color-cold-sky: #0284c7;
+$color-cold-dim: rgba(2, 132, 199, 0.08);
 
 // Urgency & Spoilage Colors
-$color-urgency-amber: #f59e0b; // At-Risk / Approaching SLA limit
-$color-urgency-amber-dim: rgba(245, 158, 11, 0.12);
-$color-urgency-rose: #f43f5e; // Critical / Near Expiry
-$color-urgency-rose-dim: rgba(244, 63, 94, 0.12);
+$color-urgency-amber: #d97706;   // At-Risk / Approaching SLA limit
+$color-urgency-amber-dim: rgba(217, 119, 6, 0.08);
+$color-urgency-rose: #e11d48;    // Critical / Near Expiry
+$color-urgency-rose-dim: rgba(225, 29, 72, 0.08);
 
 // Markdown Salvage
-$color-salvage-purple: #c084fc;
-$color-salvage-purple-dim: rgba(192, 132, 252, 0.12);
+$color-salvage-purple: #9333ea;
+$color-salvage-purple-dim: rgba(147, 51, 234, 0.08);
 
-// Light / Off-White Neutrals
-$color-light-50: #fbfbf9; // Warm off-white
-$color-light-100: #f4f4f0;
-$color-light-200: #e8e8e2;
-$color-light-300: #d5d5cd;
+// High-Legibility Slate Text Palette
+$color-text-title: #0f172a;      // H1-H4 headings
+$color-text-body: #334155;       // Standard body copy
+$color-text-secondary: #64748b;  // Secondary descriptions
+$color-text-muted: #94a3b8;      // Subtle captions & metadata
+$color-text-inverse: #ffffff;    // Text on dark buttons / floating dock
 
-// Slate Neutrals
+// Legacy text aliases mapped to crisp dark charcoal for white card contrast
+$color-light-50: $color-text-title;
+$color-light-100: $color-text-body;
+$color-light-200: $color-text-secondary;
+$color-light-300: $color-text-muted;
+
+// Slate Palette
 $color-slate-50: #f8fafc;
 $color-slate-100: #f1f5f9;
 $color-slate-200: #e2e8f0;
@@ -58,9 +78,10 @@ $color-slate-900: #0f172a;
 $color-slate-950: #020617;
 
 // Typography Stacks
-$font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-serif: "Newsreader", "Playfair Display", Georgia, serif;
 $font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-$font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-display: $font-sans;
 
 // Typography Scale
 $text-xs: 0.75rem;    // 12px
@@ -89,19 +110,20 @@ $space-20: 5rem;    // 80px
 $space-24: 6rem;    // 96px
 
 // Radii
-$radius-sm: 4px;
-$radius-md: 8px;
-$radius-lg: 12px;
-$radius-xl: 16px;
-$radius-2xl: 24px;
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 16px;
+$radius-xl: 20px;
+$radius-2xl: 28px;
 $radius-full: 9999px;
 
-// Shadows & Glows
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
-$shadow-glow-lime: 0 0 24px rgba(212, 249, 51, 0.2);
-$shadow-glow-emerald: 0 0 24px rgba(16, 185, 129, 0.25);
+// Shadows (Soft, diffused porcelain ambient)
+$shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.04);
+$shadow-md: 0 4px 20px -2px rgba(16, 24, 40, 0.05);
+$shadow-lg: 0 12px 32px -4px rgba(16, 24, 40, 0.08);
+$shadow-dock: 0 20px 40px -4px rgba(0, 0, 0, 0.35);
+$shadow-glow-lime: 0 4px 16px rgba(16, 185, 129, 0.15);
+$shadow-glow-emerald: 0 4px 16px rgba(5, 150, 105, 0.15);
 
 // Transitions
 $transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);

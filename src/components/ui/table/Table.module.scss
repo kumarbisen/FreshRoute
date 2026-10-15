@@ -4,9 +4,10 @@
 .tableWrapper {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-lg;
-  background-color: $color-dark-850;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  background-color: #ffffff;
+  box-shadow: $shadow-sm;
 }
 
 .table {
@@ -18,23 +19,23 @@
 }
 
 .header {
-  background-color: $color-dark-800;
-  border-bottom: 1px solid $color-dark-700;
+  background-color: #fafbfc;
+  border-bottom: 1px solid $color-border-subtle;
 }
 
 .head {
-  padding: $space-3 $space-4;
+  padding: $space-4 $space-5;
   font-family: $font-mono;
-  font-size: $text-xs;
+  font-size: 0.6875rem;
   font-weight: 600;
-  color: $color-slate-400;
+  color: $color-slate-500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
 }
 
 .row {
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid $color-border-subtle;
   transition: background-color $transition-fast;
 
   &:last-child {
@@ -42,19 +43,19 @@
   }
 
   &:hover {
-    background-color: rgba($color-dark-750, 0.4);
+    background-color: #f8fafc;
   }
 }
 
 .cell {
-  padding: $space-3 $space-4;
-  color: $color-slate-200;
+  padding: $space-4 $space-5;
+  color: $color-text-body;
   vertical-align: middle;
 }
 
 .footer {
-  border-top: 1px solid $color-dark-700;
-  background-color: $color-dark-800;
+  border-top: 1px solid $color-border-medium;
+  background-color: #fafbfc;
   font-weight: 600;
 }
 

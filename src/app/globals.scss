@@ -1,16 +1,20 @@
 @use "../styles/tokens" as *;
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 :root {
   // Ground & Backgrounds
-  --bg-deep: #{$color-dark-950};
-  --bg-main: #{$color-dark-900};
-  --bg-surface: #{$color-dark-850};
-  --bg-elevated: #{$color-dark-800};
-  --border-subtle: #{$color-dark-750};
-  --border-medium: #{$color-dark-700};
-  --border-hover: #{$color-dark-600};
+  --bg-deep: #{$color-canvas-bg};
+  --bg-main: #{$color-canvas-bg};
+  --bg-surface: #{$color-card-bg};
+  --bg-elevated: #{$color-card-bg};
+  --bg-subtle: #{$color-canvas-subtle};
+  --border-subtle: #{$color-border-subtle};
+  --border-default: #{$color-border-subtle};
+  --border-medium: #{$color-border-medium};
+  --border-hover: #{$color-border-hover};
 
   // Accents
+  --color-primary: #{$color-primary-charcoal};
   --color-lime: #{$color-lime-300};
   --color-lime-hover: #{$color-lime-400};
   --color-lime-dim: #{$color-lime-dim};
@@ -28,14 +32,15 @@
   --status-salvage-dim: #{$color-salvage-purple-dim};
 
   // Typography
-  --text-primary: #fbfbf9;
-  --text-secondary: #94a3b8;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
-  --text-subtle: #475569;
-  --text-inverse: #07090b;
+  --text-subtle: #94a3b8;
+  --text-inverse: #ffffff;
 
   // Fonts
   --font-sans: #{$font-sans};
+  --font-serif: #{$font-serif};
   --font-mono: #{$font-mono};
 
   // Radii
@@ -45,6 +50,11 @@
   --radius-xl: #{$radius-xl};
   --radius-2xl: #{$radius-2xl};
   --radius-full: #{$radius-full};
+
+  // Shadows
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
 
   // Transitions
   --transition-fast: #{$transition-fast};
@@ -58,7 +68,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -73,20 +83,20 @@ body {
   overflow-x: hidden;
 }
 
-// Custom Scrollbar
+// Clean Scrollbar
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-deep);
+  background: var(--bg-subtle);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-medium);
+  background: #cbd5e1;
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-hover);
+  background: #94a3b8;
 }
 
 // Links
@@ -108,6 +118,13 @@ button {
   font-family: var(--font-mono);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+// Editorial serif styling for headlines
+.editorial-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
 }
 
 // Reduced Motion Accessibility

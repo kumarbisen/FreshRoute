@@ -10,7 +10,7 @@ import { MarketingFooter } from "@/components/marketing/MarketingFooter";
 
 export default function MarketingPage() {
   return (
-    <div style={{ backgroundColor: "#07090b", minHeight: "100vh", color: "#ffffff" }}>
+    <div style={{ backgroundColor: "#faf9f6", minHeight: "100vh", color: "#0f172a" }}>
       <MarketingNav />
       <main>
         <HeroSection />

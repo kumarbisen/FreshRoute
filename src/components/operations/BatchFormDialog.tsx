@@ -291,7 +291,7 @@ export function BatchFormDialog({
               </div>
 
               <div className={styles.fieldGroup}>
-                <label className={styles.fieldLabel}>Procurement Cost ($/kg)</label>
+                <label className={styles.fieldLabel}>Procurement Cost (₹/kg)</label>
                 <input
                   type="number"
                   step="0.01"
@@ -304,7 +304,7 @@ export function BatchFormDialog({
               </div>
 
               <div className={styles.fieldGroup}>
-                <label className={styles.fieldLabel}>Target Base Selling Price ($/kg)</label>
+                <label className={styles.fieldLabel}>Target Base Selling Price (₹/kg)</label>
                 <input
                   type="number"
                   step="0.01"

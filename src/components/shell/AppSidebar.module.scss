@@ -4,7 +4,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(4px);
   z-index: 90;
 
@@ -13,21 +13,29 @@
   }
 }
 
+// Floating Dark Capsule Dock
 .sidebar {
-  width: 280px;
-  height: 100vh;
+  width: 260px;
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background-color: $color-dark-900;
-  border-right: 1px solid $color-dark-750;
+  top: 1rem;
+  left: 1rem;
+  bottom: 1rem;
+  background-color: #16181d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
+  box-shadow: $shadow-dock;
   display: flex;
   flex-direction: column;
   z-index: 100;
   transition: transform $transition-base;
+  overflow: hidden;
 
   @include breakpoint-down(1024px) {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    border-radius: 0 24px 24px 0;
     transform: translateX(-100%);
 
     &.mobileOpen {
@@ -37,8 +45,8 @@
 }
 
 .brandRow {
-  padding: $space-5 $space-6;
-  border-bottom: 1px solid $color-dark-750;
+  padding: $space-5 $space-5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,18 +59,18 @@
 }
 
 .logoBadge {
-  width: 2rem;
-  height: 2rem;
+  width: 2.125rem;
+  height: 2.125rem;
   border-radius: $radius-md;
-  background: linear-gradient(135deg, $color-lime-300, $color-produce-emerald);
-  color: $color-dark-950;
+  background: #ffffff;
+  color: #16181d;
   font-family: $font-mono;
   font-weight: 800;
   font-size: $text-sm;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: $shadow-glow-lime;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .brandText {
@@ -81,20 +89,20 @@
 
 .brandSubtitle {
   font-family: $font-mono;
-  font-size: 0.6875rem;
-  color: $color-slate-400;
-  letter-spacing: 0.05em;
+  font-size: 0.625rem;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .closeMobileBtn {
-  color: $color-slate-400;
+  color: #94a3b8;
   padding: $space-1;
   border-radius: $radius-sm;
 
   &:hover {
     color: #ffffff;
-    background-color: $color-dark-800;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   @include breakpoint-up(1024px) {
@@ -105,15 +113,15 @@
 .workspaceWrapper {
   padding: $space-3 $space-4;
   position: relative;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .workspaceTrigger {
   width: 100%;
   padding: $space-2 $space-3;
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-md;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: $radius-lg;
   display: flex;
   align-items: center;
   gap: $space-3;
@@ -121,13 +129,13 @@
   transition: all $transition-fast;
 
   &:hover {
-    background-color: $color-dark-800;
-    border-color: $color-dark-600;
+    background-color: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 }
 
 .workspaceIcon {
-  color: $color-lime-300;
+  color: #10b981;
   display: flex;
   align-items: center;
 }
@@ -141,7 +149,7 @@
 
 .workspaceName {
   font-size: $text-xs;
-  font-weight: 700;
+  font-weight: 600;
   color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
@@ -150,12 +158,12 @@
 
 .workspaceMeta {
   font-family: $font-mono;
-  font-size: 0.6875rem;
-  color: $color-slate-400;
+  font-size: 0.625rem;
+  color: #94a3b8;
 }
 
 .chevron {
-  color: $color-slate-400;
+  color: #94a3b8;
   transition: transform $transition-fast;
 
   &.chevronRotated {
@@ -168,9 +176,9 @@
   top: 100%;
   left: $space-4;
   right: $space-4;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-md;
+  background-color: #1f2229;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: $radius-lg;
   box-shadow: $shadow-lg;
   padding: $space-2;
   z-index: 105;
@@ -179,8 +187,8 @@
 
 .dropdownHeader {
   font-family: $font-mono;
-  font-size: 0.6875rem;
-  color: $color-slate-400;
+  font-size: 0.625rem;
+  color: #94a3b8;
   padding: $space-1 $space-2;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -189,23 +197,23 @@
 .dropdownItem {
   width: 100%;
   padding: $space-2;
-  border-radius: $radius-sm;
+  border-radius: $radius-md;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: $text-xs;
-  color: $color-slate-200;
+  color: #cbd5e1;
   text-align: left;
   transition: background-color $transition-fast;
 
   &:hover {
-    background-color: $color-dark-750;
+    background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
   }
 
   &.activeItem {
-    background-color: $color-lime-dim;
-    color: $color-lime-300;
+    background-color: #10b981;
+    color: #ffffff;
     font-weight: 600;
   }
 }
@@ -218,8 +226,8 @@
 
 .dropdownItemCode {
   font-family: $font-mono;
-  font-size: 0.6875rem;
-  color: $color-slate-400;
+  font-size: 0.625rem;
+  color: #94a3b8;
 }
 
 .navContainer {
@@ -228,20 +236,20 @@
   padding: $space-4 $space-3;
   display: flex;
   flex-direction: column;
-  gap: $space-5;
+  gap: $space-4;
 }
 
 .sectionGroup {
   display: flex;
   flex-direction: column;
-  gap: $space-1;
+  gap: 2px;
 }
 
 .sectionTitle {
   font-family: $font-mono;
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 700;
-  color: $color-slate-500;
+  color: #64748b;
   letter-spacing: 0.08em;
   padding: $space-1 $space-3;
 }
@@ -250,48 +258,60 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .navLink {
   display: flex;
   align-items: center;
   gap: $space-3;
-  padding: $space-2 $space-3;
-  border-radius: $radius-md;
-  color: $color-slate-300;
+  padding: 0.55rem $space-3;
+  border-radius: $radius-full;
+  color: #94a3b8;
   font-size: $text-sm;
   font-weight: 500;
   transition: all $transition-fast;
 
   &:hover {
-    background-color: $color-dark-800;
+    background-color: rgba(255, 255, 255, 0.07);
     color: #ffffff;
-  }
-
-  &.activeLink {
-    background-color: $color-dark-750;
-    color: $color-lime-300;
-    font-weight: 600;
 
     .linkIcon {
-      color: $color-lime-300;
+      color: #ffffff;
+    }
+  }
+
+  // Active High-Contrast Pill (from Behance reference)
+  &.activeLink {
+    background-color: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+
+    .linkIcon {
+      color: #0f172a;
+    }
+
+    .navBadge {
+      background-color: #f1f5f9;
+      color: #0f172a;
     }
   }
 
   &.highlightLink:not(.activeLink) {
-    color: $color-lime-300;
+    color: #10b981;
 
     .linkIcon {
-      color: $color-lime-300;
+      color: #10b981;
     }
   }
 }
 
 .linkIcon {
-  color: $color-slate-400;
+  color: #94a3b8;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: color $transition-fast;
 }
 
@@ -301,25 +321,25 @@
 
 .navBadge {
   font-family: $font-mono;
-  font-size: 0.6875rem;
-  padding: 1px $space-2;
+  font-size: 0.625rem;
+  padding: 2px $space-2;
   border-radius: $radius-full;
-  background-color: $color-dark-750;
-  color: $color-slate-400;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
 }
 
 .footerTelemetry {
-  padding: $space-4;
-  border-top: 1px solid $color-dark-750;
+  padding: $space-3 $space-4;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: $space-2;
 }
 
 .telemetryCard {
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-md;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: $radius-lg;
   padding: $space-3;
   display: flex;
   flex-direction: column;
@@ -333,16 +353,14 @@
 }
 
 .shieldIcon {
-  color: $color-produce-emerald;
+  color: #10b981;
 }
 
 .telemetryTitle {
-  font-family: $font-mono;
-  font-size: 0.6875rem;
-  font-weight: 700;
+  font-family: $font-sans;
+  font-size: $text-xs;
+  font-weight: 600;
   color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .telemetryStats {
@@ -359,18 +377,17 @@
 }
 
 .statLabel {
-  color: $color-slate-400;
-}
-
-.statValSuccess {
-  font-family: $font-mono;
-  color: $color-produce-emerald;
-  font-weight: 600;
+  color: #94a3b8;
 }
 
 .statVal {
-  font-family: $font-mono;
-  color: $color-slate-300;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.statValSuccess {
+  color: #10b981;
+  font-weight: 600;
 }
 
 .marketingLink {
@@ -378,12 +395,13 @@
   align-items: center;
   justify-content: space-between;
   font-size: $text-xs;
-  color: $color-slate-400;
-  padding: $space-2;
-  border-radius: $radius-sm;
+  color: #94a3b8;
+  padding: $space-1 $space-2;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
 
   &:hover {
-    color: $color-lime-300;
-    background-color: $color-dark-800;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
   }
 }

@@ -2,7 +2,7 @@
 @use "../../styles/mixins" as *;
 
 .section {
-  background-color: $color-dark-950;
+  background-color: #faf9f6;
   padding: $space-20 0;
   position: relative;
 }
@@ -18,13 +18,13 @@
 }
 
 .ctaBox {
-  background-color: $color-dark-850;
-  border: 1px solid rgba($color-lime-300, 0.3);
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
   border-radius: $radius-2xl;
   padding: $space-12 $space-6;
   position: relative;
   overflow: hidden;
-  box-shadow: $shadow-glow-lime;
+  box-shadow: $shadow-md;
 
   @include breakpoint-up(768px) {
     padding: $space-16 $space-12;
@@ -37,7 +37,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, transparent, $color-lime-300, transparent);
+    background: linear-gradient(90deg, transparent, #059669, transparent);
   }
 }
 
@@ -48,7 +48,7 @@
   transform: translateX(-50%);
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba($color-lime-300, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -74,15 +74,15 @@
   font-family: $font-mono;
   font-size: $text-xs;
   font-weight: 700;
-  color: $color-slate-400;
+  color: $color-slate-500;
   letter-spacing: 0.06em;
 }
 
 .heading {
   font-size: 2.25rem;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1.15;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.03em;
   margin-bottom: $space-4;
 
@@ -93,7 +93,7 @@
 
 .subtext {
   font-size: $text-base;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.6;
   margin-bottom: $space-8;
   max-width: 680px;
@@ -119,12 +119,12 @@
   gap: $space-6;
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-slate-400;
-  border-top: 1px solid $color-dark-750;
+  color: $color-slate-500;
+  border-top: 1px solid $color-border-subtle;
   padding-top: $space-6;
   width: 100%;
 }
 
 .metaItem {
-  color: $color-slate-300;
+  color: $color-text-secondary;
 }

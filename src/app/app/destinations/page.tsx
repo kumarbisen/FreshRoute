@@ -490,7 +490,7 @@ export default function DestinationsPage() {
                           )}
                         </td>
                         <td>
-                          <span className={styles.priceCell}>${dm.contractedPricePerUnit.toFixed(2)}</span>
+                          <span className={styles.priceCell}>₹{dm.contractedPricePerUnit.toFixed(2)}</span>
                           <span className={styles.subText}>/ kg</span>
                         </td>
                         <td>

@@ -18,6 +18,9 @@ export async function POST(req: NextRequest) {
       if (!file) {
         return NextResponse.json({ error: "No file uploaded in form data" }, { status: 400 });
       }
+      if (file.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Uploaded file exceeds maximum limit of 5MB" }, { status: 400 });
+      }
       csvContent = await file.text();
     } else {
       const json = await req.json();

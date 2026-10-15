@@ -1,0 +1,872 @@
+@use "@/styles/tokens" as *;
+
+.scenarioCockpit {
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: $space-6 $space-8 $space-16;
+  color: $color-light-100;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+// -------------------------------------------------------------
+// Top Header & Context Actions
+// -------------------------------------------------------------
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-6;
+  padding-bottom: $space-6;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  .badgeRow {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  .engineBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: rgba(168, 85, 247, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .statusPill {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $color-slate-400;
+  }
+
+  .title {
+    font-size: $text-3xl;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: $color-light-50;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: $text-sm;
+    color: $color-slate-400;
+    margin: 0;
+    max-width: 720px;
+    line-height: 1.5;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-3;
+}
+
+.planSelector {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-md;
+  padding: $space-2 $space-3;
+
+  label {
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $color-slate-400;
+    text-transform: uppercase;
+  }
+
+  select {
+    background: transparent;
+    border: none;
+    color: $color-light-50;
+    font-size: $text-sm;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+
+    option {
+      background: $color-dark-850;
+      color: $color-light-100;
+    }
+  }
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  background: #c084fc;
+  color: $color-dark-950;
+  font-weight: 700;
+  font-size: $text-sm;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #d8b4fe;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(192, 132, 252, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  background: $color-dark-800;
+  color: $color-light-100;
+  font-weight: 600;
+  font-size: $text-sm;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  border: 1px solid $color-dark-700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: $color-dark-750;
+    border-color: $color-slate-500;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// -------------------------------------------------------------
+// Quick Preset Disruptions Bar
+// -------------------------------------------------------------
+.presetBar {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-3 $space-4;
+
+  .presetTitle {
+    font-size: 11px;
+    font-family: $font-mono;
+    font-weight: 600;
+    color: $color-slate-400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .presetList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-2;
+
+    .presetBtn {
+      background: $color-dark-900;
+      border: 1px solid $color-dark-750;
+      border-radius: $radius-full;
+      padding: 4px 12px;
+      font-size: $text-xs;
+      color: $color-slate-300;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+
+      &:hover {
+        background: $color-dark-750;
+        border-color: #c084fc;
+        color: $color-light-50;
+      }
+
+      &.active {
+        background: rgba(168, 85, 247, 0.2);
+        border-color: #c084fc;
+        color: #d8b4fe;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Parameter Controls Panel
+// -------------------------------------------------------------
+.controlPanel {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  .panelHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    padding-bottom: $space-3;
+    border-bottom: 1px solid $color-dark-750;
+
+    .panelTitle {
+      font-size: $text-sm;
+      font-weight: 700;
+      color: $color-light-50;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+    }
+  }
+
+  .slidersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: $space-5;
+  }
+
+  .sliderCard {
+    background: $color-dark-900;
+    border: 1px solid $color-dark-750;
+    border-radius: $radius-md;
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+
+    .sliderTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .sliderLabel {
+        font-size: 11px;
+        font-family: $font-mono;
+        color: $color-slate-400;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .sliderValue {
+        font-size: $text-sm;
+        font-family: $font-mono;
+        font-weight: 700;
+        color: #c084fc;
+      }
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #c084fc;
+      cursor: pointer;
+    }
+
+    .sliderFooter {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: $color-slate-500;
+      font-family: $font-mono;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Metric Cards Grid
+// -------------------------------------------------------------
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $space-4;
+}
+
+.metricCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-4 $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $color-dark-700;
+  }
+
+  &.highlightLoss::before {
+    background: #f87171;
+  }
+
+  &.highlightPositive::before {
+    background: #4ade80;
+  }
+
+  &.highlightPurple::before {
+    background: #c084fc;
+  }
+
+  &.highlightAmber::before {
+    background: #fbbf24;
+  }
+
+  .cardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $color-slate-400;
+
+    .cardLabel {
+      font-size: $text-xs;
+      font-family: $font-mono;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .cardValue {
+    font-size: $text-2xl;
+    font-weight: 800;
+    color: $color-light-50;
+    font-family: $font-mono;
+    letter-spacing: -0.02em;
+
+    &.red {
+      color: #f87171;
+    }
+
+    &.green {
+      color: #4ade80;
+    }
+
+    &.purple {
+      color: #c084fc;
+    }
+
+    &.amber {
+      color: #fbbf24;
+    }
+  }
+
+  .cardSub {
+    font-size: $text-xs;
+    color: $color-slate-400;
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+  }
+}
+
+// -------------------------------------------------------------
+// Side-by-Side Comparison Ledger Cards
+// -------------------------------------------------------------
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-5;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.planComparisonCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  &.base {
+    border-left: 4px solid #38bdf8;
+  }
+
+  &.scenario {
+    border-left: 4px solid #c084fc;
+  }
+
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-size: $text-base;
+      font-weight: 700;
+      color: $color-light-50;
+      margin: 0;
+    }
+
+    .planPill {
+      font-size: $text-xs;
+      font-family: $font-mono;
+      padding: 2px 8px;
+      border-radius: $radius-full;
+      background: $color-dark-900;
+      color: $color-slate-300;
+      border: 1px solid $color-dark-700;
+    }
+  }
+
+  .ledgerRows {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+
+    .ledgerRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: $text-xs;
+      color: $color-slate-300;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+
+      &.highlight {
+        font-weight: 700;
+        font-size: $text-sm;
+        color: $color-light-50;
+        border-top: 1px solid $color-dark-700;
+        border-bottom: none;
+        padding-top: $space-2;
+      }
+
+      .rowVal {
+        font-family: $font-mono;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Tabs Navigation
+// -------------------------------------------------------------
+.tabsNav {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  border-bottom: 1px solid $color-dark-750;
+  padding-bottom: $space-2;
+
+  .tabBtn {
+    background: transparent;
+    border: none;
+    color: $color-slate-400;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    font-weight: 600;
+    padding: $space-2 $space-3;
+    border-radius: $radius-md;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: $color-light-50;
+      background: $color-dark-800;
+    }
+
+    &.active {
+      background: $color-dark-800;
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Table Styles
+// -------------------------------------------------------------
+.tableContainer {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: $text-xs;
+
+  thead {
+    background: $color-dark-900;
+    border-bottom: 1px solid $color-dark-750;
+
+    th {
+      padding: $space-3 $space-4;
+      font-family: $font-mono;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $color-slate-400;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba(30, 41, 59, 0.4);
+      }
+    }
+
+    td {
+      padding: $space-3 $space-4;
+      vertical-align: middle;
+      color: $color-slate-200;
+    }
+  }
+}
+
+// Badges
+.diffTypeBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  font-family: $font-mono;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &.dropped {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  &.modified {
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+  }
+
+  &.new {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
+  &.unchanged {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+  }
+}
+
+.severityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  font-family: $font-mono;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  &.critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  &.high {
+    background: rgba(249, 115, 22, 0.15);
+    color: #fb923c;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+  }
+
+  &.medium {
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+  }
+
+  &.stable {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &.expired {
+    background: rgba(100, 116, 139, 0.2);
+    color: #94a3b8;
+    border: 1px solid rgba(100, 116, 139, 0.3);
+  }
+}
+
+.urgencyAlert {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #f87171;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+// -------------------------------------------------------------
+// Sensitivity Analysis Panel
+// -------------------------------------------------------------
+.sensitivityCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  .sensitivityHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+  }
+
+  .sweepControls {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    select {
+      background: $color-dark-900;
+      border: 1px solid $color-dark-750;
+      color: $color-light-50;
+      font-size: $text-xs;
+      padding: $space-2 $space-3;
+      border-radius: $radius-md;
+      outline: none;
+    }
+  }
+
+  .slopeBanner {
+    background: $color-dark-900;
+    border: 1px solid $color-dark-750;
+    border-radius: $radius-md;
+    padding: $space-3 $space-4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: $text-xs;
+
+    .slopeVal {
+      font-family: $font-mono;
+      font-weight: 700;
+      color: #c084fc;
+    }
+  }
+
+  .sweepVisualGrid {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin-top: $space-2;
+  }
+
+  .sweepVisualRow {
+    display: grid;
+    grid-template-columns: 140px 1fr 100px 100px;
+    align-items: center;
+    gap: $space-4;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    background: $color-dark-900;
+    padding: $space-2 $space-4;
+    border-radius: $radius-md;
+    border: 1px solid $color-dark-750;
+
+    .sweepBarContainer {
+      width: 100%;
+      height: 8px;
+      background: $color-dark-800;
+      border-radius: $radius-full;
+      overflow: hidden;
+
+      .sweepBarFill {
+        height: 100%;
+        border-radius: $radius-full;
+        transition: width 0.3s ease;
+      }
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Governance & Audit Verification Bar
+// -------------------------------------------------------------
+.governanceBanner {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid $color-dark-700;
+  border-left: 4px solid #38bdf8;
+  border-radius: $radius-lg;
+  padding: $space-4 $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  font-size: $text-xs;
+
+  .governanceHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $space-2;
+
+    .governanceTitle {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      font-weight: 700;
+      color: #38bdf8;
+      text-transform: uppercase;
+      font-family: $font-mono;
+      letter-spacing: 0.05em;
+    }
+
+    .hashBadges {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      font-family: $font-mono;
+      font-size: 11px;
+    }
+  }
+
+  .hashPill {
+    background: $color-dark-900;
+    border: 1px solid $color-dark-750;
+    padding: 2px 8px;
+    border-radius: $radius-md;
+    color: $color-slate-300;
+  }
+
+  .governanceText {
+    color: $color-slate-400;
+    line-height: 1.5;
+  }
+}
+
+// -------------------------------------------------------------
+// Empty & State Messages
+// -------------------------------------------------------------
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  padding: $space-12 $space-6;
+  text-align: center;
+  background: $color-dark-850;
+  border: 1px dashed $color-dark-750;
+  border-radius: $radius-lg;
+  color: $color-slate-400;
+
+  .emptyIcon {
+    width: 40px;
+    height: 40px;
+    color: $color-slate-500;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: $text-base;
+    font-weight: 700;
+    color: $color-light-100;
+  }
+
+  p {
+    margin: 0;
+    font-size: $text-xs;
+    max-width: 460px;
+    line-height: 1.5;
+  }
+}
+
+.historyBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  .iconBtn {
+    background: $color-dark-900;
+    border: 1px solid $color-dark-750;
+    color: $color-slate-300;
+    padding: 4px 8px;
+    border-radius: $radius-md;
+    cursor: pointer;
+    font-size: $text-xs;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: $color-dark-750;
+      color: $color-light-50;
+    }
+
+    &.delete:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #f87171;
+      color: #f87171;
+    }
+  }
+}
+

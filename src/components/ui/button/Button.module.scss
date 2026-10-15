@@ -7,7 +7,7 @@
   justify-content: center;
   font-family: $font-sans;
   font-weight: 600;
-  border-radius: $radius-md;
+  border-radius: $radius-full;
   cursor: pointer;
   transition: all $transition-fast;
   user-select: none;
@@ -24,14 +24,15 @@
 
 // Variants
 .primary {
-  background-color: $color-lime-300;
-  color: $color-dark-950;
+  background-color: $color-primary-charcoal;
+  color: #ffffff;
   border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 
   &:hover {
-    background-color: $color-lime-400;
-    box-shadow: $shadow-glow-lime;
+    background-color: #1e293b;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
   &:active {
@@ -40,69 +41,69 @@
 }
 
 .secondary {
-  background-color: $color-dark-800;
-  color: $color-light-50;
-  border: 1px solid $color-dark-700;
+  background-color: #ffffff;
+  color: $color-text-title;
+  border: 1px solid $color-border-medium;
+  box-shadow: $shadow-sm;
 
   &:hover {
-    background-color: $color-dark-750;
-    border-color: $color-dark-600;
-    color: #ffffff;
+    background-color: #f8fafc;
+    border-color: $color-border-hover;
+    color: #000000;
   }
 }
 
 .outline-lime {
   background-color: transparent;
-  color: $color-lime-300;
-  border: 1px solid rgba($color-lime-300, 0.4);
+  color: $color-primary-charcoal;
+  border: 1px solid $color-border-medium;
 
   &:hover {
-    background-color: $color-lime-dim;
-    border-color: $color-lime-300;
-    box-shadow: 0 0 16px rgba($color-lime-300, 0.15);
+    background-color: #ffffff;
+    border-color: $color-primary-charcoal;
+    box-shadow: $shadow-sm;
   }
 }
 
 .ghost {
   background-color: transparent;
-  color: $color-slate-300;
+  color: $color-text-body;
   border: 1px solid transparent;
 
   &:hover {
-    background-color: $color-dark-800;
-    color: #ffffff;
+    background-color: #f1f5f9;
+    color: $color-text-title;
   }
 }
 
 .destructive {
-  background-color: $color-urgency-rose-dim;
-  color: $color-urgency-rose;
-  border: 1px solid rgba($color-urgency-rose, 0.3);
+  background-color: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
 
   &:hover {
-    background-color: rgba($color-urgency-rose, 0.2);
-    border-color: $color-urgency-rose;
+    background-color: #ffe4e6;
+    border-color: #fda4af;
   }
 }
 
 // Sizes
 .sm {
-  height: 2rem; // 32px
-  padding: 0 $space-3;
+  height: 2.125rem; // 34px
+  padding: 0 $space-4;
   font-size: $text-xs;
 }
 
 .md {
-  height: 2.5rem; // 40px
-  padding: 0 $space-4;
+  height: 2.625rem; // 42px
+  padding: 0 $space-5;
   font-size: $text-sm;
 }
 
 .lg {
-  height: 3rem; // 48px
-  padding: 0 $space-6;
+  height: 3.125rem; // 50px
+  padding: 0 $space-8;
   font-size: $text-base;
-  border-radius: $radius-lg;
 }
 
 .iconWrapper {

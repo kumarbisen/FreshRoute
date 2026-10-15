@@ -3,8 +3,9 @@
 
 .header {
   height: 64px;
-  background-color: $color-dark-900;
-  border-bottom: 1px solid $color-dark-750;
+  background-color: rgba(248, 249, 250, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $color-border-subtle;
   padding: 0 $space-6;
   display: flex;
   align-items: center;
@@ -21,16 +22,16 @@
 }
 
 .menuButton {
-  color: $color-slate-300;
+  color: $color-slate-600;
   padding: $space-2;
-  border-radius: $radius-sm;
+  border-radius: $radius-full;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    color: #ffffff;
-    background-color: $color-dark-800;
+    color: #000000;
+    background-color: #e2e8f0;
   }
 
   @include breakpoint-up(1024px) {
@@ -41,16 +42,18 @@
 .searchBar {
   display: none;
   align-items: center;
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-md;
-  padding: 0 $space-3;
+  background-color: #ffffff;
+  border: 1px solid $color-border-medium;
+  border-radius: $radius-full;
+  padding: 0 $space-4;
   width: 320px;
-  height: 36px;
-  transition: border-color $transition-fast;
+  height: 38px;
+  box-shadow: $shadow-sm;
+  transition: all $transition-fast;
 
   &:focus-within {
-    border-color: $color-dark-600;
+    border-color: $color-primary-charcoal;
+    box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08);
   }
 
   @include breakpoint-up(640px) {
@@ -59,7 +62,7 @@
 }
 
 .searchIcon {
-  color: $color-slate-500;
+  color: $color-slate-400;
   margin-right: $space-2;
   flex-shrink: 0;
 }
@@ -67,43 +70,44 @@
 .searchInput {
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: $color-text-title;
   font-size: $text-xs;
   width: 100%;
   outline: none;
 
   &::placeholder {
-    color: $color-slate-500;
+    color: $color-slate-400;
   }
 }
 
 .searchShortcut {
   font-family: $font-mono;
   font-size: 0.6875rem;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-700;
+  background-color: #f1f5f9;
+  border: 1px solid $color-border-medium;
   border-radius: $radius-sm;
   padding: 1px $space-1;
-  color: $color-slate-400;
+  color: $color-slate-500;
 }
 
 .rightGroup {
   display: flex;
   align-items: center;
-  gap: $space-4;
+  gap: $space-3;
 }
 
 .clockWidget {
   display: none;
   align-items: center;
   gap: $space-2;
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-750;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
   padding: $space-1 $space-3;
-  border-radius: $radius-sm;
+  border-radius: $radius-full;
   font-family: $font-mono;
   font-size: $text-xs;
-  color: $color-slate-300;
+  color: $color-slate-600;
+  box-shadow: $shadow-sm;
 
   @include breakpoint-up(768px) {
     display: flex;
@@ -111,22 +115,23 @@
 }
 
 .clockIcon {
-  color: $color-lime-300;
+  color: #10b981;
 }
 
 .clockText {
   letter-spacing: 0.05em;
+  font-weight: 500;
 }
 
 .telemetryPill {
   display: none;
   align-items: center;
   gap: $space-1;
-  background-color: $color-produce-emerald-dim;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: $space-1 $space-2;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 0.25rem 0.6rem;
   border-radius: $radius-full;
-  color: $color-produce-emerald;
+  color: #047857;
   font-family: $font-mono;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -153,19 +158,20 @@
   position: relative;
   width: 36px;
   height: 36px;
-  border-radius: $radius-md;
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-750;
-  color: $color-slate-300;
+  border-radius: $radius-full;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  color: $color-slate-600;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: $shadow-sm;
   transition: all $transition-fast;
 
   &:hover {
-    color: #ffffff;
-    background-color: $color-dark-800;
-    border-color: $color-dark-600;
+    color: #000000;
+    background-color: #f8fafc;
+    border-color: $color-border-hover;
   }
 }
 
@@ -187,22 +193,25 @@
   display: flex;
   align-items: center;
   gap: $space-2;
-  padding: $space-1 $space-2;
-  border-radius: $radius-md;
-  transition: background-color $transition-fast;
+  padding: 4px $space-3 4px 4px;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-full;
+  box-shadow: $shadow-sm;
+  transition: all $transition-fast;
 
   &:hover {
-    background-color: $color-dark-850;
+    background-color: #f8fafc;
+    border-color: $color-border-hover;
   }
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: $radius-full;
-  background: linear-gradient(135deg, $color-dark-750, $color-dark-700);
-  border: 1px solid $color-dark-600;
-  color: $color-lime-300;
+  background: #0f172a;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,13 +230,13 @@
 .userName {
   font-size: $text-xs;
   font-weight: 600;
-  color: #ffffff;
+  color: $color-text-title;
   line-height: 1.2;
 }
 
 .userRole {
-  font-size: 0.6875rem;
-  color: $color-slate-400;
+  font-size: 0.625rem;
+  color: $color-slate-500;
 }
 
 .dropdownChevron {
@@ -239,10 +248,10 @@
   top: 100%;
   right: 0;
   margin-top: $space-2;
-  width: 220px;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-md;
+  width: 230px;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
   box-shadow: $shadow-lg;
   padding: $space-2;
   z-index: 50;
@@ -258,7 +267,7 @@
 .profileEmail {
   font-size: $text-xs;
   font-weight: 600;
-  color: #ffffff;
+  color: $color-text-title;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -267,12 +276,12 @@
 .profileOrg {
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-slate-400;
+  color: $color-slate-500;
 }
 
 .dropdownDivider {
   height: 1px;
-  background-color: $color-dark-750;
+  background-color: $color-border-subtle;
   margin: $space-1 0;
 }
 
@@ -280,8 +289,8 @@
   width: 100%;
   padding: $space-2;
   font-size: $text-xs;
-  color: $color-slate-300;
-  border-radius: $radius-sm;
+  color: $color-slate-700;
+  border-radius: $radius-md;
   text-align: left;
   display: flex;
   align-items: center;
@@ -289,16 +298,66 @@
   transition: background-color $transition-fast;
 
   &:hover {
-    background-color: $color-dark-750;
-    color: #ffffff;
+    background-color: #f1f5f9;
+    color: #000000;
   }
 
   &.destructiveAction {
     color: $color-urgency-rose;
 
     &:hover {
-      background-color: $color-urgency-rose-dim;
-      color: #fb7185;
+      background-color: #fff1f2;
+      color: #be123c;
     }
+  }
+}
+
+.notificationsDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: $space-2;
+  width: 340px;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  padding: $space-3;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.notificationItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: $space-2 $space-3;
+  border-radius: $radius-lg;
+  background: #ffffff;
+  border: 1px solid $color-border-subtle;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: #f8fafc;
+    border-color: $color-border-medium;
+  }
+
+  .notificationTitle {
+    font-size: $text-xs;
+    font-weight: 700;
+    color: $color-text-title;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .notificationDesc {
+    font-size: 11px;
+    color: $color-slate-500;
+    line-height: 1.4;
   }
 }

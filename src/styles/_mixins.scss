@@ -22,7 +22,7 @@
 @mixin technical-badge {
   font-family: $font-mono;
   font-size: $text-xs;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   padding: $space-1 $space-2;
@@ -35,7 +35,7 @@
 // Accessible Focus Ring
 @mixin focus-ring {
   &:focus-visible {
-    outline: 2px solid $color-lime-300;
+    outline: 2px solid $color-primary-charcoal;
     outline-offset: 2px;
   }
 }
@@ -66,23 +66,26 @@ $bp-2xl: 1536px;
   }
 }
 
-// Dark Card Elevation
+// Clean Porcelain Card Elevation
 @mixin dark-card {
-  background: $color-dark-850;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-lg;
+  background: $color-card-bg;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
   transition: border-color $transition-fast, box-shadow $transition-fast;
 
   &:hover {
-    border-color: $color-dark-600;
+    border-color: $color-border-medium;
+    box-shadow: $shadow-md;
   }
 }
 
 // Highlight Glow Card
 @mixin glow-card {
-  background: $color-dark-850;
-  border: 1px solid $color-dark-750;
+  background: $color-card-bg;
+  border: 1px solid $color-border-subtle;
   border-radius: $radius-xl;
+  box-shadow: $shadow-md;
   position: relative;
   overflow: hidden;
 
@@ -92,7 +95,7 @@ $bp-2xl: 1536px;
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba($color-lime-300, 0.4), transparent);
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $color-produce-emerald, transparent);
   }
 }

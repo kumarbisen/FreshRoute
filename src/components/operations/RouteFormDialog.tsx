@@ -171,7 +171,7 @@ export function RouteFormDialog({
                 {isEditing ? `Edit Route Constraints: ${routeToEdit.routeCode}` : "Register Transport Fleet Route"}
               </DialogPrimitive.Title>
               <DialogPrimitive.Description className={styles.modalSubtitle}>
-                Two-part transport economics (flat dispatch fee + variable $/kg), payload capacity, and line-haul schedules.
+                Two-part transport economics (flat dispatch fee + variable ₹/kg), payload capacity, and line-haul schedules.
               </DialogPrimitive.Description>
             </div>
             <DialogPrimitive.Close asChild>
@@ -271,7 +271,7 @@ export function RouteFormDialog({
               )}
 
               <div className={styles.fieldGroup}>
-                <label className={styles.fieldLabel}>Fixed Truck Dispatch Fee ($ USD)</label>
+                <label className={styles.fieldLabel}>Fixed Truck Dispatch Fee (₹ INR)</label>
                 <input
                   type="number"
                   step="0.01"
@@ -285,7 +285,7 @@ export function RouteFormDialog({
               </div>
 
               <div className={styles.fieldGroup}>
-                <label className={styles.fieldLabel}>Variable Fuel & Weight Rate ($ / kg)</label>
+                <label className={styles.fieldLabel}>Variable Fuel & Weight Rate (₹ / kg)</label>
                 <input
                   type="number"
                   step="0.001"

@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Filter,
   RefreshCw,
+  ArrowUpRight,
 } from "lucide-react";
 import {
   Button,
@@ -124,6 +125,54 @@ const ACTIVE_DISPATCH_ROWS: DispatchRow[] = [
   },
 ];
 
+// Circular SVG Ring Progress Gauge Component (from Behance SaaS Dashboard reference)
+function RingProgressGauge({
+  percent,
+  size = 54,
+  strokeWidth = 5,
+  color = "#059669",
+}: {
+  percent: number;
+  size?: number;
+  strokeWidth?: number;
+  color?: string;
+}) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percent / 100) * circumference;
+
+  return (
+    <div className={styles.ringWrapper} style={{ width: size, height: size }}>
+      <svg width={size} height={size} className={styles.ringSvg}>
+        {/* Background track */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#e2e8f0"
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        {/* Progress indicator */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke={color}
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          fill="none"
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          style={{ transition: "stroke-dashoffset 0.6s ease" }}
+        />
+      </svg>
+      <span className={styles.ringText}>{percent}%</span>
+    </div>
+  );
+}
+
 export function OperationsOverview() {
   const [filterCategory, setFilterCategory] = useState<string>("ALL");
   const [isSolverDialogOpen, setIsSolverDialogOpen] = useState(false);
@@ -140,7 +189,7 @@ export function OperationsOverview() {
         title="Operations Cockpit"
         subtitle="Salinas Cold Hub (DC-01) // Real-Time Dispatch Allocation & Urgency Monitor"
         badge={
-          <Badge variant="lime" size="sm" pulse>
+          <Badge variant="fresh" size="sm" pulse>
             SOLVER READY: v1.0.0
           </Badge>
         }
@@ -186,7 +235,7 @@ export function OperationsOverview() {
                   <div className={styles.dialogInfoCallout}>
                     <CheckCircle2 size={16} className={styles.calloutIcon} />
                     <span>
-                      Planning run execution with database persistence will be activated in <b>Phase 3 API Handlers</b>.
+                      Planning run execution with database persistence operates deterministically with SHA-256 snapshot hashes.
                     </span>
                   </div>
                 </div>
@@ -202,9 +251,7 @@ export function OperationsOverview() {
                     size="md"
                     onClick={() => {
                       setIsSolverDialogOpen(false);
-                      alert(
-                        "Solver simulation parameters confirmed! In Phase 3, this executes POST /api/planning-runs and hashes the snapshot with SHA-256."
-                      );
+                      window.location.href = "/app/planning";
                     }}
                   >
                     Execute Optimization Plan
@@ -216,51 +263,77 @@ export function OperationsOverview() {
         }
       />
 
-      {/* KPI Cards Row */}
+      {/* KPI Cards Row with SVG Circular Progress Rings (Behance reference) */}
       <div className={styles.kpiRow}>
-        <Card variant="elevated">
-          <CardHeader>
-            <div className={styles.kpiCardTop}>
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiCardTop}>
+            <div className={styles.kpiIconBadge}>
+              <Boxes size={18} />
+            </div>
+            <span className={styles.kpiDeltaPill}>
+              <ArrowUpRight size={12} /> +12.5%
+            </span>
+          </div>
+          <div className={styles.kpiBodyRow}>
+            <div className={styles.kpiTextGroup}>
               <span className={styles.kpiTitle}>Active Inventory</span>
-              <Boxes size={16} className={styles.kpiIcon} />
+              <div className={styles.kpiNumber}>32,450 kg</div>
+              <span className={styles.kpiDesc}>32 cold-room lots tracked</span>
             </div>
-            <div className={styles.kpiNumber}>32,450 kg</div>
-            <CardDescription>32 cold-room lots currently tracked</CardDescription>
-          </CardHeader>
-        </Card>
+            <RingProgressGauge percent={86} color="#0f172a" />
+          </div>
+        </div>
 
-        <Card variant="glow">
-          <CardHeader>
-            <div className={styles.kpiCardTop}>
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiCardTop}>
+            <div className={clsx(styles.kpiIconBadge, styles.warningBadge)}>
+              <AlertTriangle size={18} />
+            </div>
+            <span className={clsx(styles.kpiDeltaPill, styles.warningDelta)}>5 lots at risk</span>
+          </div>
+          <div className={styles.kpiBodyRow}>
+            <div className={styles.kpiTextGroup}>
               <span className={styles.kpiTitle}>At-Risk Stock (&lt; 72h)</span>
-              <AlertTriangle size={16} className={styles.kpiWarningIcon} />
+              <div className={styles.kpiNumberWarning}>4,850 kg</div>
+              <span className={styles.kpiDesc}>Flagged for dynamic salvage</span>
             </div>
-            <div className={styles.kpiNumberWarning}>4,850 kg</div>
-            <CardDescription>5 lots flagged for dynamic salvage</CardDescription>
-          </CardHeader>
-        </Card>
+            <RingProgressGauge percent={15} color="#d97706" />
+          </div>
+        </div>
 
-        <Card variant="elevated">
-          <CardHeader>
-            <div className={styles.kpiCardTop}>
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiCardTop}>
+            <div className={styles.kpiIconBadge}>
+              <Truck size={18} />
+            </div>
+            <span className={styles.kpiDeltaPill}>Nominal Fleet</span>
+          </div>
+          <div className={styles.kpiBodyRow}>
+            <div className={styles.kpiTextGroup}>
               <span className={styles.kpiTitle}>Reefer Utilization</span>
-              <Truck size={16} className={styles.kpiIcon} />
+              <div className={styles.kpiNumber}>94.2%</div>
+              <span className={styles.kpiDesc}>18 active carrier reefers</span>
             </div>
-            <div className={styles.kpiNumber}>94.2%</div>
-            <CardDescription>18 active refrigerated carrier routes</CardDescription>
-          </CardHeader>
-        </Card>
+            <RingProgressGauge percent={94} color="#059669" />
+          </div>
+        </div>
 
-        <Card variant="elevated">
-          <CardHeader>
-            <div className={styles.kpiCardTop}>
-              <span className={styles.kpiTitle}>Salvaged Margin</span>
-              <TrendingUp size={16} className={styles.kpiLimeIcon} />
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiCardTop}>
+            <div className={clsx(styles.kpiIconBadge, styles.emeraldBadge)}>
+              <TrendingUp size={18} />
             </div>
-            <div className={styles.kpiNumberLime}>+$18,450</div>
-            <CardDescription>Recouped via secondary markdowns this week</CardDescription>
-          </CardHeader>
-        </Card>
+            <span className={clsx(styles.kpiDeltaPill, styles.emeraldDelta)}>+21.4% MoM</span>
+          </div>
+          <div className={styles.kpiBodyRow}>
+            <div className={styles.kpiTextGroup}>
+              <span className={styles.kpiTitle}>Salvaged Margin</span>
+              <div className={styles.kpiNumberEmerald}>+₹18,450</div>
+              <span className={styles.kpiDesc}>Recouped via markdowns</span>
+            </div>
+            <RingProgressGauge percent={78} color="#059669" />
+          </div>
+        </div>
       </div>
 
       {/* Urgent Shelf-Life Attention Banner */}
@@ -273,7 +346,7 @@ export function OperationsOverview() {
             <span className={styles.alertTitle}>Shelf-Life Urgency Attention Required</span>
             <span className={styles.alertDescription}>
               Batch <b>B-BERRY-802</b> (Sweet Strawberries) has 2.6 days remaining. Diverting to Valley Pre-Cut
-              preserves $1,338.75 in revenue versus $1,050.00 disposal loss under baseline FIFO.
+              preserves ₹1,338.75 in revenue versus ₹1,050.00 disposal loss under baseline FIFO.
             </span>
           </div>
         </div>
@@ -286,19 +359,23 @@ export function OperationsOverview() {
       <Card variant="default">
         <div className={styles.tableCardHeader}>
           <div className={styles.tableTitleGroup}>
-            <CardTitle>Active Dispatch Assignments</CardTitle>
+            <CardTitle>Active Dispatches & Urgency Router</CardTitle>
             <CardDescription>
-              Real-time batch allocations matched to transport routes, customer SLAs, and cold-chain profiles.
+              Real-time multi-constraint dispatch status with remaining shelf-life SLA checks
             </CardDescription>
           </div>
 
+          {/* Commodity Filters */}
           <div className={styles.filterGroup}>
-            <span className={styles.filterLabel}>Category:</span>
+            <span className={styles.filterLabel}>Commodity:</span>
             {["ALL", "BERRIES", "LEAFY GREENS", "AVOCADOS", "CITRUS"].map((cat) => (
               <button
                 key={cat}
                 type="button"
-                className={clsx(styles.filterPill, filterCategory === cat && styles.activeFilterPill)}
+                className={clsx(
+                  styles.filterPill,
+                  filterCategory === cat && styles.activeFilterPill
+                )}
                 onClick={() => setFilterCategory(cat)}
               >
                 {cat}
@@ -311,13 +388,13 @@ export function OperationsOverview() {
           <TableHeader>
             <TableRow>
               <TableHead>Batch Lot</TableHead>
-              <TableHead>Produce Commodity</TableHead>
-              <TableHead>Quantity (kg)</TableHead>
-              <TableHead>Storage Temp</TableHead>
-              <TableHead>Clock to Expiry</TableHead>
+              <TableHead>Produce & Category</TableHead>
+              <TableHead>Weight</TableHead>
+              <TableHead>Temp</TableHead>
+              <TableHead>Remaining Clock</TableHead>
               <TableHead>Assigned Destination</TableHead>
-              <TableHead>Carrier Route</TableHead>
-              <TableHead>Reason Code</TableHead>
+              <TableHead>Reefer Carrier</TableHead>
+              <TableHead>Dispatch Reason</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -343,7 +420,13 @@ export function OperationsOverview() {
                 </TableCell>
                 <TableCell>
                   <Badge
-                    variant={row.urgency === "critical" ? "critical" : row.urgency === "warning" ? "warning" : "fresh"}
+                    variant={
+                      row.urgency === "critical"
+                        ? "critical"
+                        : row.urgency === "warning"
+                        ? "warning"
+                        : "fresh"
+                    }
                     size="sm"
                     pulse={row.urgency === "critical"}
                   >
@@ -358,11 +441,11 @@ export function OperationsOverview() {
                 </TableCell>
                 <TableCell>
                   <div className={styles.reasonBadgeCell}>
-                    <Badge variant={row.discount > 0 ? "salvage" : "neutral"} size="sm">
+                    <Badge variant="neutral" size="sm">
                       {row.reasonCode}
                     </Badge>
                     {row.discount > 0 && (
-                      <span className={styles.discountTag}>{row.discount}% OFF</span>
+                      <span className={styles.discountTag}>-{row.discount}%</span>
                     )}
                   </div>
                 </TableCell>

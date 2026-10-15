@@ -5,7 +5,7 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-  background-color: rgba(7, 9, 11, 0.75);
+  background-color: rgba(15, 23, 42, 0.4);
   backdrop-filter: blur(4px);
   animation: fadeIn $transition-fast;
 }
@@ -19,9 +19,9 @@
   max-width: 540px;
   max-height: 85vh;
   transform: translate(-50%, -50%);
-  background-color: $color-dark-850;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-xl;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-2xl;
   box-shadow: $shadow-lg;
   padding: $space-6;
   overflow-y: auto;
@@ -33,8 +33,8 @@
   position: absolute;
   top: $space-4;
   right: $space-4;
-  border-radius: $radius-sm;
-  color: $color-slate-400;
+  border-radius: $radius-full;
+  color: $color-text-secondary;
   padding: $space-1;
   display: flex;
   align-items: center;
@@ -42,8 +42,8 @@
   transition: color $transition-fast, background-color $transition-fast;
 
   &:hover {
-    color: #ffffff;
-    background-color: $color-dark-750;
+    color: $color-text-title;
+    background-color: #f1f5f9;
   }
 }
 
@@ -57,13 +57,13 @@
 .title {
   font-size: $text-lg;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.01em;
 }
 
 .description {
   font-size: $text-sm;
-  color: $color-slate-400;
+  color: $color-text-secondary;
   line-height: 1.5;
 }
 
@@ -74,7 +74,7 @@
   gap: $space-3;
   margin-top: $space-6;
   padding-top: $space-4;
-  border-top: 1px solid $color-dark-750;
+  border-top: 1px solid $color-border-subtle;
 }
 
 @keyframes fadeIn {

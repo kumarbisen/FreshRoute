@@ -36,3 +36,9 @@ next-env.d.ts
 
 # prisma generated engines
 prisma/migrations/*/*.sql
+
+
+bugs.md
+roadmap.md
+taskboard.md
+project.md

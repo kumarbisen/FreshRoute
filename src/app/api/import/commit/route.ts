@@ -17,6 +17,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No validated rows provided for commit" }, { status: 400 });
     }
 
+    if (rows.length > 5000) {
+      return NextResponse.json({ error: "Batch commit exceeds maximum limit of 5,000 rows" }, { status: 400 });
+    }
+
     const result = await commitCsvImport(orgId, type, rows);
 
     const statusCode = result.failedCount > 0 ? 207 : 200; // Multi-Status or OK

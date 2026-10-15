@@ -1,0 +1,16 @@
+code,name,address,city,state,postalCode,latitude,longitude,totalCapacityKg,totalVolumeM3,coldStorageType
+DC-AZ01-SHI,Shimla Western Himalayan Cold Hub,NH-5 Highway Terminal,Shimla,HP,171001,31.104800,77.173400,300000.00,2200.00,CONTROLLED_ATMOSPHERE_CHAMBERS
+DC-AZ02-GUW,Guwahati Eastern Himalayan Transit Depot,Lokhra Industrial Corridor,Guwahati,AS,781034,26.115800,91.708600,250000.00,1800.00,MULTI_COMMODITY_COLD_ROOMS
+DC-AZ03-KOL,Kolkata Lower Gangetic Distribution Terminal,Dankuni Logistics Park,Kolkata,WB,712311,22.685300,88.293800,450000.00,3200.00,DUAL_TEMP_FISH_PRODUCE
+DC-AZ04-VAR,Varanasi Middle Gangetic Agro Gateway,NH-19 Cargo Terminal,Varanasi,UP,221002,25.317600,82.973900,380000.00,2600.00,INTEGRATED_PACKHOUSE_COLDSTORE
+DC-AZ05-NOI,Noida Upper Gangetic Reefer Center,Ecotech Industrial Area,Greater Noida,UP,201306,28.474400,77.504000,500000.00,3500.00,HIGH_THROUGHPUT_AUTOMATED_REEFER
+DC-AZ06-DEL,Delhi NCR Kundli Trans-Gangetic Food Depot,Kundli Mega Food Park Zone,Sonipat,HR,131028,28.872400,77.126400,600000.00,4200.00,MULTI_ZONE_FROZEN_CHILLED
+DC-AZ07-RAI,Raipur Eastern Plateau Perishable Depot,Bhatagaon Logistics Complex,Raipur,CG,492013,21.251400,81.629600,280000.00,1900.00,SOLAR_ASSISTED_COLD_STORAGE
+DC-AZ08-IND,Indore Central Plateau Agro Hub,Pithampur Special Economic Zone,Indore,MP,454775,22.614600,75.681100,420000.00,3000.00,GRAIN_PULSE_COLD_CHAMBERS
+DC-AZ09-NAS,Nashik Western Plateau Horticulture Terminal,Pimpalgaon Grape Park,Nashik,MH,422209,20.170600,73.987700,550000.00,3800.00,RAPID_PRECOOLING_CA_HUB
+DC-AZ10-BLR,Bengaluru Southern Plateau Cold Network,Dabaspete Logistics Node,Bengaluru,KA,562111,13.232400,77.243500,520000.00,3600.00,MULTI_TEMP_AUTOMATED_REEFER
+DC-AZ11-VIZ,Visakhapatnam East Coast Marine Terminal,Gajuwaka Port Access Road,Visakhapatnam,AP,530026,17.690500,83.210000,350000.00,2400.00,DEEP_FREEZE_MARINE_FACILITY
+DC-AZ12-KOC,Kochi West Coast Seafood & Spice Hub,Willingdon Island Terminal,Kochi,KL,682003,9.961000,76.275000,320000.00,2200.00,CRYOGENIC_SEAFOOD_STORAGE
+DC-AZ13-AHM,Ahmedabad Gujarat Plains Logistics Center,Changodar Agro Industrial Area,Ahmedabad,GJ,382213,22.923800,72.439800,480000.00,3400.00,DAIRY_PRODUCE_DUAL_ZONE
+DC-AZ14-JOD,Jodhpur Western Dry Cold Depot,Boronada Industrial Park,Jodhpur,RJ,342012,26.208900,72.951100,220000.00,1600.00,THERMALLY_INSULATED_DRY_CHILL
+DC-AZ15-PBL,Port Blair Island Cold Storage Dock,Haddo Wharf Cargo Area,Port Blair,AN,744102,11.678400,92.727500,120000.00,900.00,PORTABLE_REEFER_CONTAINER_TERMINAL

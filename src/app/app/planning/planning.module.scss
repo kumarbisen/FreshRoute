@@ -1,0 +1,844 @@
+@use "@/styles/tokens" as *;
+
+.planningCockpit {
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: $space-6 $space-8 $space-16;
+  color: $color-light-100;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+// -------------------------------------------------------------
+// Top Header & Actions
+// -------------------------------------------------------------
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-6;
+  padding-bottom: $space-6;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  .badgeRow {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  .engineBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: $color-lime-dim;
+    color: $color-lime-300;
+    border: 1px solid rgba(212, 249, 51, 0.3);
+  }
+
+  .title {
+    font-size: $text-3xl;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: $color-light-50;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: $text-sm;
+    color: $color-slate-400;
+    margin: 0;
+    max-width: 680px;
+    line-height: 1.5;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-3;
+}
+
+.warehouseSelector {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-md;
+  padding: $space-2 $space-3;
+
+  label {
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $color-slate-400;
+    text-transform: uppercase;
+  }
+
+  select {
+    background: transparent;
+    border: none;
+    color: $color-light-50;
+    font-size: $text-sm;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+
+    option {
+      background: $color-dark-900;
+      color: $color-light-100;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Readiness Banner
+// -------------------------------------------------------------
+.readinessCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-4 $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  &.errorBorder {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.04);
+  }
+
+  &.readyBorder {
+    border-color: rgba(212, 249, 51, 0.25);
+  }
+}
+
+.readinessHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.readinessStatusBadge {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $text-sm;
+  font-weight: 700;
+  font-family: $font-mono;
+
+  &.ready {
+    color: $color-lime-300;
+  }
+
+  &.blocked {
+    color: $color-urgency-rose;
+  }
+}
+
+.readinessPills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-2;
+}
+
+.readinessPill {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-family: $font-mono;
+  background: $color-dark-800;
+  border: 1px solid $color-dark-700;
+  color: $color-slate-300;
+
+  &.highlight {
+    border-color: rgba(212, 249, 51, 0.3);
+    color: $color-lime-300;
+  }
+}
+
+.readinessAlerts {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding-top: $space-2;
+  border-top: 1px dashed $color-dark-750;
+
+  .alertItem {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $text-xs;
+    color: $color-urgency-rose;
+  }
+
+  .warningItem {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $text-xs;
+    color: $color-urgency-amber;
+  }
+}
+
+// -------------------------------------------------------------
+// Parameters Accordion
+// -------------------------------------------------------------
+.parametersAccordion {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  .accordionToggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-3 $space-5;
+    background: transparent;
+    border: none;
+    color: $color-light-200;
+    font-size: $text-sm;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-dark-800;
+    }
+
+    .toggleLeft {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+    }
+  }
+
+  .accordionBody {
+    padding: $space-4 $space-5 $space-5;
+    border-top: 1px solid $color-dark-750;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $space-4;
+  }
+}
+
+.paramControl {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  label {
+    font-size: $text-xs;
+    color: $color-slate-300;
+    font-weight: 500;
+  }
+
+  .inputWithUnit {
+    display: flex;
+    align-items: center;
+    background: $color-dark-900;
+    border: 1px solid $color-dark-700;
+    border-radius: $radius-md;
+    padding: $space-2 $space-3;
+    gap: $space-2;
+
+    input {
+      background: transparent;
+      border: none;
+      color: $color-light-50;
+      font-size: $text-sm;
+      font-family: $font-mono;
+      width: 100%;
+      outline: none;
+    }
+
+    span {
+      font-size: $text-xs;
+      font-family: $font-mono;
+      color: $color-slate-400;
+    }
+  }
+
+  .toggleRow {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    margin-top: $space-1;
+    font-size: $text-sm;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      accent-color: $color-lime-400;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Executive KPI Grid
+// -------------------------------------------------------------
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $space-4;
+}
+
+.kpiCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-4 $space-5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $space-2;
+  position: relative;
+  overflow: hidden;
+
+  &.winnerCard {
+    grid-column: span 2;
+    border-color: rgba(212, 249, 51, 0.4);
+    background: linear-gradient(135deg, rgba(212, 249, 51, 0.05) 0%, rgba(16, 21, 26, 0.8) 100%);
+
+    @media (max-width: 900px) {
+      grid-column: span 1;
+    }
+  }
+
+  .kpiLabel {
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $color-slate-400;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kpiValueRow {
+    display: flex;
+    align-items: baseline;
+    gap: $space-2;
+  }
+
+  .kpiValue {
+    font-size: $text-2xl;
+    font-weight: 800;
+    font-family: $font-mono;
+    color: $color-light-50;
+    letter-spacing: -0.02em;
+
+    &.highlightLime {
+      color: $color-lime-300;
+    }
+
+    &.highlightGreen {
+      color: $color-produce-emerald;
+    }
+
+    &.highlightAmber {
+      color: $color-urgency-amber;
+    }
+  }
+
+  .kpiDelta {
+    font-size: $text-xs;
+    font-family: $font-mono;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: $radius-sm;
+
+    &.positive {
+      background: rgba(16, 185, 129, 0.15);
+      color: $color-produce-emerald;
+    }
+
+    &.negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: $color-urgency-rose;
+    }
+  }
+
+  .kpiSub {
+    font-size: $text-xs;
+    color: $color-slate-400;
+    line-height: 1.4;
+  }
+}
+
+// -------------------------------------------------------------
+// Plan Metadata & Switcher Strip
+// -------------------------------------------------------------
+.metadataStrip {
+  background: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  padding: $space-3 $space-5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.metadataLeft {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.planSelectorGroup {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  label {
+    font-size: $text-xs;
+    font-family: $font-mono;
+    color: $color-slate-400;
+  }
+
+  select {
+    background: $color-dark-800;
+    border: 1px solid $color-dark-700;
+    border-radius: $radius-sm;
+    color: $color-light-100;
+    padding: $space-1 $space-3;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.snapshotHashPill {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  background: $color-dark-800;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-full;
+  padding: 3px 10px;
+  font-size: $text-xs;
+  font-family: $font-mono;
+  color: $color-slate-300;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $color-slate-500;
+    color: $color-light-50;
+  }
+
+  .copyIcon {
+    opacity: 0.6;
+  }
+}
+
+// -------------------------------------------------------------
+// Tabs Navigation
+// -------------------------------------------------------------
+.tabsNav {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  border-bottom: 1px solid $color-dark-750;
+  padding-bottom: 2px;
+}
+
+.tabBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-5;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: $color-slate-400;
+  font-size: $text-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $color-light-200;
+  }
+
+  &.active {
+    color: $color-lime-300;
+    border-bottom-color: $color-lime-300;
+  }
+
+  .tabCountBadge {
+    padding: 1px 6px;
+    border-radius: $radius-full;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    background: $color-dark-800;
+    color: $color-slate-300;
+  }
+}
+
+// -------------------------------------------------------------
+// Table Styles (Dispatch Manifest & Comparisons)
+// -------------------------------------------------------------
+.tableCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.tableToolbar {
+  padding: $space-3 $space-5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-3;
+  border-bottom: 1px solid $color-dark-750;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  background: $color-dark-900;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-md;
+  padding: $space-2 $space-3;
+  width: 320px;
+
+  input {
+    background: transparent;
+    border: none;
+    color: $color-light-50;
+    font-size: $text-sm;
+    outline: none;
+    width: 100%;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $text-sm;
+  text-align: left;
+
+  th {
+    background: $color-dark-900;
+    color: $color-slate-400;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-dark-750;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-dark-800;
+    color: $color-light-200;
+    white-space: nowrap;
+  }
+
+  tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}
+
+.monoCol {
+  font-family: $font-mono;
+}
+
+.batchBadge {
+  display: inline-flex;
+  flex-direction: column;
+
+  .batchCode {
+    font-family: $font-mono;
+    font-weight: 700;
+    color: $color-light-50;
+  }
+
+  .commoditySub {
+    font-size: $text-xs;
+    color: $color-slate-400;
+  }
+}
+
+.rslBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: $radius-sm;
+
+  &.safe {
+    background: rgba(16, 185, 129, 0.15);
+    color: $color-produce-emerald;
+  }
+
+  &.tight {
+    background: rgba(245, 158, 11, 0.15);
+    color: $color-urgency-amber;
+  }
+
+  &.breach {
+    background: rgba(239, 68, 68, 0.15);
+    color: $color-urgency-rose;
+  }
+}
+
+// -------------------------------------------------------------
+// Allocation Matrix (Heatmap)
+// -------------------------------------------------------------
+.matrixCard {
+  background: $color-dark-850;
+  border: 1px solid $color-dark-750;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.matrixTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $text-sm;
+
+  th,
+  td {
+    border: 1px solid $color-dark-750;
+    padding: $space-3 $space-4;
+    text-align: center;
+  }
+
+  th {
+    background: $color-dark-900;
+    font-family: $font-mono;
+    font-size: $text-xs;
+    color: $color-slate-400;
+    text-transform: uppercase;
+  }
+
+  .batchRowHeader {
+    text-align: left;
+    background: $color-dark-900;
+    min-width: 200px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .matrixCell {
+    min-width: 130px;
+    font-family: $font-mono;
+
+    &.allocated {
+      background: rgba(212, 249, 51, 0.08);
+      color: $color-lime-300;
+      font-weight: 700;
+    }
+
+    &.discounted {
+      background: rgba(192, 132, 252, 0.1);
+      color: $color-salvage-purple;
+    }
+
+    &.empty {
+      color: $color-slate-600;
+    }
+  }
+
+  .summaryCol {
+    font-family: $font-mono;
+    background: $color-dark-900;
+    font-weight: 700;
+  }
+}
+
+// -------------------------------------------------------------
+// Rejections & Explainability
+// -------------------------------------------------------------
+.rejectionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-5;
+}
+
+.rejectionCard {
+  background: $color-dark-900;
+  border: 1px solid $color-dark-750;
+  border-left: 3px solid $color-urgency-rose;
+  border-radius: $radius-md;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  .rejectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: $font-mono;
+    font-size: $text-xs;
+  }
+
+  .rejectionExplanation {
+    font-size: $text-sm;
+    color: $color-light-200;
+  }
+
+  .rejectionFacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
+    padding-top: $space-2;
+    border-top: 1px dashed $color-dark-800;
+
+    .factPill {
+      font-family: $font-mono;
+      font-size: $text-xs;
+      background: $color-dark-800;
+      padding: 2px 6px;
+      border-radius: $radius-sm;
+      color: $color-slate-400;
+    }
+  }
+}
+
+// -------------------------------------------------------------
+// Facts Audit Modal
+// -------------------------------------------------------------
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-6;
+}
+
+.modalDialog {
+  background: $color-dark-900;
+  border: 1px solid $color-dark-700;
+  border-radius: $radius-xl;
+  max-width: 760px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-5 $space-6;
+  border-bottom: 1px solid $color-dark-750;
+
+  h3 {
+    margin: 0;
+    font-size: $text-lg;
+    font-weight: 700;
+    color: $color-light-50;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    color: $color-slate-400;
+    cursor: pointer;
+    font-size: $text-lg;
+
+    &:hover {
+      color: $color-light-50;
+    }
+  }
+}
+
+.modalBody {
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.factsSection {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  h4 {
+    margin: 0;
+    font-size: $text-xs;
+    font-family: $font-mono;
+    text-transform: uppercase;
+    color: $color-lime-300;
+    letter-spacing: 0.05em;
+  }
+
+  .factsTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      padding: $space-2 $space-3;
+      border-bottom: 1px solid $color-dark-800;
+      font-size: $text-sm;
+    }
+
+    td:first-child {
+      color: $color-slate-400;
+      width: 40%;
+    }
+
+    td:last-child {
+      font-family: $font-mono;
+      color: $color-light-100;
+      font-weight: 600;
+    }
+  }
+}

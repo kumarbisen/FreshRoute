@@ -363,8 +363,8 @@ export default function InventoryPage() {
                         </span>
                       </td>
                       <td>
-                        <span className={styles.priceCell}>${batch.unitCost.toFixed(2)}</span>
-                        <span className={styles.subText}>Target: ${batch.basePrice.toFixed(2)}</span>
+                        <span className={styles.priceCell}>₹{batch.unitCost.toFixed(2)}</span>
+                        <span className={styles.subText}>Target: ₹{batch.basePrice.toFixed(2)}</span>
                       </td>
                       <td>
                         <span style={{ fontSize: "0.8125rem", color: "var(--text-primary)", fontWeight: 600 }}>

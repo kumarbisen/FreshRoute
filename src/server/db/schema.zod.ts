@@ -338,18 +338,28 @@ export const CreateScenarioSchema = z.object({
 // CSV IMPORT ROW SCHEMAS
 // -------------------------------------------------------------
 
-export const InventoryCsvRowSchema = z.object({
-  batchCode: z.string().min(2, "Batch code is required"),
-  commodityCode: z.string().min(2, "Commodity code is required"),
-  warehouseCode: z.string().min(2, "Warehouse code is required"),
-  initialQuantityKg: z.coerce.number().positive("Quantity must be greater than 0"),
-  qualityGrade: QualityGradeSchema.default("GRADE_A"),
-  unitCostUsd: z.coerce.number().nonnegative("Unit cost must be non-negative"),
-  basePriceUsd: z.coerce.number().positive("Base price must be positive"),
-  harvestDate: z.coerce.date(),
-  expiryDate: z.coerce.date(),
-  storageTempCelsius: z.coerce.number().default(2.5),
-});
+export const InventoryCsvRowSchema = z
+  .object({
+    batchCode: z.string().min(2, "Batch code is required"),
+    commodityCode: z.string().min(2, "Commodity code is required"),
+    warehouseCode: z.string().min(2, "Warehouse code is required"),
+    initialQuantityKg: z.coerce.number().positive("Quantity must be greater than 0"),
+    qualityGrade: QualityGradeSchema.default("GRADE_A"),
+    unitCostUsd: z.coerce.number().nonnegative("Unit cost must be non-negative").optional(),
+    unitCostInr: z.coerce.number().nonnegative("Unit cost must be non-negative").optional(),
+    unitCost: z.coerce.number().nonnegative("Unit cost must be non-negative").optional(),
+    basePriceUsd: z.coerce.number().positive("Base price must be positive").optional(),
+    basePriceInr: z.coerce.number().positive("Base price must be positive").optional(),
+    basePrice: z.coerce.number().positive("Base price must be positive").optional(),
+    harvestDate: z.coerce.date(),
+    expiryDate: z.coerce.date(),
+    storageTempCelsius: z.coerce.number().default(2.5),
+  })
+  .transform((row) => ({
+    ...row,
+    unitCostUsd: row.unitCostInr ?? row.unitCost ?? row.unitCostUsd ?? 0,
+    basePriceUsd: row.basePriceInr ?? row.basePrice ?? row.basePriceUsd ?? 1,
+  }));
 export type InventoryCsvRow = z.infer<typeof InventoryCsvRowSchema>;
 
 export const DestinationDemandCsvRowSchema = z.object({
@@ -376,18 +386,28 @@ export const DestinationDemandCsvRowSchema = z.object({
 });
 export type DestinationDemandCsvRow = z.infer<typeof DestinationDemandCsvRowSchema>;
 
-export const TransportCsvRowSchema = z.object({
-  routeCode: z.string().min(2, "Route code is required"),
-  originWarehouseCode: z.string().min(2, "Origin warehouse code is required"),
-  destinationRegion: z.string().min(2, "Destination region is required"),
-  carrierName: z.string().min(2, "Carrier name is required"),
-  vehicleType: z.string().default("REEFER_HEAVY_TRUCK"),
-  maxWeightCapacityKg: z.coerce.number().positive("Max weight capacity must be > 0"),
-  fixedTripCostUsd: z.coerce.number().nonnegative("Fixed trip cost must be >= 0"),
-  variableCostPerKgUsd: z.coerce.number().nonnegative("Variable cost must be >= 0"),
-  transitDurationHours: z.coerce.number().positive("Transit duration must be > 0"),
-  handlingDurationHours: z.coerce.number().default(0.5),
-  departureTime: z.coerce.date(),
-  estimatedArrivalTime: z.coerce.date(),
-});
+export const TransportCsvRowSchema = z
+  .object({
+    routeCode: z.string().min(2, "Route code is required"),
+    originWarehouseCode: z.string().min(2, "Origin warehouse code is required"),
+    destinationRegion: z.string().min(2, "Destination region is required"),
+    carrierName: z.string().min(2, "Carrier name is required"),
+    vehicleType: z.string().default("REEFER_HEAVY_TRUCK"),
+    maxWeightCapacityKg: z.coerce.number().positive("Max weight capacity must be > 0"),
+    fixedTripCostUsd: z.coerce.number().nonnegative("Fixed trip cost must be >= 0").optional(),
+    fixedTripCostInr: z.coerce.number().nonnegative("Fixed trip cost must be >= 0").optional(),
+    fixedTripCost: z.coerce.number().nonnegative("Fixed trip cost must be >= 0").optional(),
+    variableCostPerKgUsd: z.coerce.number().nonnegative("Variable cost must be >= 0").optional(),
+    variableCostPerKgInr: z.coerce.number().nonnegative("Variable cost must be >= 0").optional(),
+    variableCostPerKg: z.coerce.number().nonnegative("Variable cost must be >= 0").optional(),
+    transitDurationHours: z.coerce.number().positive("Transit duration must be > 0"),
+    handlingDurationHours: z.coerce.number().default(0.5),
+    departureTime: z.coerce.date(),
+    estimatedArrivalTime: z.coerce.date(),
+  })
+  .transform((row) => ({
+    ...row,
+    fixedTripCostUsd: row.fixedTripCostInr ?? row.fixedTripCost ?? row.fixedTripCostUsd ?? 0,
+    variableCostPerKgUsd: row.variableCostPerKgInr ?? row.variableCostPerKg ?? row.variableCostPerKgUsd ?? 0,
+  }));
 export type TransportCsvRow = z.infer<typeof TransportCsvRowSchema>;

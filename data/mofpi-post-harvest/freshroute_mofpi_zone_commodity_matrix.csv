@@ -1,0 +1,104 @@
+matrix_id,zone_code,zone_name,commodity_code,commodity_name,category,peak_harvest_months,baseline_farm_loss_percent,baseline_market_loss_percent,baseline_total_loss_percent,freshroute_projected_loss_reduction_percent,freshroute_projected_salvage_percent,recommended_pre_cooling_hours,optimal_transit_temp_celsius
+MAT-0001,ZONE-01,Western Himalayan Region,CMD-APP-01,Apple,FRUITS,Mar - Jul,7.87,1.64,9.51,3.61,4.28,2.0,0.0
+MAT-0002,ZONE-01,Western Himalayan Region,CMD-MSH-01,Mushroom (Button / Oyster),VEGETABLES,Mar - Jul,6.21,0.99,7.20,2.74,3.24,2.0,1.0
+MAT-0003,ZONE-01,Western Himalayan Region,CMD-BNS-01,Beans (French / Cluster),VEGETABLES,Mar - Jul,3.68,3.43,7.11,2.70,3.20,2.0,5.0
+MAT-0004,ZONE-02,Eastern Himalayan Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0005,ZONE-02,Eastern Himalayan Region,CMD-URD-01,Black Gram (Urad),PULSES,Oct - Mar,4.95,0.88,5.83,2.22,2.62,0.5,15.0
+MAT-0006,ZONE-02,Eastern Himalayan Region,CMD-APP-01,Apple,FRUITS,Mar - Jul,7.87,1.64,9.51,3.61,4.28,2.0,0.0
+MAT-0007,ZONE-02,Eastern Himalayan Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0008,ZONE-02,Eastern Himalayan Region,CMD-PNA-01,Pineapple,FRUITS,Mar - Jul,4.22,1.80,6.02,2.29,2.71,2.0,7.0
+MAT-0009,ZONE-02,Eastern Himalayan Region,CMD-BKP-01,Black Pepper,PLANTATION_SPICES,Mar - Jul,1.11,0.19,1.30,0.49,0.59,0.5,15.0
+MAT-0010,ZONE-02,Eastern Himalayan Region,CMD-TRM-01,Turmeric (Cured Rhizome),PLANTATION_SPICES,Mar - Jul,3.78,1.57,5.35,2.03,2.41,0.5,12.0
+MAT-0011,ZONE-02,Eastern Himalayan Region,CMD-FSH-INL-01,Inland Fisheries (Freshwater Fish),FISHERIES,Mar - Jul,3.80,1.06,4.86,1.85,2.19,2.0,0.0
+MAT-0012,ZONE-03,Lower Gangetic Plain Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0013,ZONE-03,Lower Gangetic Plain Region,CMD-MGO-01,Mango,FRUITS,Mar - Jul,6.03,2.50,8.53,3.24,3.84,2.0,12.0
+MAT-0014,ZONE-03,Lower Gangetic Plain Region,CMD-CAB-01,Cabbage,VEGETABLES,Mar - Jul,5.83,2.32,8.15,3.10,3.67,2.0,0.0
+MAT-0015,ZONE-03,Lower Gangetic Plain Region,CMD-CAU-01,Cauliflower,VEGETABLES,Mar - Jul,5.76,2.13,7.89,3.00,3.55,2.0,0.0
+MAT-0016,ZONE-03,Lower Gangetic Plain Region,CMD-POT-01,Potato,VEGETABLES,Mar - Jul,5.10,0.86,5.96,2.26,2.68,2.0,8.0
+MAT-0017,ZONE-03,Lower Gangetic Plain Region,CMD-FSH-INL-01,Inland Fisheries (Freshwater Fish),FISHERIES,Mar - Jul,3.80,1.06,4.86,1.85,2.19,2.0,0.0
+MAT-0018,ZONE-04,Middle Gangetic Plain Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0019,ZONE-04,Middle Gangetic Plain Region,CMD-WHT-01,Wheat,CEREALS,Oct - Mar,3.61,0.56,4.17,1.58,1.88,0.5,12.0
+MAT-0020,ZONE-04,Middle Gangetic Plain Region,CMD-MAZ-01,Maize (Corn),CEREALS,Oct - Mar,3.22,0.67,3.89,1.48,1.75,0.5,10.0
+MAT-0021,ZONE-04,Middle Gangetic Plain Region,CMD-GUA-01,Guava,FRUITS,Mar - Jul,11.59,3.46,15.05,5.72,6.77,2.0,8.0
+MAT-0022,ZONE-04,Middle Gangetic Plain Region,CMD-MGO-01,Mango,FRUITS,Mar - Jul,6.03,2.50,8.53,3.24,3.84,2.0,12.0
+MAT-0023,ZONE-04,Middle Gangetic Plain Region,CMD-POT-01,Potato,VEGETABLES,Mar - Jul,5.10,0.86,5.96,2.26,2.68,2.0,8.0
+MAT-0024,ZONE-04,Middle Gangetic Plain Region,CMD-TOM-01,Tomato,VEGETABLES,Mar - Jul,8.37,3.25,11.62,4.42,5.23,2.0,10.0
+MAT-0025,ZONE-04,Middle Gangetic Plain Region,CMD-SGC-01,Sugarcane,PLANTATION_SPICES,Mar - Jul,5.63,1.71,7.34,2.79,3.30,0.5,18.0
+MAT-0026,ZONE-05,Upper Gangetic Plain Region,CMD-WHT-01,Wheat,CEREALS,Oct - Mar,3.61,0.56,4.17,1.58,1.88,0.5,12.0
+MAT-0027,ZONE-05,Upper Gangetic Plain Region,CMD-MSD-01,Mustard / Rapeseed,OILSEEDS,Mar - Jul,4.08,0.38,4.46,1.69,2.01,0.5,10.0
+MAT-0028,ZONE-05,Upper Gangetic Plain Region,CMD-MGO-01,Mango,FRUITS,Mar - Jul,6.03,2.50,8.53,3.24,3.84,2.0,12.0
+MAT-0029,ZONE-05,Upper Gangetic Plain Region,CMD-POT-01,Potato,VEGETABLES,Mar - Jul,5.10,0.86,5.96,2.26,2.68,2.0,8.0
+MAT-0030,ZONE-05,Upper Gangetic Plain Region,CMD-SGC-01,Sugarcane,PLANTATION_SPICES,Mar - Jul,5.63,1.71,7.34,2.79,3.30,0.5,18.0
+MAT-0031,ZONE-05,Upper Gangetic Plain Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0032,ZONE-05,Upper Gangetic Plain Region,CMD-PLT-01,Poultry Meat (Broiler Chicken),POULTRY,Mar - Jul,2.51,3.12,5.63,2.14,2.53,0.5,-1.0
+MAT-0033,ZONE-06,Trans-Gangetic Plain Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0034,ZONE-06,Trans-Gangetic Plain Region,CMD-WHT-01,Wheat,CEREALS,Oct - Mar,3.61,0.56,4.17,1.58,1.88,0.5,12.0
+MAT-0035,ZONE-06,Trans-Gangetic Plain Region,CMD-CTR-01,Citrus (Mandarin / Orange / Lime),FRUITS,Mar - Jul,5.53,2.18,7.71,2.93,3.47,2.0,5.0
+MAT-0036,ZONE-06,Trans-Gangetic Plain Region,CMD-CAU-01,Cauliflower,VEGETABLES,Mar - Jul,5.76,2.13,7.89,3.00,3.55,2.0,0.0
+MAT-0037,ZONE-06,Trans-Gangetic Plain Region,CMD-MSH-01,Mushroom (Button / Oyster),VEGETABLES,Mar - Jul,6.21,0.99,7.20,2.74,3.24,2.0,1.0
+MAT-0038,ZONE-06,Trans-Gangetic Plain Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0039,ZONE-06,Trans-Gangetic Plain Region,CMD-PLT-01,Poultry Meat (Broiler Chicken),POULTRY,Mar - Jul,2.51,3.12,5.63,2.14,2.53,0.5,-1.0
+MAT-0040,ZONE-06,Trans-Gangetic Plain Region,CMD-EGG-01,Egg (Layer Poultry),EGGS,Mar - Jul,4.40,1.63,6.03,2.29,2.71,0.5,10.0
+MAT-0041,ZONE-07,Eastern Plateau and Hills Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0042,ZONE-07,Eastern Plateau and Hills Region,CMD-MAZ-01,Maize (Corn),CEREALS,Oct - Mar,3.22,0.67,3.89,1.48,1.75,0.5,10.0
+MAT-0043,ZONE-07,Eastern Plateau and Hills Region,CMD-TUR-01,Pigeon Pea (Tur / Arhar),PULSES,Oct - Mar,4.67,0.99,5.66,2.15,2.55,0.5,15.0
+MAT-0044,ZONE-07,Eastern Plateau and Hills Region,CMD-TOM-01,Tomato,VEGETABLES,Mar - Jul,8.37,3.25,11.62,4.42,5.23,2.0,10.0
+MAT-0045,ZONE-07,Eastern Plateau and Hills Region,CMD-OKR-01,Okra (Bhindi / Ladyfinger),VEGETABLES,Mar - Jul,3.76,2.25,6.01,2.28,2.70,2.0,8.0
+MAT-0046,ZONE-07,Eastern Plateau and Hills Region,CMD-TRM-01,Turmeric (Cured Rhizome),PLANTATION_SPICES,Mar - Jul,3.78,1.57,5.35,2.03,2.41,0.5,12.0
+MAT-0047,ZONE-07,Eastern Plateau and Hills Region,CMD-FSH-INL-01,Inland Fisheries (Freshwater Fish),FISHERIES,Mar - Jul,3.80,1.06,4.86,1.85,2.19,2.0,0.0
+MAT-0048,ZONE-08,Central Plateau and Hills Region,CMD-WHT-01,Wheat,CEREALS,Oct - Mar,3.61,0.56,4.17,1.58,1.88,0.5,12.0
+MAT-0049,ZONE-08,Central Plateau and Hills Region,CMD-CHK-01,Chickpea (Gram / Chana),PULSES,Oct - Mar,5.89,0.85,6.74,2.56,3.03,0.5,12.0
+MAT-0050,ZONE-08,Central Plateau and Hills Region,CMD-MSD-01,Mustard / Rapeseed,OILSEEDS,Mar - Jul,4.08,0.38,4.46,1.69,2.01,0.5,10.0
+MAT-0051,ZONE-08,Central Plateau and Hills Region,CMD-SOY-01,Soybean,OILSEEDS,Mar - Jul,6.58,0.93,7.51,2.85,3.38,0.5,12.0
+MAT-0052,ZONE-08,Central Plateau and Hills Region,CMD-GUA-01,Guava,FRUITS,Mar - Jul,11.59,3.46,15.05,5.72,6.77,2.0,8.0
+MAT-0053,ZONE-08,Central Plateau and Hills Region,CMD-COR-01,Coriander Seed,PLANTATION_SPICES,Mar - Jul,4.72,0.60,5.32,2.02,2.39,0.5,12.0
+MAT-0054,ZONE-08,Central Plateau and Hills Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0055,ZONE-09,Western Plateau and Hills Region,CMD-CTN-01,Cottonseed,OILSEEDS,Mar - Jul,2.47,0.40,2.87,1.09,1.29,0.5,15.0
+MAT-0056,ZONE-09,Western Plateau and Hills Region,CMD-SOY-01,Soybean,OILSEEDS,Mar - Jul,6.58,0.93,7.51,2.85,3.38,0.5,12.0
+MAT-0057,ZONE-09,Western Plateau and Hills Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0058,ZONE-09,Western Plateau and Hills Region,CMD-CTR-01,Citrus (Mandarin / Orange / Lime),FRUITS,Mar - Jul,5.53,2.18,7.71,2.93,3.47,2.0,5.0
+MAT-0059,ZONE-09,Western Plateau and Hills Region,CMD-GRP-01,Grapes,FRUITS,Mar - Jul,5.09,2.05,7.14,2.71,3.21,2.0,-0.5
+MAT-0060,ZONE-09,Western Plateau and Hills Region,CMD-POM-01,Pomegranate,FRUITS,Mar - Jul,4.09,2.73,6.82,2.59,3.07,2.0,5.0
+MAT-0061,ZONE-09,Western Plateau and Hills Region,CMD-ONN-01,Onion,VEGETABLES,Mar - Jul,5.31,1.96,7.27,2.76,3.27,2.0,0.0
+MAT-0062,ZONE-09,Western Plateau and Hills Region,CMD-SGC-01,Sugarcane,PLANTATION_SPICES,Mar - Jul,5.63,1.71,7.34,2.79,3.30,0.5,18.0
+MAT-0063,ZONE-10,Southern Plateau and Hills Region,CMD-TUR-01,Pigeon Pea (Tur / Arhar),PULSES,Oct - Mar,4.67,0.99,5.66,2.15,2.55,0.5,15.0
+MAT-0064,ZONE-10,Southern Plateau and Hills Region,CMD-GNT-01,Groundnut (Peanut),OILSEEDS,Mar - Jul,4.70,1.03,5.73,2.18,2.58,0.5,8.0
+MAT-0065,ZONE-10,Southern Plateau and Hills Region,CMD-MGO-01,Mango,FRUITS,Mar - Jul,6.03,2.50,8.53,3.24,3.84,2.0,12.0
+MAT-0066,ZONE-10,Southern Plateau and Hills Region,CMD-TOM-01,Tomato,VEGETABLES,Mar - Jul,8.37,3.25,11.62,4.42,5.23,2.0,10.0
+MAT-0067,ZONE-10,Southern Plateau and Hills Region,CMD-TAP-01,Tapioca (Cassava),VEGETABLES,Mar - Jul,3.39,1.48,4.87,1.85,2.19,2.0,3.0
+MAT-0068,ZONE-10,Southern Plateau and Hills Region,CMD-CHL-01,Chilli (Dry Red),PLANTATION_SPICES,Mar - Jul,5.20,0.91,6.11,2.32,2.75,0.5,8.0
+MAT-0069,ZONE-10,Southern Plateau and Hills Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0070,ZONE-10,Southern Plateau and Hills Region,CMD-PLT-01,Poultry Meat (Broiler Chicken),POULTRY,Mar - Jul,2.51,3.12,5.63,2.14,2.53,0.5,-1.0
+MAT-0071,ZONE-10,Southern Plateau and Hills Region,CMD-EGG-01,Egg (Layer Poultry),EGGS,Mar - Jul,4.40,1.63,6.03,2.29,2.71,0.5,10.0
+MAT-0072,ZONE-11,East Coast Plains and Hills Region,CMD-PAD-01,Paddy (Rice),CEREALS,Oct - Mar,4.16,0.61,4.77,1.81,2.15,0.5,15.0
+MAT-0073,ZONE-11,East Coast Plains and Hills Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0074,ZONE-11,East Coast Plains and Hills Region,CMD-CSH-01,Cashew Nut (Raw Seed),PLANTATION_SPICES,Mar - Jul,3.11,0.61,3.72,1.41,1.67,0.5,15.0
+MAT-0075,ZONE-11,East Coast Plains and Hills Region,CMD-CCN-01,Coconut (Mature Nut),PLANTATION_SPICES,Mar - Jul,2.85,1.00,3.85,1.46,1.73,0.5,12.0
+MAT-0076,ZONE-11,East Coast Plains and Hills Region,CMD-CHL-01,Chilli (Dry Red),PLANTATION_SPICES,Mar - Jul,5.20,0.91,6.11,2.32,2.75,0.5,8.0
+MAT-0077,ZONE-11,East Coast Plains and Hills Region,CMD-FSH-INL-01,Inland Fisheries (Freshwater Fish),FISHERIES,Mar - Jul,3.80,1.06,4.86,1.85,2.19,2.0,0.0
+MAT-0078,ZONE-11,East Coast Plains and Hills Region,CMD-FSH-MAR-01,Marine Fisheries (Sea Catch),FISHERIES,Mar - Jul,7.00,1.76,8.76,3.33,3.94,2.0,-1.0
+MAT-0079,ZONE-12,West Coast Plains and Ghat Region,CMD-URD-01,Black Gram (Urad),PULSES,Oct - Mar,4.95,0.88,5.83,2.22,2.62,0.5,15.0
+MAT-0080,ZONE-12,West Coast Plains and Ghat Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0081,ZONE-12,West Coast Plains and Ghat Region,CMD-TAP-01,Tapioca (Cassava),VEGETABLES,Mar - Jul,3.39,1.48,4.87,1.85,2.19,2.0,3.0
+MAT-0082,ZONE-12,West Coast Plains and Ghat Region,CMD-ARC-01,Areca Nut (Betel Nut),PLANTATION_SPICES,Mar - Jul,3.58,0.83,4.41,1.68,1.98,0.5,18.0
+MAT-0083,ZONE-12,West Coast Plains and Ghat Region,CMD-CSH-01,Cashew Nut (Raw Seed),PLANTATION_SPICES,Mar - Jul,3.11,0.61,3.72,1.41,1.67,0.5,15.0
+MAT-0084,ZONE-12,West Coast Plains and Ghat Region,CMD-CCN-01,Coconut (Mature Nut),PLANTATION_SPICES,Mar - Jul,2.85,1.00,3.85,1.46,1.73,0.5,12.0
+MAT-0085,ZONE-12,West Coast Plains and Ghat Region,CMD-BKP-01,Black Pepper,PLANTATION_SPICES,Mar - Jul,1.11,0.19,1.30,0.49,0.59,0.5,15.0
+MAT-0086,ZONE-12,West Coast Plains and Ghat Region,CMD-FSH-MAR-01,Marine Fisheries (Sea Catch),FISHERIES,Mar - Jul,7.00,1.76,8.76,3.33,3.94,2.0,-1.0
+MAT-0087,ZONE-13,Gujarat Plains and Hills Region,CMD-MSD-01,Mustard / Rapeseed,OILSEEDS,Mar - Jul,4.08,0.38,4.46,1.69,2.01,0.5,10.0
+MAT-0088,ZONE-13,Gujarat Plains and Hills Region,CMD-CTN-01,Cottonseed,OILSEEDS,Mar - Jul,2.47,0.40,2.87,1.09,1.29,0.5,15.0
+MAT-0089,ZONE-13,Gujarat Plains and Hills Region,CMD-GNT-01,Groundnut (Peanut),OILSEEDS,Mar - Jul,4.70,1.03,5.73,2.18,2.58,0.5,8.0
+MAT-0090,ZONE-13,Gujarat Plains and Hills Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0091,ZONE-13,Gujarat Plains and Hills Region,CMD-POT-01,Potato,VEGETABLES,Mar - Jul,5.10,0.86,5.96,2.26,2.68,2.0,8.0
+MAT-0092,ZONE-13,Gujarat Plains and Hills Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0093,ZONE-13,Gujarat Plains and Hills Region,CMD-FSH-MAR-01,Marine Fisheries (Sea Catch),FISHERIES,Mar - Jul,7.00,1.76,8.76,3.33,3.94,2.0,-1.0
+MAT-0094,ZONE-14,Western Dry Region,CMD-BAJ-01,Bajra (Pearl Millet),CEREALS,Oct - Mar,3.59,0.78,4.37,1.66,1.97,0.5,15.0
+MAT-0095,ZONE-14,Western Dry Region,CMD-MSD-01,Mustard / Rapeseed,OILSEEDS,Mar - Jul,4.08,0.38,4.46,1.69,2.01,0.5,10.0
+MAT-0096,ZONE-14,Western Dry Region,CMD-COR-01,Coriander Seed,PLANTATION_SPICES,Mar - Jul,4.72,0.60,5.32,2.02,2.39,0.5,12.0
+MAT-0097,ZONE-14,Western Dry Region,CMD-MLK-01,Milk (Bovine),DAIRY,Mar - Jul,0.54,0.33,0.87,0.33,0.39,0.5,2.0
+MAT-0098,ZONE-15,The Island Region,CMD-APP-01,Apple,FRUITS,Mar - Jul,7.87,1.64,9.51,3.61,4.28,2.0,0.0
+MAT-0099,ZONE-15,The Island Region,CMD-BAN-01,Banana,FRUITS,Mar - Jul,5.17,2.40,7.57,2.88,3.41,2.0,13.0
+MAT-0100,ZONE-15,The Island Region,CMD-PNA-01,Pineapple,FRUITS,Mar - Jul,4.22,1.80,6.02,2.29,2.71,2.0,7.0
+MAT-0101,ZONE-15,The Island Region,CMD-ARC-01,Areca Nut (Betel Nut),PLANTATION_SPICES,Mar - Jul,3.58,0.83,4.41,1.68,1.98,0.5,18.0
+MAT-0102,ZONE-15,The Island Region,CMD-CCN-01,Coconut (Mature Nut),PLANTATION_SPICES,Mar - Jul,2.85,1.00,3.85,1.46,1.73,0.5,12.0
+MAT-0103,ZONE-15,The Island Region,CMD-FSH-MAR-01,Marine Fisheries (Sea Catch),FISHERIES,Mar - Jul,7.00,1.76,8.76,3.33,3.94,2.0,-1.0

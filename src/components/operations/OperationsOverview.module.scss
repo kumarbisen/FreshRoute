@@ -27,11 +27,86 @@
   }
 }
 
+// Behance-style Rounded KPI Card with Ring Meter
+.kpiCard {
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-2xl;
+  padding: $space-5 $space-6;
+  box-shadow: $shadow-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $color-border-hover;
+    box-shadow: $shadow-md;
+    transform: translateY(-1px);
+  }
+}
+
 .kpiCardTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: $space-1;
+}
+
+.kpiIconBadge {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  background-color: #f1f5f9;
+  color: $color-primary-charcoal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.warningBadge {
+    background-color: #fffbeb;
+    color: #d97706;
+  }
+
+  &.emeraldBadge {
+    background-color: #ecfdf5;
+    color: #059669;
+  }
+}
+
+.kpiDeltaPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px $space-2;
+  border-radius: $radius-full;
+  background-color: #f1f5f9;
+  color: $color-slate-600;
+
+  &.warningDelta {
+    background-color: #fffbeb;
+    color: #b45309;
+  }
+
+  &.emeraldDelta {
+    background-color: #ecfdf5;
+    color: #047857;
+  }
+}
+
+.kpiBodyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+}
+
+.kpiTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .kpiTitle {
@@ -43,48 +118,67 @@
   letter-spacing: 0.05em;
 }
 
-.kpiIcon {
-  color: $color-slate-400;
-}
-
-.kpiWarningIcon {
-  color: $color-urgency-amber;
-}
-
-.kpiLimeIcon {
-  color: $color-lime-300;
-}
-
 .kpiNumber {
   font-family: $font-mono;
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .kpiNumberWarning {
   font-family: $font-mono;
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 800;
-  color: $color-urgency-amber;
+  color: #d97706;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
-.kpiNumberLime {
+.kpiNumberEmerald {
   font-family: $font-mono;
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 800;
-  color: $color-lime-300;
+  color: #059669;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
+.kpiDesc {
+  font-size: 0.6875rem;
+  color: $color-text-secondary;
+}
+
+// Circular SVG Ring Progress Gauge
+.ringWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ringSvg {
+  transform: rotate(0deg);
+}
+
+.ringText {
+  position: absolute;
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: $color-text-title;
+}
+
+// Shelf-Life Alert Banner
 .alertBanner {
-  background-color: $color-dark-850;
-  border: 1px solid rgba(192, 132, 252, 0.4);
-  border-left: 4px solid $color-salvage-purple;
-  border-radius: $radius-lg;
+  background-color: #ffffff;
+  border: 1px solid #e9d5ff;
+  border-left: 4px solid #9333ea;
+  border-radius: $radius-xl;
   padding: $space-4 $space-6;
+  box-shadow: $shadow-sm;
   display: flex;
   flex-direction: column;
   gap: $space-3;
@@ -106,8 +200,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: $radius-full;
-  background-color: $color-salvage-purple-dim;
-  color: $color-salvage-purple;
+  background-color: #faf5ff;
+  color: #9333ea;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,22 +218,23 @@
 .alertTitle {
   font-size: $text-sm;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .alertDescription {
   font-size: $text-xs;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.5;
 
   b {
-    color: #ffffff;
+    color: $color-text-title;
   }
 }
 
+// Table Card Header
 .tableCardHeader {
   padding: $space-5 $space-6;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid $color-border-subtle;
   display: flex;
   flex-direction: column;
   gap: $space-4;
@@ -173,23 +268,24 @@
 .filterPill {
   font-family: $font-mono;
   font-size: 0.6875rem;
-  padding: $space-1 $space-3;
-  border-radius: $radius-sm;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-700;
-  color: $color-slate-300;
+  padding: 0.25rem $space-3;
+  border-radius: $radius-full;
+  background-color: #f1f5f9;
+  border: 1px solid $color-border-subtle;
+  color: $color-slate-600;
   cursor: pointer;
   transition: all $transition-fast;
 
   &:hover {
-    color: #ffffff;
-    border-color: $color-dark-600;
+    color: #000000;
+    border-color: $color-border-hover;
+    background-color: #e2e8f0;
   }
 
   &.activeFilterPill {
-    background-color: $color-lime-dim;
-    border-color: $color-lime-300;
-    color: $color-lime-300;
+    background-color: $color-primary-charcoal;
+    border-color: $color-primary-charcoal;
+    color: #ffffff;
     font-weight: 700;
   }
 }
@@ -198,7 +294,7 @@
   font-family: $font-mono;
   font-weight: 700;
   font-size: $text-xs;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .produceCell {
@@ -209,7 +305,7 @@
 
 .produceName {
   font-weight: 600;
-  color: $color-slate-100;
+  color: $color-text-title;
 }
 
 .categoryTag {
@@ -221,7 +317,7 @@
 .quantityVal {
   font-family: $font-mono;
   font-size: $text-xs;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .tempCard {
@@ -230,19 +326,19 @@
   gap: $space-1;
   font-family: $font-mono;
   font-size: $text-xs;
-  color: $color-cold-sky;
+  color: #0284c7;
 }
 
 .destinationName {
   font-size: $text-xs;
-  color: $color-slate-200;
+  color: $color-text-title;
   font-weight: 500;
 }
 
 .routeCode {
   font-family: $font-mono;
   font-size: $text-xs;
-  color: $color-slate-400;
+  color: $color-slate-500;
 }
 
 .reasonBadgeCell {
@@ -255,10 +351,11 @@
   font-family: $font-mono;
   font-size: 0.625rem;
   font-weight: 800;
-  color: $color-salvage-purple;
-  background-color: $color-salvage-purple-dim;
-  padding: 1px $space-1;
-  border-radius: $radius-sm;
+  color: #7e22ce;
+  background-color: #faf5ff;
+  border: 1px solid #e9d5ff;
+  padding: 2px $space-2;
+  border-radius: $radius-full;
 }
 
 // Dialog Form Styles
@@ -279,7 +376,7 @@
   font-family: $font-mono;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -287,11 +384,11 @@
 .formReadonly {
   font-family: $font-mono;
   font-size: $text-xs;
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-700;
-  border-radius: $radius-sm;
+  background-color: #f8fafc;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-md;
   padding: $space-2 $space-3;
-  color: $color-lime-300;
+  color: $color-text-title;
 }
 
 .checkboxRow {
@@ -301,14 +398,14 @@
 }
 
 .checkbox {
-  accent-color: $color-lime-300;
+  accent-color: $color-primary-charcoal;
   width: 1rem;
   height: 1rem;
 }
 
 .checkboxLabel {
   font-size: $text-xs;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   cursor: pointer;
 }
 
@@ -317,16 +414,16 @@
   align-items: flex-start;
   gap: $space-2;
   font-size: $text-xs;
-  color: $color-slate-300;
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
+  color: $color-text-secondary;
+  background-color: #f8fafc;
+  border: 1px solid $color-border-subtle;
   border-radius: $radius-md;
   padding: $space-3;
   line-height: 1.4;
 }
 
 .calloutIcon {
-  color: $color-produce-emerald;
+  color: #059669;
   flex-shrink: 0;
   margin-top: 1px;
 }

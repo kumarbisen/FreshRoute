@@ -25,7 +25,7 @@
   font-family: $font-mono;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: $color-slate-400;
+  color: $color-slate-500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: $space-1;
@@ -35,7 +35,7 @@
   font-family: $font-mono;
   font-size: 1.75rem;
   font-weight: 800;
-  color: #ffffff;
+  color: $color-text-title;
   letter-spacing: -0.02em;
 }
 
@@ -49,16 +49,16 @@
 .iconCircle {
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: $radius-lg;
-  background-color: $color-dark-800;
-  border: 1px solid $color-dark-700;
+  border-radius: $radius-xl;
+  background-color: #f1f5f9;
+  border: 1px solid $color-border-subtle;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .cardIcon {
-  color: $color-lime-300;
+  color: $color-primary-charcoal;
 }
 
 .headerInfo {
@@ -71,14 +71,14 @@
   font-family: $font-mono;
   font-size: 0.625rem;
   font-weight: 700;
-  color: $color-lime-300;
+  color: #059669;
   letter-spacing: 0.08em;
 }
 
 .deliverablesBlock {
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-lg;
+  background-color: #f8fafc;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-xl;
   padding: $space-6;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@
 .deliverablesTitle {
   font-size: $text-sm;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .deliverablesList {
@@ -103,12 +103,12 @@
   align-items: flex-start;
   gap: $space-3;
   font-size: $text-xs;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   line-height: 1.5;
 }
 
 .bullet {
-  color: $color-produce-emerald;
+  color: #059669;
   font-weight: 700;
   flex-shrink: 0;
 }

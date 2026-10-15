@@ -10,3 +10,5 @@ export * from "./allocator";
 export * from "./baseline-fifo";
 export * from "./planner";
 export * from "./evaluator";
+export * from "./discount-engine";
+export * from "./scenario-engine";

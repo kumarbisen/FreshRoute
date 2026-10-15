@@ -3,26 +3,14 @@
 
 .heroSection {
   position: relative;
-  background-color: $color-dark-950;
+  background-color: #faf9f6;
   padding: $space-16 0 $space-20;
   overflow: hidden;
-  border-bottom: 1px solid $color-dark-750;
+  border-bottom: 1px solid $color-border-subtle;
 
   @include breakpoint-up(1024px) {
-    padding: $space-24 0 $space-24;
+    padding: $space-24 0 $space-20;
   }
-}
-
-.gridOverlay {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 60%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 60%, transparent 100%);
-  pointer-events: none;
 }
 
 .heroContainer {
@@ -54,19 +42,19 @@
   gap: $space-2;
   font-family: $font-mono;
   font-size: 0.6875rem;
-  color: $color-slate-400;
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
-  padding: $space-1 $space-3;
-  border-radius: $radius-sm;
+  color: $color-slate-500;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  padding: 0.3rem $space-3;
+  border-radius: $radius-full;
+  box-shadow: $shadow-sm;
 }
 
 .coordDot {
   width: 6px;
   height: 6px;
   border-radius: $radius-full;
-  background-color: $color-lime-300;
-  box-shadow: 0 0 6px $color-lime-300;
+  background-color: #10b981;
 }
 
 .coordText {
@@ -81,10 +69,10 @@
 .mainTitle {
   font-family: $font-sans;
   font-size: 2.75rem;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.04em;
-  color: #ffffff;
+  color: $color-text-title;
   margin-bottom: $space-6;
   text-transform: uppercase;
 
@@ -97,16 +85,20 @@
   }
 }
 
-.accentText {
-  color: $color-lime-300;
-  text-shadow: 0 0 40px rgba($color-lime-300, 0.25);
+.editorialItalic {
+  font-family: $font-serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  color: #1e293b;
   display: inline-block;
+  letter-spacing: -0.01em;
 }
 
 .subTitle {
   font-size: $text-base;
   line-height: 1.7;
-  color: $color-slate-300;
+  color: $color-text-secondary;
   max-width: 780px;
 
   @include breakpoint-up(768px) {
@@ -127,10 +119,11 @@
 }
 
 .metricStrip {
-  background-color: $color-dark-900;
-  border: 1px solid $color-dark-750;
-  border-radius: $radius-xl;
+  background-color: #ffffff;
+  border: 1px solid $color-border-subtle;
+  border-radius: $radius-2xl;
   padding: $space-6 $space-8;
+  box-shadow: $shadow-sm;
   display: grid;
   grid-template-columns: 1fr;
   gap: $space-6;
@@ -156,7 +149,7 @@
   font-family: $font-mono;
   font-size: 2.25rem;
   font-weight: 800;
-  color: $color-lime-300;
+  color: $color-text-title;
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -169,14 +162,69 @@
 .metricHighlight {
   font-size: $text-sm;
   font-weight: 700;
-  color: #ffffff;
+  color: $color-text-title;
 }
 
 .metricSub {
   font-size: 0.6875rem;
-  color: $color-slate-400;
+  color: $color-slate-500;
 }
 
 .metricDivider {
   display: none;
+}
+
+// Vertical Scroll Discovery Cue
+.scrollIndicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-16;
+  opacity: 0.7;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.scrollText {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  color: $color-slate-500;
+  text-transform: uppercase;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, #94a3b8, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollDot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 16px;
+  background-color: $color-primary-charcoal;
+  animation: scrollDown 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(48px);
+    opacity: 0;
+  }
 }

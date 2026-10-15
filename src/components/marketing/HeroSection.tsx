@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Play, Clock, Sparkles, TrendingUp, ShieldAlert, Cpu } from "lucide-react";
+import { ArrowRight, Play, ArrowDown } from "lucide-react";
 import { Button } from "../ui/button/Button";
 import { Badge } from "../ui/badge/Badge";
 import styles from "./HeroSection.module.scss";
@@ -8,32 +8,31 @@ import styles from "./HeroSection.module.scss";
 export function HeroSection() {
   return (
     <section className={styles.heroSection}>
-      {/* Background Ambience Lines */}
-      <div className={styles.gridOverlay} aria-hidden="true" />
-
       <div className={styles.heroContainer}>
         {/* Top Technical Metadata Bar */}
         <div className={styles.metaRow}>
           <div className={styles.coordinateBadge}>
             <span className={styles.coordDot} />
-            <span className={styles.coordText}>{"36.6777° N, 121.6555° W // SALINAS COLD-CHAIN HUB"}</span>
+            <span className={styles.coordText}>
+              {"36.6777° N, 121.6555° W // SALINAS COLD-CHAIN HUB"}
+            </span>
           </div>
-          <Badge variant="lime" size="sm" pulse>
+          <Badge variant="fresh" size="sm" pulse>
             SOLVER RUNNING: FEFO-ELASTIC-v1.0
           </Badge>
         </div>
 
-        {/* Confident Oversized Editorial Headline */}
+        {/* Editorial Headline with Italic Serif Accent (RaceZero reference) */}
         <div className={styles.headlineBlock}>
           <h1 className={styles.mainTitle}>
-            EVERY BATCH HAS A CLOCK.
+            PERISHABLE LOGISTICS
             <br />
-            <span className={styles.accentText}>MAKE EVERY DISPATCH</span> COUNT.
+            <span className={styles.editorialItalic}>Intelligently Dispatched</span>
           </h1>
           <p className={styles.subTitle}>
             Fresh produce degrades by the minute. Legacy ERPs rely on dumb FIFO rules that ship the wrong
-            lots, trigger brutal retail SLA rejection penalties, and dump expired inventory.
-            FreshRoute solves the multi-constraint cold-chain knapsack: routing by real-time shelf life,
+            lots, trigger brutal retail SLA penalties, and dump expired inventory.
+            FreshRoute solves the multi-constraint knapsack: routing by real-time shelf life,
             cold-chain compatibility, and dynamic salvage markdowns.
           </p>
         </div>
@@ -43,12 +42,12 @@ export function HeroSection() {
           <Button asChild variant="primary" size="lg" rightIcon={<ArrowRight size={18} />}>
             <Link href="/app">Launch Operations Console</Link>
           </Button>
-          <Button asChild variant="outline-lime" size="lg" leftIcon={<Play size={16} />}>
-            <a href="#network-flow">Explore Live Dispatch Simulation</a>
+          <Button asChild variant="secondary" size="lg" leftIcon={<Play size={16} />}>
+            <a href="#network-flow">Explore Dispatch Simulation</a>
           </Button>
         </div>
 
-        {/* Editorial Value Metric Strip */}
+        {/* Minimal Editorial Value Metric Cards */}
         <div className={styles.metricStrip}>
           <div className={styles.metricItem}>
             <div className={styles.metricValue}>-34%</div>
@@ -84,8 +83,16 @@ export function HeroSection() {
             <div className={styles.metricValue}>100%</div>
             <div className={styles.metricLabel}>
               <span className={styles.metricHighlight}>Deterministic Audits</span>
-              <span className={styles.metricSub}>SHA-256 snapshot reproducibility</span>
+              <span className={styles.metricSub}>SHA-256 snapshot hashes</span>
             </div>
+          </div>
+        </div>
+
+        {/* Vertical Scroll Discovery Cue */}
+        <div className={styles.scrollIndicator}>
+          <span className={styles.scrollText}>SCROLL TO EXPLORE</span>
+          <div className={styles.scrollLine}>
+            <span className={styles.scrollDot} />
           </div>
         </div>
       </div>

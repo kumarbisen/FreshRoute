@@ -126,6 +126,10 @@ export interface DistributionPlanDetail extends DistributionPlanListItem {
     proposedSlaCompliancePercent: number;
     baselineRejectionsCount: number;
     proposedRejectionsCount: number;
+    proposedFulfillmentKg?: number;
+    baselineFulfillmentKg?: number;
+    fulfillmentRateDeltaPercent?: number;
+    strategyWinner?: string;
   };
   allocations: Array<{
     id: string;
@@ -1086,6 +1090,42 @@ export async function getDistributionPlanById(
           proposedSlaCompliancePercent: Number(metricsQuery.rows[0].proposedSlaCompliancePercent),
           baselineRejectionsCount: Number(metricsQuery.rows[0].baselineRejectionsCount),
           proposedRejectionsCount: Number(metricsQuery.rows[0].proposedRejectionsCount),
+          proposedFulfillmentKg:
+            evaluationRun?.freshRouteLedger?.fulfilledDemandKg ?? Number(p.totalAllocatedKg ?? 0),
+          baselineFulfillmentKg:
+            evaluationRun?.baselineLedger?.fulfilledDemandKg ?? Number(p.totalAllocatedKg ?? 0),
+          fulfillmentRateDeltaPercent:
+            evaluationRun?.comparison?.fulfillmentRateDeltaPercent ??
+            Number(
+              (
+                Number(metricsQuery.rows[0].proposedSlaCompliancePercent ?? 0) -
+                Number(metricsQuery.rows[0].baselineSlaCompliancePercent ?? 0)
+              ).toFixed(2)
+            ),
+          strategyWinner:
+            evaluationRun?.comparison?.outcomeStatus ??
+            (Number(metricsQuery.rows[0].profitUpliftUsd) > 0.05
+              ? "FRESHROUTE_SUPERIOR"
+              : "EQUIVALENT"),
+        }
+      : evaluationRun
+      ? {
+          baselineProfitUsd: evaluationRun.baselineLedger.netEconomicOutcomeUsd,
+          proposedProfitUsd: evaluationRun.freshRouteLedger.netEconomicOutcomeUsd,
+          profitUpliftUsd: evaluationRun.comparison.netOutcomeDeltaUsd,
+          profitUpliftPercent: evaluationRun.comparison.netOutcomeDeltaPercent,
+          baselineSpoilageKg: evaluationRun.baselineLedger.spoiledExpiredStockKg,
+          proposedSpoilageKg: evaluationRun.freshRouteLedger.spoiledExpiredStockKg,
+          spoilageReductionKg: evaluationRun.comparison.spoilageReductionKg,
+          spoilageReductionPercent: evaluationRun.comparison.spoilageReductionPercent,
+          baselineSlaCompliancePercent: evaluationRun.baselineLedger.fulfillmentRatePercent,
+          proposedSlaCompliancePercent: evaluationRun.freshRouteLedger.fulfillmentRatePercent,
+          baselineRejectionsCount: 0,
+          proposedRejectionsCount: 0,
+          proposedFulfillmentKg: evaluationRun.freshRouteLedger.fulfilledDemandKg,
+          baselineFulfillmentKg: evaluationRun.baselineLedger.fulfilledDemandKg,
+          fulfillmentRateDeltaPercent: evaluationRun.comparison.fulfillmentRateDeltaPercent,
+          strategyWinner: evaluationRun.comparison.outcomeStatus,
         }
       : undefined;
 

@@ -7,6 +7,8 @@ import {
   getMofpiZoneCommodityMatrix,
   validateOperationalMofpiCsvs,
   seedMofpiProduceNetwork,
+  seedMofpiOperationalDataset,
+  seedMofpiCompleteDataset,
 } from "../../src/server/services/mofpi-data.service";
 import { previewCsvUpload } from "../../src/server/services/csv-import.service";
 import { getPgLite, initPgLiteSchema } from "../../src/server/db/pglite";
@@ -185,5 +187,37 @@ describe("MoFPI Post-Harvest Losses (2020-22) Study & FreshRoute SaaS Data Integ
       expect(preview.validRowsCount).toBe(6);
       expect(preview.canCommit).toBe(true);
     });
+
+    it("should seed operational dataset (15 batches, 10 destinations, 10 demands, 6 routes) directly from raw CSV strings", async () => {
+      const opResult = await seedMofpiOperationalDataset(ORG_ID);
+      expect(opResult.batchesCount).toBe(15);
+      expect(opResult.destinationsCount).toBe(10);
+      expect(opResult.demandsCount).toBe(10);
+      expect(opResult.routesCount).toBe(6);
+
+      const db = await getPgLite();
+      const batchRes = await db.query(`SELECT COUNT(*) as count FROM "InventoryBatch" WHERE "organizationId" = $1;`, [ORG_ID]);
+      expect(parseInt((batchRes.rows[0] as { count: string }).count, 10)).toBe(15);
+
+      const destRes = await db.query(`SELECT COUNT(*) as count FROM "Destination" WHERE "organizationId" = $1;`, [ORG_ID]);
+      expect(parseInt((destRes.rows[0] as { count: string }).count, 10)).toBe(10);
+
+      const demandRes = await db.query(`SELECT COUNT(*) as count FROM "DestinationDemand" WHERE "organizationId" = $1;`, [ORG_ID]);
+      expect(parseInt((demandRes.rows[0] as { count: string }).count, 10)).toBe(10);
+
+      const routeRes = await db.query(`SELECT COUNT(*) as count FROM "Route" WHERE "organizationId" = $1;`, [ORG_ID]);
+      expect(parseInt((routeRes.rows[0] as { count: string }).count, 10)).toBe(6);
+    });
+
+    it("should seed complete MoFPI dataset (produce network + operational entities) idempotently from raw CSV strings", async () => {
+      const completeResult = await seedMofpiCompleteDataset(ORG_ID);
+      expect(completeResult.commoditiesCount).toBe(54);
+      expect(completeResult.warehousesCount).toBe(15);
+      expect(completeResult.batchesCount).toBe(15);
+      expect(completeResult.destinationsCount).toBe(10);
+      expect(completeResult.demandsCount).toBe(10);
+      expect(completeResult.routesCount).toBe(6);
+    });
   });
 });
+

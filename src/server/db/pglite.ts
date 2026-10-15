@@ -10,6 +10,7 @@ const globalForPgLite = globalThis as unknown as {
 
 let dbInstance: PGlite | null = globalForPgLite.pgliteInstance ?? null;
 let isInitialized = globalForPgLite.pgliteInitialized ?? false;
+let isSeeding = false;
 
 /**
  * Get or create the singleton embedded PGlite PostgreSQL WASM instance.
@@ -39,31 +40,59 @@ export async function initPgLiteSchema(db?: PGlite): Promise<void> {
     ) as exists;
   `);
 
-  if (checkResult.rows[0]?.exists) {
-    isInitialized = true;
-    globalForPgLite.pgliteInitialized = true;
-    return;
+  if (!checkResult.rows[0]?.exists) {
+    // Load migration DDL
+    const migrationPath = path.resolve(
+      process.cwd(),
+      "prisma/migrations/20261014000000_init/migration.sql"
+    );
+
+    if (!fs.existsSync(migrationPath)) {
+      throw new Error(`Migration SQL not found at ${migrationPath}`);
+    }
+
+    let migrationSql = fs.readFileSync(migrationPath, "utf8");
+    // Ensure UTF-8 BOM is stripped if present
+    if (migrationSql.charCodeAt(0) === 0xfeff) {
+      migrationSql = migrationSql.slice(1);
+    }
+
+    try {
+      await client.exec(migrationSql);
+    } catch (migErr: any) {
+      if (!migErr.message?.includes("already exists")) {
+        throw migErr;
+      }
+    }
   }
 
-  // Load migration DDL
-  const migrationPath = path.resolve(
-    process.cwd(),
-    "prisma/migrations/20261014000000_init/migration.sql"
-  );
-
-  if (!fs.existsSync(migrationPath)) {
-    throw new Error(`Migration SQL not found at ${migrationPath}`);
-  }
-
-  let migrationSql = fs.readFileSync(migrationPath, "utf8");
-  // Ensure UTF-8 BOM is stripped if present
-  if (migrationSql.charCodeAt(0) === 0xfeff) {
-    migrationSql = migrationSql.slice(1);
-  }
-
-  await client.exec(migrationSql);
   isInitialized = true;
   globalForPgLite.pgliteInitialized = true;
+
+  // Auto-seed canonical baseline demo data if database has no organizations yet (and not in test mode, and not currently seeding)
+  if (
+    !isSeeding &&
+    process.env.NODE_ENV !== "test" &&
+    process.env.ENABLE_DEMO_DATA_SEEDING !== "false"
+  ) {
+    isSeeding = true;
+    try {
+      const orgCountRes = await client.query<{ count: string }>(
+        `SELECT COUNT(*)::text as count FROM "Organization";`
+      );
+      const count = parseInt(orgCountRes.rows[0]?.count || "0", 10);
+      if (count === 0) {
+        const { seedDemoDataset } = await import("../services/data-foundation.service");
+        const { seedMofpiCompleteDataset } = await import("../services/mofpi-data.service");
+        await seedDemoDataset();
+        await seedMofpiCompleteDataset("org-freshroute-demo");
+      }
+    } catch (seedErr) {
+      console.warn("Auto-seeding initial dataset skipped/failed:", seedErr);
+    } finally {
+      isSeeding = false;
+    }
+  }
 }
 
 /**

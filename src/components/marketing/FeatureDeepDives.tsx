@@ -123,11 +123,9 @@ export function FeatureDeepDives() {
                     <span className={styles.dot} />
                     <span className={styles.dot} />
                   </div>
-                  <span className={styles.codeLang}>TypeScript Pure Core</span>
+
                 </div>
-                <pre className={styles.codeBlock}>
-                  <code>{feature.codePreview}</code>
-                </pre>
+
               </div>
             </div>
           ))}

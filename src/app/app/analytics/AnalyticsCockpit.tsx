@@ -46,45 +46,57 @@ interface PlanDetail {
   id: string;
   planNumber: string;
   status: string;
+  totalAllocatedKg?: number;
+  totalRevenueUsd?: number;
+  totalCostUsd?: number;
+  netMarginUsd?: number;
+  spoilagePreventedKg?: number;
+  spoilagePreventedUsd?: number;
+  winnerStatus?: string;
   createdAt: string;
-  metrics: {
-    proposedProfitUsd: number;
-    baselineProfitUsd: number;
-    proposedSpoilageKg: number;
-    baselineSpoilageKg: number;
-    proposedFulfillmentKg: number;
-    baselineFulfillmentKg: number;
-    profitUpliftUsd: number;
-    profitUpliftPercent: number;
-    spoilageReductionKg: number;
-    fulfillmentRateDeltaPercent: number;
-    strategyWinner: string;
+  metrics?: {
+    proposedProfitUsd?: number;
+    baselineProfitUsd?: number;
+    proposedSpoilageKg?: number;
+    baselineSpoilageKg?: number;
+    proposedFulfillmentKg?: number;
+    baselineFulfillmentKg?: number;
+    profitUpliftUsd?: number;
+    profitUpliftPercent?: number;
+    spoilageReductionKg?: number;
+    fulfillmentRateDeltaPercent?: number;
+    strategyWinner?: string;
   };
-  allocations: Array<{
-    commodityName: string;
-    allocatedQuantity: number;
-    netMarginUsd: number;
-    routeCode: string;
+  allocations?: Array<{
+    commodityName?: string;
+    allocatedQuantity?: number;
+    netMarginUsd?: number;
+    routeCode?: string;
   }>;
   evaluationRun?: {
-    freshRouteLedger: {
-      realizedSalesRevenueUsd: number;
-      incurredTransportTotalCostUsd: number;
-      incurredDisposalPenaltyUsd: number;
-      netEconomicOutcomeUsd: number;
-      spoiledExpiredStockKg: number;
-      fulfilledDemandKg: number;
+    freshRouteLedger?: {
+      realizedSalesRevenueUsd?: number;
+      incurredTransportTotalCostUsd?: number;
+      incurredDisposalPenaltyUsd?: number;
+      netEconomicOutcomeUsd?: number;
+      spoiledExpiredStockKg?: number;
+      fulfilledDemandKg?: number;
+      fulfillmentRatePercent?: number;
     };
-    baselineLedger: {
-      realizedSalesRevenueUsd: number;
-      incurredTransportTotalCostUsd: number;
-      incurredDisposalPenaltyUsd: number;
-      netEconomicOutcomeUsd: number;
-      spoiledExpiredStockKg: number;
-      fulfilledDemandKg: number;
+    baselineLedger?: {
+      realizedSalesRevenueUsd?: number;
+      incurredTransportTotalCostUsd?: number;
+      incurredDisposalPenaltyUsd?: number;
+      netEconomicOutcomeUsd?: number;
+      spoiledExpiredStockKg?: number;
+      fulfilledDemandKg?: number;
+      fulfillmentRatePercent?: number;
     };
-    comparison: {
-      narrativeSummary: string;
+    comparison?: {
+      narrativeSummary?: string;
+      fulfillmentRateDeltaPercent?: number;
+      fulfillmentDeltaKg?: number;
+      outcomeStatus?: string;
     };
   };
 }
@@ -167,71 +179,120 @@ export function AnalyticsCockpit() {
 
   // Recharts Data 1: Economic Ledgers Comparison
   const economicChartData = useMemo(() => {
-    if (!planDetail?.evaluationRun) return [];
-    const f = planDetail.evaluationRun.freshRouteLedger;
-    const b = planDetail.evaluationRun.baselineLedger;
+    if (planDetail?.evaluationRun?.freshRouteLedger && planDetail?.evaluationRun?.baselineLedger) {
+      const f = planDetail.evaluationRun.freshRouteLedger;
+      const b = planDetail.evaluationRun.baselineLedger;
 
-    return [
-      {
-        category: "Gross Revenue",
-        FreshRoute: Number(f.realizedSalesRevenueUsd),
-        BaselineFIFO: Number(b.realizedSalesRevenueUsd),
-      },
-      {
-        category: "Logistics Spend",
-        FreshRoute: Number(f.incurredTransportTotalCostUsd),
-        BaselineFIFO: Number(b.incurredTransportTotalCostUsd),
-      },
-      {
-        category: "Disposal Penalty",
-        FreshRoute: Number(f.incurredDisposalPenaltyUsd),
-        BaselineFIFO: Number(b.incurredDisposalPenaltyUsd),
-      },
-      {
-        category: "Net Operating Margin",
-        FreshRoute: Number(f.netEconomicOutcomeUsd),
-        BaselineFIFO: Number(b.netEconomicOutcomeUsd),
-      },
-    ];
+      return [
+        {
+          category: "Gross Revenue",
+          FreshRoute: Number(f.realizedSalesRevenueUsd || 0),
+          BaselineFIFO: Number(b.realizedSalesRevenueUsd || 0),
+        },
+        {
+          category: "Logistics Spend",
+          FreshRoute: Number(f.incurredTransportTotalCostUsd || 0),
+          BaselineFIFO: Number(b.incurredTransportTotalCostUsd || 0),
+        },
+        {
+          category: "Disposal Penalty",
+          FreshRoute: Number(f.incurredDisposalPenaltyUsd || 0),
+          BaselineFIFO: Number(b.incurredDisposalPenaltyUsd || 0),
+        },
+        {
+          category: "Net Operating Margin",
+          FreshRoute: Number(f.netEconomicOutcomeUsd || 0),
+          BaselineFIFO: Number(b.netEconomicOutcomeUsd || 0),
+        },
+      ];
+    }
+
+    if (planDetail?.metrics) {
+      const m = planDetail.metrics;
+      return [
+        {
+          category: "Gross Revenue",
+          FreshRoute: Number(planDetail.totalRevenueUsd || m.proposedProfitUsd || 0),
+          BaselineFIFO: Number(m.baselineProfitUsd || 0),
+        },
+        {
+          category: "Logistics Spend",
+          FreshRoute: Number(planDetail.totalCostUsd || 0),
+          BaselineFIFO: Number(planDetail.totalCostUsd || 0),
+        },
+        {
+          category: "Disposal Penalty",
+          FreshRoute: 0,
+          BaselineFIFO: Number(m.baselineSpoilageKg || 0) * 15,
+        },
+        {
+          category: "Net Operating Margin",
+          FreshRoute: Number(m.proposedProfitUsd || 0),
+          BaselineFIFO: Number(m.baselineProfitUsd || 0),
+        },
+      ];
+    }
+
+    return [];
   }, [planDetail]);
 
   // Recharts Data 2: Physical Spoilage Mass
   const massChartData = useMemo(() => {
-    if (!planDetail?.evaluationRun) return [];
-    const f = planDetail.evaluationRun.freshRouteLedger;
-    const b = planDetail.evaluationRun.baselineLedger;
+    if (planDetail?.evaluationRun?.freshRouteLedger && planDetail?.evaluationRun?.baselineLedger) {
+      const f = planDetail.evaluationRun.freshRouteLedger;
+      const b = planDetail.evaluationRun.baselineLedger;
 
-    return [
-      {
-        metric: "Produce Spoilage (kg)",
-        FreshRoute: Number(f.spoiledExpiredStockKg),
-        BaselineFIFO: Number(b.spoiledExpiredStockKg),
-      },
-      {
-        metric: "Demand Fulfilled (kg)",
-        FreshRoute: Number(f.fulfilledDemandKg),
-        BaselineFIFO: Number(b.fulfilledDemandKg),
-      },
-    ];
+      return [
+        {
+          metric: "Produce Spoilage (kg)",
+          FreshRoute: Number(f.spoiledExpiredStockKg || 0),
+          BaselineFIFO: Number(b.spoiledExpiredStockKg || 0),
+        },
+        {
+          metric: "Demand Fulfilled (kg)",
+          FreshRoute: Number(f.fulfilledDemandKg || 0),
+          BaselineFIFO: Number(b.fulfilledDemandKg || 0),
+        },
+      ];
+    }
+
+    if (planDetail?.metrics) {
+      const m = planDetail.metrics;
+      return [
+        {
+          metric: "Produce Spoilage (kg)",
+          FreshRoute: Number(m.proposedSpoilageKg || 0),
+          BaselineFIFO: Number(m.baselineSpoilageKg || 0),
+        },
+        {
+          metric: "Demand Fulfilled (kg)",
+          FreshRoute: Number(m.proposedFulfillmentKg || planDetail.totalAllocatedKg || 0),
+          BaselineFIFO: Number(m.baselineFulfillmentKg || planDetail.totalAllocatedKg || 0),
+        },
+      ];
+    }
+
+    return [];
   }, [planDetail]);
 
   // Recharts Data 3: Commodity Margin Contribution
   const commodityMarginData = useMemo(() => {
-    if (!planDetail?.allocations) return [];
+    if (!planDetail?.allocations || !Array.isArray(planDetail.allocations)) return [];
     const agg: Record<string, { quantityKg: number; marginUsd: number }> = {};
 
     planDetail.allocations.forEach((a) => {
-      if (!agg[a.commodityName]) {
-        agg[a.commodityName] = { quantityKg: 0, marginUsd: 0 };
+      const name = a.commodityName || "Produce";
+      if (!agg[name]) {
+        agg[name] = { quantityKg: 0, marginUsd: 0 };
       }
-      agg[a.commodityName].quantityKg += Number(a.allocatedQuantity);
-      agg[a.commodityName].marginUsd += Number(a.netMarginUsd);
+      agg[name].quantityKg += Number(a.allocatedQuantity || 0);
+      agg[name].marginUsd += Number(a.netMarginUsd || 0);
     });
 
     return Object.entries(agg).map(([name, data]) => ({
       commodity: name,
-      marginUsd: Number(data.marginUsd.toFixed(2)),
-      quantityKg: Number(data.quantityKg.toFixed(1)),
+      marginUsd: Number((data.marginUsd || 0).toFixed(2)),
+      quantityKg: Number((data.quantityKg || 0).toFixed(1)),
     }));
   }, [planDetail]);
 
@@ -290,10 +351,10 @@ export function AnalyticsCockpit() {
           <div className={styles.winnerInfo}>
             <div className={styles.winnerTitle}>
               <Award size={16} /> Strategy Outcome:{" "}
-              {planDetail.metrics.strategyWinner || "FRESHROUTE_SUPERIOR"}
+              {planDetail.metrics?.strategyWinner || planDetail.winnerStatus || "FRESHROUTE_SUPERIOR"}
             </div>
             <div className={styles.winnerNarrative}>
-              {planDetail.evaluationRun?.comparison.narrativeSummary ||
+              {planDetail.evaluationRun?.comparison?.narrativeSummary ||
                 "FreshRoute optimizer recovered additional margin while preventing avoidable produce spoilage through intelligent perishability dispatching."}
             </div>
           </div>
@@ -313,10 +374,10 @@ export function AnalyticsCockpit() {
               <TrendingUp size={15} color="#34d399" />
             </div>
             <div className={`${styles.cardValue} ${styles.green}`}>
-              +{planDetail.metrics.profitUpliftPercent.toFixed(1)}%
+              +{Number(planDetail.metrics?.profitUpliftPercent ?? 0).toFixed(1)}%
             </div>
             <div className={styles.cardSub}>
-              +{formatCurrency(planDetail.metrics.profitUpliftUsd)} net economic gain over FIFO
+              +{formatCurrency(planDetail.metrics?.profitUpliftUsd ?? 0)} net economic gain over FIFO
             </div>
           </div>
 
@@ -327,7 +388,7 @@ export function AnalyticsCockpit() {
               <Package size={15} color="#d4f933" />
             </div>
             <div className={`${styles.cardValue} ${styles.lime}`}>
-              {formatWeight(planDetail.metrics.spoilageReductionKg)}
+              {formatWeight(planDetail.metrics?.spoilageReductionKg ?? planDetail.spoilagePreventedKg ?? 0)}
             </div>
             <div className={styles.cardSub}>
               Physical mass diverted from landfill disposal write-off
@@ -341,10 +402,10 @@ export function AnalyticsCockpit() {
               <IndianRupee size={15} color="#38bdf8" />
             </div>
             <div className={`${styles.cardValue} ${styles.cyan}`}>
-              {formatCurrency(planDetail.metrics.proposedProfitUsd)}
+              {formatCurrency(planDetail.metrics?.proposedProfitUsd ?? planDetail.netMarginUsd ?? 0)}
             </div>
             <div className={styles.cardSub}>
-              vs FIFO baseline ({formatCurrency(planDetail.metrics.baselineProfitUsd)})
+              vs FIFO baseline ({formatCurrency(planDetail.metrics?.baselineProfitUsd ?? 0)})
             </div>
           </div>
 
@@ -355,11 +416,11 @@ export function AnalyticsCockpit() {
               <CheckCircle2 size={15} color="#c084fc" />
             </div>
             <div className={`${styles.cardValue} ${styles.purple}`}>
-              +{planDetail.metrics.fulfillmentRateDeltaPercent.toFixed(1)}%
+              +{Number(planDetail.metrics?.fulfillmentRateDeltaPercent ?? planDetail.evaluationRun?.comparison?.fulfillmentRateDeltaPercent ?? 0).toFixed(1)}%
             </div>
             <div className={styles.cardSub}>
-              Delivered: {formatWeight(planDetail.metrics.proposedFulfillmentKg)} vs{" "}
-              {formatWeight(planDetail.metrics.baselineFulfillmentKg)}
+              Delivered: {formatWeight(planDetail.metrics?.proposedFulfillmentKg ?? planDetail.evaluationRun?.freshRouteLedger?.fulfilledDemandKg ?? planDetail.totalAllocatedKg ?? 0)} vs{" "}
+              {formatWeight(planDetail.metrics?.baselineFulfillmentKg ?? planDetail.evaluationRun?.baselineLedger?.fulfilledDemandKg ?? planDetail.totalAllocatedKg ?? 0)}
             </div>
           </div>
         </div>

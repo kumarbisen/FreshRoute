@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import Decimal from "decimal.js";
 import { getPgLite, initPgLiteSchema } from "../db/pglite";
 import { parseRawCsvText } from "./csv-import.service";
@@ -8,6 +6,16 @@ import {
   DestinationDemandCsvRowSchema,
   TransportCsvRowSchema,
 } from "../db/schema.zod";
+import {
+  MOFPI_COMMODITIES_CATALOG_CSV,
+  MOFPI_WAREHOUSES_CSV,
+  MOFPI_INVENTORY_CSV,
+  MOFPI_DESTINATIONS_DEMAND_CSV,
+  MOFPI_TRANSPORT_ROUTES_CSV,
+  MOFPI_15_AGRO_ZONES_CSV,
+  MOFPI_54_COMMODITIES_LOSSES_CSV,
+  MOFPI_ZONE_COMMODITY_MATRIX_CSV,
+} from "../../data/mofpi-raw-csv";
 
 export interface MofpiCommodityRecord {
   commodity_code: string;
@@ -58,15 +66,12 @@ export interface MofpiZoneCommodityMatrixRecord {
   optimal_transit_temp_celsius: number;
 }
 
-const DATA_DIR = path.join(process.cwd(), "data", "mofpi-post-harvest");
-
 /**
  * Loads and returns all 54 commodities from the MoFPI / NABCONS (2020-22) dataset.
+ * Uses embedded raw CSV string directly for zero-latency, zero-I/O parsing.
  */
 export function getMofpi54Commodities(): MofpiCommodityRecord[] {
-  const filePath = path.join(DATA_DIR, "mofpi_54_commodities_post_harvest_losses.csv");
-  const content = fs.readFileSync(filePath, "utf-8");
-  const { rows } = parseRawCsvText(content);
+  const { rows } = parseRawCsvText(MOFPI_54_COMMODITIES_LOSSES_CSV);
 
   return rows.map((r) => ({
     commodity_code: r.commodity_code,
@@ -89,11 +94,10 @@ export function getMofpi54Commodities(): MofpiCommodityRecord[] {
 
 /**
  * Loads and returns all 15 Agro-Climatic Zones of India.
+ * Uses embedded raw CSV string directly for zero-latency parsing.
  */
 export function getMofpi15AgroZones(): MofpiAgroZoneRecord[] {
-  const filePath = path.join(DATA_DIR, "mofpi_15_agro_climatic_zones_india.csv");
-  const content = fs.readFileSync(filePath, "utf-8");
-  const { rows } = parseRawCsvText(content);
+  const { rows } = parseRawCsvText(MOFPI_15_AGRO_ZONES_CSV);
 
   return rows.map((r) => ({
     zone_code: r.zone_code,
@@ -112,11 +116,10 @@ export function getMofpi15AgroZones(): MofpiAgroZoneRecord[] {
 
 /**
  * Loads the interaction matrix mapping 15 agro-climatic zones to commodities.
+ * Uses embedded raw CSV string directly for zero-latency parsing.
  */
 export function getMofpiZoneCommodityMatrix(): MofpiZoneCommodityMatrixRecord[] {
-  const filePath = path.join(DATA_DIR, "freshroute_mofpi_zone_commodity_matrix.csv");
-  const content = fs.readFileSync(filePath, "utf-8");
-  const { rows } = parseRawCsvText(content);
+  const { rows } = parseRawCsvText(MOFPI_ZONE_COMMODITY_MATRIX_CSV);
 
   return rows.map((r) => ({
     matrix_id: r.matrix_id,
@@ -137,7 +140,7 @@ export function getMofpiZoneCommodityMatrix(): MofpiZoneCommodityMatrixRecord[] 
 }
 
 /**
- * Validates the operational CSVs against FreshRoute's Zod schemas in-memory.
+ * Validates the operational CSVs against FreshRoute's Zod schemas in-memory directly from raw CSV strings.
  */
 export function validateOperationalMofpiCsvs(): {
   inventoryValidCount: number;
@@ -148,9 +151,7 @@ export function validateOperationalMofpiCsvs(): {
   const errors: string[] = [];
 
   // 1. Inventory CSV
-  const invPath = path.join(DATA_DIR, "freshroute_inventory_mofpi_data.csv");
-  const invContent = fs.readFileSync(invPath, "utf-8");
-  const invParsed = parseRawCsvText(invContent);
+  const invParsed = parseRawCsvText(MOFPI_INVENTORY_CSV);
   let invValid = 0;
   invParsed.rows.forEach((r, idx) => {
     const res = InventoryCsvRowSchema.safeParse(r);
@@ -162,9 +163,7 @@ export function validateOperationalMofpiCsvs(): {
   });
 
   // 2. Destinations & Demand CSV
-  const destPath = path.join(DATA_DIR, "freshroute_destinations_demand_mofpi_data.csv");
-  const destContent = fs.readFileSync(destPath, "utf-8");
-  const destParsed = parseRawCsvText(destContent);
+  const destParsed = parseRawCsvText(MOFPI_DESTINATIONS_DEMAND_CSV);
   let destValid = 0;
   destParsed.rows.forEach((r, idx) => {
     const res = DestinationDemandCsvRowSchema.safeParse(r);
@@ -176,9 +175,7 @@ export function validateOperationalMofpiCsvs(): {
   });
 
   // 3. Transport Routes CSV
-  const transPath = path.join(DATA_DIR, "freshroute_transport_routes_mofpi_data.csv");
-  const transContent = fs.readFileSync(transPath, "utf-8");
-  const transParsed = parseRawCsvText(transContent);
+  const transParsed = parseRawCsvText(MOFPI_TRANSPORT_ROUTES_CSV);
   let transValid = 0;
   transParsed.rows.forEach((r, idx) => {
     const res = TransportCsvRowSchema.safeParse(r);
@@ -198,7 +195,8 @@ export function validateOperationalMofpiCsvs(): {
 }
 
 /**
- * Seeds the MoFPI Commodities catalog and Indian Agro-Climatic Zone warehouses into FreshRoute database.
+ * Seeds the MoFPI Commodities catalog and Indian Agro-Climatic Zone warehouses into FreshRoute database
+ * directly from embedded raw CSV strings (without dummy seed data or filesystem reading).
  */
 export async function seedMofpiProduceNetwork(organizationId: string = "freshroute-org-canonical"): Promise<{
   commoditiesCount: number;
@@ -215,10 +213,8 @@ export async function seedMofpiProduceNetwork(organizationId: string = "freshrou
     [organizationId, "freshroute-india-network", "FreshRoute India Produce Network", "ENTERPRISE_COLD_CHAIN"]
   );
 
-  // 1. Seed all 54 commodities from catalog
-  const catalogPath = path.join(DATA_DIR, "freshroute_india_commodities_catalog.csv");
-  const catalogContent = fs.readFileSync(catalogPath, "utf-8");
-  const catalogParsed = parseRawCsvText(catalogContent);
+  // 1. Seed all 54 commodities from raw catalog CSV string
+  const catalogParsed = parseRawCsvText(MOFPI_COMMODITIES_CATALOG_CSV);
 
   let commCount = 0;
   for (const row of catalogParsed.rows) {
@@ -258,10 +254,8 @@ export async function seedMofpiProduceNetwork(organizationId: string = "freshrou
     commCount++;
   }
 
-  // 2. Seed all 15 warehouses across the 15 Agro-Climatic Zones
-  const whPath = path.join(DATA_DIR, "freshroute_india_warehouses.csv");
-  const whContent = fs.readFileSync(whPath, "utf-8");
-  const whParsed = parseRawCsvText(whContent);
+  // 2. Seed all 15 warehouses across the 15 Agro-Climatic Zones from raw CSV string
+  const whParsed = parseRawCsvText(MOFPI_WAREHOUSES_CSV);
 
   let whCount = 0;
   for (const row of whParsed.rows) {
@@ -302,5 +296,235 @@ export async function seedMofpiProduceNetwork(organizationId: string = "freshrou
   return {
     commoditiesCount: commCount,
     warehousesCount: whCount,
+  };
+}
+
+/**
+ * Seeds the MoFPI operational batches, destinations, demand orders, and transport routes
+ * directly from embedded raw CSV strings into FreshRoute database.
+ */
+export async function seedMofpiOperationalDataset(organizationId: string = "freshroute-org-canonical"): Promise<{
+  batchesCount: number;
+  destinationsCount: number;
+  demandsCount: number;
+  routesCount: number;
+}> {
+  const db = await getPgLite();
+  await initPgLiteSchema(db);
+
+  // Ensure commodities and warehouses exist first
+  await seedMofpiProduceNetwork(organizationId);
+
+  // Reference lookups for mapping
+  const whRes = await db.query<any>(`SELECT id, code FROM "Warehouse" WHERE "organizationId" = $1;`, [organizationId]);
+  const cmdRes = await db.query<any>(`SELECT id, code FROM "Commodity" WHERE "organizationId" = $1;`, [organizationId]);
+
+  const whMap = new Map<string, string>(whRes.rows.map((w) => [w.code.toUpperCase(), w.id]));
+  const cmdMap = new Map<string, string>(cmdRes.rows.map((c) => [c.code.toUpperCase(), c.id]));
+
+  // 1. Seed Inventory Batches from raw inventory CSV string
+  const invParsed = parseRawCsvText(MOFPI_INVENTORY_CSV);
+  let batchCount = 0;
+  for (const row of invParsed.rows) {
+    const whId = whMap.get(row.warehouseCode.toUpperCase()) || `wh-mofpi-${row.warehouseCode.toLowerCase()}`;
+    const cmdId = cmdMap.get(row.commodityCode.toUpperCase()) || `cmd-mofpi-${row.commodityCode.toLowerCase()}`;
+    const batchId = `batch-mofpi-${row.batchCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    const initialQty = row.initialQuantityKg;
+    const unitCost = row.unitCostUsd || "0.50";
+    const basePrice = row.basePriceUsd || "1.00";
+    const storageTemp = row.storageTempCelsius || "2.5";
+    const grade = row.qualityGrade || "GRADE_A";
+
+    await db.query(
+      `INSERT INTO "InventoryBatch" (
+        id, "organizationId", "warehouseId", "commodityId", "batchCode",
+        "harvestDate", "receivedDate", "expiryDate", "initialQuantity", "availableQuantity",
+        "reservedQuantity", "dispatchedQuantity", "spoiledQuantity", "unitOfMeasure",
+        "qualityGrade", "storageTempCelsius", "unitCost", "basePrice", status, "isDemo",
+        "createdAt", "updatedAt"
+      ) VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7, $8, $8, 0, 0, 0, 'KG', $9, $10, $11, $12, 'AVAILABLE', false, NOW(), NOW())
+      ON CONFLICT ("batchCode") DO UPDATE SET
+        "availableQuantity" = EXCLUDED."availableQuantity",
+        "initialQuantity" = EXCLUDED."initialQuantity",
+        "unitCost" = EXCLUDED."unitCost",
+        "basePrice" = EXCLUDED."basePrice",
+        "expiryDate" = EXCLUDED."expiryDate",
+        "storageTempCelsius" = EXCLUDED."storageTempCelsius",
+        "updatedAt" = NOW();`,
+      [
+        batchId,
+        organizationId,
+        whId,
+        cmdId,
+        row.batchCode,
+        new Date(row.harvestDate),
+        new Date(row.expiryDate),
+        initialQty,
+        grade,
+        storageTemp,
+        unitCost,
+        basePrice,
+      ]
+    );
+    batchCount++;
+  }
+
+  // 2. Seed Destinations & Demands from raw destinations/demand CSV string
+  const destParsed = parseRawCsvText(MOFPI_DESTINATIONS_DEMAND_CSV);
+  let destCount = 0;
+  let demandCount = 0;
+  const destSeen = new Set<string>();
+
+  for (const row of destParsed.rows) {
+    const destCode = row.destinationCode;
+    const destId = `dest-mofpi-${destCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    const acceptsDiscounts =
+      String(row.acceptsDiscounts).toLowerCase() === "true" || String(row.acceptsDiscounts).toLowerCase() === "yes";
+
+    if (!destSeen.has(destCode)) {
+      await db.query(
+        `INSERT INTO "Destination" (
+          id, "organizationId", code, name, tier, address, city, state, "postalCode",
+          latitude, longitude, "minShelfLifeDays", "acceptsDiscounts", "maxDiscountPercent",
+          "receivingHoursStart", "receivingHoursEnd", "isDemo", "createdAt", "updatedAt"
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, '04:00', '22:00', false, NOW(), NOW())
+        ON CONFLICT (code) DO UPDATE SET
+          name = EXCLUDED.name,
+          tier = EXCLUDED.tier,
+          "minShelfLifeDays" = EXCLUDED."minShelfLifeDays",
+          "acceptsDiscounts" = EXCLUDED."acceptsDiscounts",
+          "updatedAt" = NOW();`,
+        [
+          destId,
+          organizationId,
+          destCode,
+          row.destinationName,
+          row.tier,
+          row.address,
+          row.city,
+          row.state,
+          row.postalCode,
+          row.latitude,
+          row.longitude,
+          parseInt(row.minShelfLifeDays, 10),
+          acceptsDiscounts,
+          acceptsDiscounts ? "30.00" : "0.00",
+        ]
+      );
+      destSeen.add(destCode);
+      destCount++;
+    }
+
+    // Insert demand order
+    const cmdId = cmdMap.get(row.commodityCode.toUpperCase()) || `cmd-mofpi-${row.commodityCode.toLowerCase()}`;
+    const demandId = `dem-mofpi-${row.orderNumber.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    const qty = row.requestedQuantityKg;
+    const contractedPrice = row.contractedPricePerKg;
+
+    await db.query(
+      `INSERT INTO "DestinationDemand" (
+        id, "organizationId", "destinationId", "commodityId", "orderNumber",
+        "requestedQuantity", "fulfilledQuantity", "unitOfMeasure", "contractedPricePerUnit",
+        "deliveryWindowStart", "deliveryWindowEnd", "maxReceivingLimitKg", status, "isDemo",
+        "createdAt", "updatedAt"
+      ) VALUES ($1, $2, $3, $4, $5, $6, 0, 'KG', $7, $8, $9, $6, 'PENDING', false, NOW(), NOW())
+      ON CONFLICT ("orderNumber") DO UPDATE SET
+        "requestedQuantity" = EXCLUDED."requestedQuantity",
+        "contractedPricePerUnit" = EXCLUDED."contractedPricePerUnit",
+        "deliveryWindowStart" = EXCLUDED."deliveryWindowStart",
+        "deliveryWindowEnd" = EXCLUDED."deliveryWindowEnd",
+        "updatedAt" = NOW();`,
+      [
+        demandId,
+        organizationId,
+        destId,
+        cmdId,
+        row.orderNumber,
+        qty,
+        contractedPrice,
+        new Date(row.deliveryWindowStart),
+        new Date(row.deliveryWindowEnd),
+      ]
+    );
+    demandCount++;
+  }
+
+  // 3. Seed Transport Routes from raw transport CSV string
+  const transParsed = parseRawCsvText(MOFPI_TRANSPORT_ROUTES_CSV);
+  let routeCount = 0;
+  for (const row of transParsed.rows) {
+    const whId = whMap.get(row.originWarehouseCode.toUpperCase()) || `wh-mofpi-${row.originWarehouseCode.toLowerCase()}`;
+    const routeId = `route-mofpi-${row.routeCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    const fixedCost = row.fixedTripCostUsd || "300.00";
+    const varCost = row.variableCostPerKgUsd || "0.05";
+    const transitHours = row.transitDurationHours;
+    const handlingHours = row.handlingDurationHours || "0.5";
+    const capacityKg = row.maxWeightCapacityKg;
+
+    await db.query(
+      `INSERT INTO "Route" (
+        id, "organizationId", "routeCode", "originWarehouseId", "destinationRegion",
+        "vehicleType", "maxWeightCapacityKg", "maxVolumeCapacityM3",
+        "currentAvailableWeightKg", "currentAvailableVolumeM3", "tempZoneMinCelsius",
+        "tempZoneMaxCelsius", "transitDurationHours", "handlingDurationHours",
+        "fixedTripCost", "variableCostPerKg", "departureTime", "estimatedArrivalTime",
+        status, "isDemo", "createdAt", "updatedAt"
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, 80.00, $7, 80.00, 0.0, 15.0, $8, $9, $10, $11, $12, $13, 'SCHEDULED', false, NOW(), NOW())
+      ON CONFLICT ("routeCode") DO UPDATE SET
+        "originWarehouseId" = EXCLUDED."originWarehouseId",
+        "destinationRegion" = EXCLUDED."destinationRegion",
+        "maxWeightCapacityKg" = EXCLUDED."maxWeightCapacityKg",
+        "fixedTripCost" = EXCLUDED."fixedTripCost",
+        "variableCostPerKg" = EXCLUDED."variableCostPerKg",
+        "transitDurationHours" = EXCLUDED."transitDurationHours",
+        "updatedAt" = NOW();`,
+      [
+        routeId,
+        organizationId,
+        row.routeCode,
+        whId,
+        row.destinationRegion,
+        row.vehicleType || "REEFER_HEAVY_TRUCK",
+        capacityKg,
+        transitHours,
+        handlingHours,
+        fixedCost,
+        varCost,
+        new Date(row.departureTime),
+        new Date(row.estimatedArrivalTime),
+      ]
+    );
+    routeCount++;
+  }
+
+  return {
+    batchesCount: batchCount,
+    destinationsCount: destCount,
+    demandsCount: demandCount,
+    routesCount: routeCount,
+  };
+}
+
+/**
+ * Seeds the complete MoFPI produce network and operational dataset directly from raw CSV strings.
+ */
+export async function seedMofpiCompleteDataset(organizationId: string = "freshroute-org-canonical"): Promise<{
+  commoditiesCount: number;
+  warehousesCount: number;
+  batchesCount: number;
+  destinationsCount: number;
+  demandsCount: number;
+  routesCount: number;
+}> {
+  const produce = await seedMofpiProduceNetwork(organizationId);
+  const operational = await seedMofpiOperationalDataset(organizationId);
+
+  return {
+    commoditiesCount: produce.commoditiesCount,
+    warehousesCount: produce.warehousesCount,
+    batchesCount: operational.batchesCount,
+    destinationsCount: operational.destinationsCount,
+    demandsCount: operational.demandsCount,
+    routesCount: operational.routesCount,
   };
 }

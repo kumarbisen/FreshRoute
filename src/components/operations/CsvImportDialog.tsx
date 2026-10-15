@@ -4,6 +4,11 @@ import React, { useState, useRef } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Upload, FileText, CheckCircle2, AlertCircle, AlertTriangle, Download, X, Loader2 } from "lucide-react";
 import { Button, Badge } from "@/components/ui";
+import {
+  MOFPI_INVENTORY_CSV,
+  MOFPI_DESTINATIONS_DEMAND_CSV,
+  MOFPI_TRANSPORT_ROUTES_CSV,
+} from "@/data/mofpi-raw-csv";
 import styles from "./Operations.module.scss";
 
 export type CsvTemplateType = "inventory" | "destinations-demand" | "transport";
@@ -57,6 +62,28 @@ export function CsvImportDialog({
 
   const handleDownloadTemplate = () => {
     window.open(`/api/import/template?type=${templateType}`, "_blank");
+  };
+
+  const handleLoadFromDataCsv = () => {
+    let content = "";
+    let filename = "";
+    if (templateType === "inventory") {
+      content = MOFPI_INVENTORY_CSV;
+      filename = "freshroute_inventory_mofpi_data.csv";
+    } else if (templateType === "destinations-demand") {
+      content = MOFPI_DESTINATIONS_DEMAND_CSV;
+      filename = "freshroute_destinations_demand_mofpi_data.csv";
+    } else if (templateType === "transport") {
+      content = MOFPI_TRANSPORT_ROUTES_CSV;
+      filename = "freshroute_transport_routes_mofpi_data.csv";
+    }
+
+    setFile(new File([content], filename, { type: "text/csv" }));
+    setErrors([]);
+    setPreviewRows([]);
+    setSuccessReport(null);
+    setCsvContent(content);
+    validateContent(content);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,7 +182,15 @@ export function CsvImportDialog({
               leftIcon={<Download size={14} />}
               onClick={handleDownloadTemplate}
             >
-              Download Sample CSV Template
+              Download Template
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              leftIcon={<FileText size={14} />}
+              onClick={handleLoadFromDataCsv}
+            >
+              Use /data CSV directly
             </Button>
             <span className={styles.formatNotice}>
               UTF-8 CSV format required // Strict headers validated

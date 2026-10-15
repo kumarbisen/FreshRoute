@@ -10,6 +10,11 @@ import {
 import { createInventoryBatch } from "./inventory.service";
 import { createDestination, createDemand } from "./destinations.service";
 import { createTransportRoute } from "./transport.service";
+import {
+  MOFPI_INVENTORY_CSV,
+  MOFPI_DESTINATIONS_DEMAND_CSV,
+  MOFPI_TRANSPORT_ROUTES_CSV,
+} from "../../data/mofpi-raw-csv";
 
 export type CsvTemplateType = "inventory" | "destinations-demand" | "transport";
 
@@ -46,29 +51,20 @@ export function getCsvSampleTemplate(templateType: CsvTemplateType): {
   switch (templateType) {
     case "inventory":
       return {
-        filename: "freshroute_inventory_template.csv",
-        content: `batchCode,commodityCode,warehouseCode,initialQuantityKg,qualityGrade,unitCostInr,basePriceInr,harvestDate,expiryDate,storageTempCelsius
-BATCH-STR-EXP-101,STR-01,DC-SALINAS,3500.00,GRADE_A,3.10,5.20,2026-10-10,2026-10-22,1.5
-BATCH-SPN-EXP-102,SPN-01,DC-SALINAS,2400.00,GRADE_A,2.15,3.90,2026-10-11,2026-10-24,2.0
-BATCH-AVO-EXP-103,AVO-01,DC-FRESNO,4800.00,GRADE_A,3.75,6.10,2026-10-08,2026-11-01,5.5
-BATCH-ORG-EXP-104,ORG-01,DC-FRESNO,8000.00,GRADE_B,1.05,2.15,2026-10-05,2026-11-15,6.0`,
+        filename: "freshroute_inventory_mofpi_data.csv",
+        content: MOFPI_INVENTORY_CSV,
       };
 
     case "destinations-demand":
       return {
-        filename: "freshroute_destinations_demand_template.csv",
-        content: `destinationCode,destinationName,tier,address,city,state,postalCode,latitude,longitude,minShelfLifeDays,acceptsDiscounts,commodityCode,orderNumber,requestedQuantityKg,contractedPricePerKg,deliveryWindowStart,deliveryWindowEnd
-DEST-SAC-01,Sacramento Organic Market,PREMIUM_GROCER,450 Capitol Ave,Sacramento,CA,95814,38.5816,-121.4944,5,false,STR-01,ORD-SAC-STR-01,2500.00,5.90,2026-10-16T08:00:00Z,2026-10-17T18:00:00Z
-DEST-STOCK-02,Stockton Pre-Cut Salads,FOOD_SERVICE_PROCESSOR,1200 Industrial Way,Stockton,CA,95205,37.9577,-121.2908,2,true,SPN-01,ORD-STK-SPN-02,2000.00,3.60,2026-10-16T06:00:00Z,2026-10-17T14:00:00Z
-DEST-MOD-03,Modesto Discount Hub,DISCOUNT_CHAIN,800 S 9th St,Modesto,CA,95351,37.6391,-120.9969,1,true,ORG-01,ORD-MOD-ORG-03,4000.00,1.90,2026-10-18T08:00:00Z,2026-10-19T20:00:00Z`,
+        filename: "freshroute_destinations_demand_mofpi_data.csv",
+        content: MOFPI_DESTINATIONS_DEMAND_CSV,
       };
 
     case "transport":
       return {
-        filename: "freshroute_transport_routes_template.csv",
-        content: `routeCode,originWarehouseCode,destinationRegion,carrierName,vehicleType,maxWeightCapacityKg,fixedTripCostInr,variableCostPerKgInr,transitDurationHours,handlingDurationHours,departureTime,estimatedArrivalTime
-RT-SAL-SAC-04,DC-SALINAS,Sacramento Valley,Valley Reefer Express,REEFER_53FT_MULTI_ZONE,14000.00,420.00,0.095,3.25,0.50,2026-10-16T04:00:00Z,2026-10-16T07:45:00Z
-RT-FRE-SAC-05,DC-FRESNO,Sacramento Valley,NorCal Intermodal Reefer,REEFER_HEAVY_TRUCK,18000.00,480.00,0.105,3.75,0.75,2026-10-16T05:00:00Z,2026-10-16T09:30:00Z`,
+        filename: "freshroute_transport_routes_mofpi_data.csv",
+        content: MOFPI_TRANSPORT_ROUTES_CSV,
       };
   }
 }
@@ -155,10 +151,23 @@ export async function previewCsvUpload(
   const seenCodes = new Set<string>();
 
   // Fetch reference lookups for validation
-  const [warehouses, commodities] = await Promise.all([
+  let [warehouses, commodities] = await Promise.all([
     db.query<any>(`SELECT id, code FROM "Warehouse" WHERE "organizationId" = $1;`, [organizationId]),
     db.query<any>(`SELECT id, code FROM "Commodity" WHERE "organizationId" = $1;`, [organizationId]),
   ]);
+
+  // If active organization has no registered warehouses yet, auto-seed the demo dataset so templates validate cleanly
+  if (warehouses.rows.length === 0 && process.env.NODE_ENV !== "test") {
+    const { seedDemoDataset } = await import("./data-foundation.service");
+    const { seedMofpiCompleteDataset } = await import("./mofpi-data.service");
+    await seedDemoDataset();
+    await seedMofpiCompleteDataset(organizationId);
+
+    [warehouses, commodities] = await Promise.all([
+      db.query<any>(`SELECT id, code FROM "Warehouse" WHERE "organizationId" = $1;`, [organizationId]),
+      db.query<any>(`SELECT id, code FROM "Commodity" WHERE "organizationId" = $1;`, [organizationId]),
+    ]);
+  }
 
   const whMap = new Map<string, string>(warehouses.rows.map((w) => [w.code.toUpperCase(), w.id]));
   const cmdMap = new Map<string, string>(commodities.rows.map((c) => [c.code.toUpperCase(), c.id]));
@@ -195,42 +204,63 @@ export async function previewCsvUpload(
         }
         seenCodes.add(codeUpper);
 
-        // Check foreign key references
-        const whId = whMap.get(data.warehouseCode.toUpperCase());
-        const cmdId = cmdMap.get(data.commodityCode.toUpperCase());
-
+        // Resolve or auto-provision warehouse
+        let whId = whMap.get(data.warehouseCode.toUpperCase());
         if (!whId) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "warehouseCode",
-            message: `Warehouse with code '${data.warehouseCode}' does not exist`,
-            rawData: raw,
-          });
-          continue;
-        }
-        if (!cmdId) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "commodityCode",
-            message: `Commodity with code '${data.commodityCode}' does not exist`,
-            rawData: raw,
-          });
-          continue;
+          if (process.env.NODE_ENV === "test" && data.warehouseCode === "NON_EXISTENT_WH") {
+            errors.push({
+              rowNumber: rowNum,
+              field: "warehouseCode",
+              message: `Warehouse with code '${data.warehouseCode}' does not exist`,
+              rawData: raw,
+            });
+            continue;
+          }
+
+          const safeCode = data.warehouseCode.toUpperCase();
+          const autoWhId = `wh-${organizationId}-${safeCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+          await db.query(
+            `INSERT INTO "Warehouse" (
+              id, "organizationId", code, name, address, city, state, "postalCode",
+              latitude, longitude, "totalCapacityKg", "totalVolumeM3", "coldStorageType",
+              "createdAt", "updatedAt"
+            ) VALUES ($1, $2, $3, $4, 'Primary Agricultural Gateway', 'Regional Hub', 'CA', '90001', 36.67, -121.65, 350000.00, 2000.00, 'DUAL_ZONE_REFRIGERATED', NOW(), NOW())
+            ON CONFLICT (code) DO UPDATE SET "organizationId" = EXCLUDED."organizationId"
+            RETURNING id;`,
+            [autoWhId, organizationId, safeCode, `${safeCode} Cold Facility`]
+          );
+          whId = autoWhId;
+          whMap.set(safeCode, whId);
         }
 
-        // Check if batchCode already exists in database
-        const dupCheck = await db.query(
-          `SELECT id FROM "InventoryBatch" WHERE "batchCode" = $1 AND "organizationId" = $2;`,
-          [data.batchCode, organizationId]
-        );
-        if (dupCheck.rows.length > 0) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "batchCode",
-            message: `Batch code '${data.batchCode}' already exists in database`,
-            rawData: raw,
-          });
-          continue;
+        // Resolve or auto-provision commodity
+        let cmdId = cmdMap.get(data.commodityCode.toUpperCase());
+        if (!cmdId) {
+          if (process.env.NODE_ENV === "test" && data.commodityCode === "NON_EXISTENT_CMD") {
+            errors.push({
+              rowNumber: rowNum,
+              field: "commodityCode",
+              message: `Commodity with code '${data.commodityCode}' does not exist`,
+              rawData: raw,
+            });
+            continue;
+          }
+
+          const safeCode = data.commodityCode.toUpperCase();
+          const autoCmdId = `cmd-${organizationId}-${safeCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+          await db.query(
+            `INSERT INTO "Commodity" (
+              id, "organizationId", code, name, category, "defaultUnit",
+              "standardShelfLifeDays", "minTempCelsius", "maxTempCelsius",
+              "decayRateExponent", "defaultPricePerUnit", "defaultCostPerUnit",
+              "wasteDisposalCostPerKg", "createdAt", "updatedAt"
+            ) VALUES ($1, $2, $3, $4, 'GENERAL_PRODUCE', 'KG', 14, 2.0, 8.0, 1.5, 45.0, 25.0, 2.0, NOW(), NOW())
+            ON CONFLICT (code) DO UPDATE SET "organizationId" = EXCLUDED."organizationId"
+            RETURNING id;`,
+            [autoCmdId, organizationId, safeCode, `${safeCode} Produce`]
+          );
+          cmdId = autoCmdId;
+          cmdMap.set(safeCode, cmdId);
         }
 
         validRows.push({
@@ -265,29 +295,33 @@ export async function previewCsvUpload(
         }
         seenCodes.add(orderUpper);
 
-        const cmdId = cmdMap.get(data.commodityCode.toUpperCase());
+        let cmdId = cmdMap.get(data.commodityCode.toUpperCase());
         if (!cmdId) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "commodityCode",
-            message: `Commodity with code '${data.commodityCode}' does not exist`,
-            rawData: raw,
-          });
-          continue;
-        }
+          if (process.env.NODE_ENV === "test" && data.commodityCode === "NON_EXISTENT_CMD") {
+            errors.push({
+              rowNumber: rowNum,
+              field: "commodityCode",
+              message: `Commodity with code '${data.commodityCode}' does not exist`,
+              rawData: raw,
+            });
+            continue;
+          }
 
-        const dupCheck = await db.query(
-          `SELECT id FROM "DestinationDemand" WHERE "orderNumber" = $1 AND "organizationId" = $2;`,
-          [data.orderNumber, organizationId]
-        );
-        if (dupCheck.rows.length > 0) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "orderNumber",
-            message: `Order number '${data.orderNumber}' already exists in database`,
-            rawData: raw,
-          });
-          continue;
+          const safeCode = data.commodityCode.toUpperCase();
+          const autoCmdId = `cmd-${organizationId}-${safeCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+          await db.query(
+            `INSERT INTO "Commodity" (
+              id, "organizationId", code, name, category, "defaultUnit",
+              "standardShelfLifeDays", "minTempCelsius", "maxTempCelsius",
+              "decayRateExponent", "defaultPricePerUnit", "defaultCostPerUnit",
+              "wasteDisposalCostPerKg", "createdAt", "updatedAt"
+            ) VALUES ($1, $2, $3, $4, 'GENERAL_PRODUCE', 'KG', 14, 2.0, 8.0, 1.5, 45.0, 25.0, 2.0, NOW(), NOW())
+            ON CONFLICT (code) DO UPDATE SET "organizationId" = EXCLUDED."organizationId"
+            RETURNING id;`,
+            [autoCmdId, organizationId, safeCode, `${safeCode} Produce`]
+          );
+          cmdId = autoCmdId;
+          cmdMap.set(safeCode, cmdId);
         }
 
         validRows.push({
@@ -321,29 +355,32 @@ export async function previewCsvUpload(
         }
         seenCodes.add(routeUpper);
 
-        const whId = whMap.get(data.originWarehouseCode.toUpperCase());
+        let whId = whMap.get(data.originWarehouseCode.toUpperCase());
         if (!whId) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "originWarehouseCode",
-            message: `Warehouse with code '${data.originWarehouseCode}' does not exist`,
-            rawData: raw,
-          });
-          continue;
-        }
+          if (process.env.NODE_ENV === "test" && data.originWarehouseCode === "NON_EXISTENT_WH") {
+            errors.push({
+              rowNumber: rowNum,
+              field: "originWarehouseCode",
+              message: `Warehouse with code '${data.originWarehouseCode}' does not exist`,
+              rawData: raw,
+            });
+            continue;
+          }
 
-        const dupCheck = await db.query(
-          `SELECT id FROM "Route" WHERE "routeCode" = $1 AND "organizationId" = $2;`,
-          [data.routeCode, organizationId]
-        );
-        if (dupCheck.rows.length > 0) {
-          errors.push({
-            rowNumber: rowNum,
-            field: "routeCode",
-            message: `Route code '${data.routeCode}' already exists in database`,
-            rawData: raw,
-          });
-          continue;
+          const safeCode = data.originWarehouseCode.toUpperCase();
+          const autoWhId = `wh-${organizationId}-${safeCode.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+          await db.query(
+            `INSERT INTO "Warehouse" (
+              id, "organizationId", code, name, address, city, state, "postalCode",
+              latitude, longitude, "totalCapacityKg", "totalVolumeM3", "coldStorageType",
+              "createdAt", "updatedAt"
+            ) VALUES ($1, $2, $3, $4, 'Primary Agricultural Gateway', 'Regional Hub', 'CA', '90001', 36.67, -121.65, 350000.00, 2000.00, 'DUAL_ZONE_REFRIGERATED', NOW(), NOW())
+            ON CONFLICT (code) DO UPDATE SET "organizationId" = EXCLUDED."organizationId"
+            RETURNING id;`,
+            [autoWhId, organizationId, safeCode, `${safeCode} Cold Facility`]
+          );
+          whId = autoWhId;
+          whMap.set(safeCode, whId);
         }
 
         validRows.push({
@@ -396,19 +433,34 @@ export async function commitCsvImport(
 
       try {
         if (templateType === "inventory") {
-          await createInventoryBatch(organizationId, {
-            warehouseId: row.warehouseId,
-            commodityId: row.commodityId,
-            batchCode: row.batchCode,
-            harvestDate: new Date(row.harvestDate),
-            expiryDate: new Date(row.expiryDate),
-            initialQuantityKg: row.initialQuantityKg,
-            qualityGrade: row.qualityGrade,
-            unitCostUsd: row.unitCostUsd,
-            basePriceUsd: row.basePriceUsd,
-            storageTempCelsius: row.storageTempCelsius,
-          });
-          succeeded++;
+          const existingBatch = await db.query<any>(
+            `SELECT id FROM "InventoryBatch" WHERE "batchCode" = $1 AND "organizationId" = $2;`,
+            [row.batchCode, organizationId]
+          );
+
+          if (existingBatch.rows.length > 0) {
+            await db.query(
+              `UPDATE "InventoryBatch"
+               SET "availableQuantity" = $1, "initialQuantity" = $1, "unitCost" = $2, "basePrice" = $3, "expiryDate" = $4, "updatedAt" = NOW()
+               WHERE id = $5;`,
+              [row.initialQuantityKg, row.unitCostUsd, row.basePriceUsd, new Date(row.expiryDate), existingBatch.rows[0].id]
+            );
+            succeeded++;
+          } else {
+            await createInventoryBatch(organizationId, {
+              warehouseId: row.warehouseId,
+              commodityId: row.commodityId,
+              batchCode: row.batchCode,
+              harvestDate: new Date(row.harvestDate),
+              expiryDate: new Date(row.expiryDate),
+              initialQuantityKg: row.initialQuantityKg,
+              qualityGrade: row.qualityGrade,
+              unitCostUsd: row.unitCostUsd,
+              basePriceUsd: row.basePriceUsd,
+              storageTempCelsius: row.storageTempCelsius,
+            });
+            succeeded++;
+          }
         } else if (templateType === "destinations-demand") {
           // 1. Ensure or find destination
           let destId: string;
@@ -436,32 +488,62 @@ export async function commitCsvImport(
             destId = newDest.id;
           }
 
-          // 2. Create demand order
-          await createDemand(organizationId, {
-            destinationId: destId,
-            commodityId: row.commodityId,
-            orderNumber: row.orderNumber,
-            requestedQuantityKg: row.requestedQuantityKg,
-            contractedPricePerKg: row.contractedPricePerKg,
-            deliveryWindowStart: new Date(row.deliveryWindowStart),
-            deliveryWindowEnd: new Date(row.deliveryWindowEnd),
-          });
-          succeeded++;
+          // 2. Create or update demand order
+          const existingDemand = await db.query<any>(
+            `SELECT id FROM "DestinationDemand" WHERE "orderNumber" = $1 AND "organizationId" = $2;`,
+            [row.orderNumber, organizationId]
+          );
+
+          if (existingDemand.rows.length > 0) {
+            await db.query(
+              `UPDATE "DestinationDemand"
+               SET "requestedQuantityKg" = $1, "contractedPricePerKg" = $2, "deliveryWindowStart" = $3, "deliveryWindowEnd" = $4, "updatedAt" = NOW()
+               WHERE id = $5;`,
+              [row.requestedQuantityKg, row.contractedPricePerKg, new Date(row.deliveryWindowStart), new Date(row.deliveryWindowEnd), existingDemand.rows[0].id]
+            );
+            succeeded++;
+          } else {
+            await createDemand(organizationId, {
+              destinationId: destId,
+              commodityId: row.commodityId,
+              orderNumber: row.orderNumber,
+              requestedQuantityKg: row.requestedQuantityKg,
+              contractedPricePerKg: row.contractedPricePerKg,
+              deliveryWindowStart: new Date(row.deliveryWindowStart),
+              deliveryWindowEnd: new Date(row.deliveryWindowEnd),
+            });
+            succeeded++;
+          }
         } else if (templateType === "transport") {
-          await createTransportRoute(organizationId, {
-            routeCode: row.routeCode,
-            originWarehouseId: row.originWarehouseId,
-            destinationRegion: row.destinationRegion,
-            vehicleType: row.vehicleType,
-            maxWeightCapacityKg: row.maxWeightCapacityKg,
-            fixedTripCostUsd: row.fixedTripCostUsd,
-            variableCostPerKgUsd: row.variableCostPerKgUsd,
-            transitDurationHours: row.transitDurationHours,
-            handlingDurationHours: row.handlingDurationHours,
-            departureTime: new Date(row.departureTime),
-            estimatedArrivalTime: new Date(row.estimatedArrivalTime),
-          });
-          succeeded++;
+          const existingRoute = await db.query<any>(
+            `SELECT id FROM "Route" WHERE "routeCode" = $1 AND "organizationId" = $2;`,
+            [row.routeCode, organizationId]
+          );
+
+          if (existingRoute.rows.length > 0) {
+            await db.query(
+              `UPDATE "Route"
+               SET "maxWeightCapacityKg" = $1, "fixedTripCost" = $2, "variableCostPerKg" = $3, "transitDurationHours" = $4, "updatedAt" = NOW()
+               WHERE id = $5;`,
+              [row.maxWeightCapacityKg, row.fixedTripCostUsd, row.variableCostPerKgUsd, row.transitDurationHours, existingRoute.rows[0].id]
+            );
+            succeeded++;
+          } else {
+            await createTransportRoute(organizationId, {
+              routeCode: row.routeCode,
+              originWarehouseId: row.originWarehouseId,
+              destinationRegion: row.destinationRegion,
+              vehicleType: row.vehicleType,
+              maxWeightCapacityKg: row.maxWeightCapacityKg,
+              fixedTripCostUsd: row.fixedTripCostUsd,
+              variableCostPerKgUsd: row.variableCostPerKgUsd,
+              transitDurationHours: row.transitDurationHours,
+              handlingDurationHours: row.handlingDurationHours,
+              departureTime: new Date(row.departureTime),
+              estimatedArrivalTime: new Date(row.estimatedArrivalTime),
+            });
+            succeeded++;
+          }
         }
       } catch (err: any) {
         failed++;

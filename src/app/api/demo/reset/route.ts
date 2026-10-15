@@ -5,6 +5,7 @@ import {
   DEMO_ORGANIZATION_ID,
   DEMO_WAREHOUSE_SALINAS_ID,
 } from "@/server/services/data-foundation.service";
+import { seedMofpiCompleteDataset } from "@/server/services/mofpi-data.service";
 import { generateDistributionPlan } from "@/server/services/planning.service";
 import { evaluatePlanDiscounts } from "@/server/services/discount.service";
 
@@ -16,8 +17,9 @@ export async function POST(req: NextRequest) {
     // 1. Reset database tables and schema
     await resetPgLiteDatabase(db);
 
-    // 2. Seed canonical demo dataset (5 canonical edge cases)
+    // 2. Seed canonical demo dataset (5 canonical edge cases) + complete MoFPI operational network from raw CSV
     await seedDemoDataset();
+    await seedMofpiCompleteDataset(orgId);
 
     // 3. Generate initial canonical distribution plan for Salinas Coolport
     const { plan } = await generateDistributionPlan(orgId, {
